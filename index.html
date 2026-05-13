@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 圖像提示詞圖庫｜GPT Image · Nano Banana · Midjourney</title>
+<style>
+  :root {
+    --bg: #0f1115;
+    --panel: #161922;
+    --panel-2: #1d2130;
+    --border: #2a2f42;
+    --text: #e9ecf3;
+    --muted: #8b93a7;
+    --accent: #7dd3fc;
+    --accent-2: #fbbf24;
+    --tag-1: #38bdf8;
+    --tag-2: #f472b6;
+    --tag-3: #a78bfa;
+    --tag-4: #34d399;
+    --ok: #22c55e;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", Roboto, sans-serif;
+    background: var(--bg); color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    padding: 36px 24px 20px;
+    background: linear-gradient(135deg, #0f1115 0%, #1a1f2e 100%);
+    border-bottom: 1px solid var(--border);
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h1 {
+    margin: 0 0 8px;
+    font-size: 28px; font-weight: 700;
+    background: linear-gradient(90deg, #7dd3fc 0%, #f472b6 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .subtitle { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--muted);
+  }
+  .meta a { color: var(--accent); text-decoration: none; }
+  .meta a:hover { text-decoration: underline; }
+  .toolbar {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    padding: 16px 24px;
+    background: var(--panel); border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .toolbar input {
+    flex: 1; min-width: 220px;
+    padding: 10px 14px;
+    background: var(--panel-2); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px;
+    font-size: 14px;
+  }
+  .toolbar input:focus { outline: none; border-color: var(--accent); }
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 8px 14px; font-size: 13px;
+    background: var(--panel-2); border: 1px solid var(--border);
+    color: var(--text); border-radius: 999px; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--accent); }
+  .filter-btn.active { background: var(--accent); color: #0f1115; border-color: var(--accent); font-weight: 600; }
+  main { padding: 24px; }
+  .grid {
+    display: grid; gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 900px) {
+    .grid { grid-template-columns: 1fr 1fr; }
+  }
+  .card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .preview-wrap {
+    position: relative;
+    width: 100%;
+    background: var(--panel-2);
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    cursor: zoom-in;
+    border-bottom: 1px solid var(--border);
+  }
+  .preview-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease, opacity 0.2s;
+    opacity: 0;
+  }
+  .preview-wrap img.loaded { opacity: 1; }
+  .preview-wrap:hover img { transform: scale(1.04); }
+  .preview-skeleton {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 12px;
+    background: linear-gradient(110deg, #1d2130 30%, #252a3d 50%, #1d2130 70%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  .preview-error {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--panel-2); color: var(--muted); font-size: 12px;
+  }
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 100;
+    align-items: center; justify-content: center;
+    padding: 20px;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 96%; max-height: 96%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+  }
+  .lightbox-close {
+    position: absolute; top: 20px; right: 24px;
+    background: rgba(255,255,255,0.1); color: white;
+    border: none; width: 40px; height: 40px;
+    border-radius: 50%; cursor: pointer; font-size: 20px;
+  }
+  .card-head {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: start; gap: 8px;
+  }
+  .card-title {
+    font-size: 15px; font-weight: 600; margin: 0;
+    flex: 1;
+  }
+  .tag {
+    font-size: 11px; padding: 3px 8px; border-radius: 4px;
+    background: var(--panel-2); color: var(--muted);
+    white-space: nowrap;
+  }
+  .tag.cat-1 { background: rgba(56, 189, 248, 0.15); color: var(--tag-1); }
+  .tag.cat-2 { background: rgba(244, 114, 182, 0.15); color: var(--tag-2); }
+  .tag.cat-3 { background: rgba(167, 139, 250, 0.15); color: var(--tag-3); }
+  .tag.cat-4 { background: rgba(52, 211, 153, 0.15); color: var(--tag-4); }
+  .card-meta {
+    padding: 10px 16px;
+    display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .card-meta .model {
+    background: var(--panel-2); padding: 3px 8px; border-radius: 4px;
+    color: var(--accent-2); font-weight: 500;
+  }
+  .card-meta a { color: var(--accent); text-decoration: none; }
+  .card-meta a:hover { text-decoration: underline; }
+  .prompt-box {
+    padding: 14px 16px;
+    background: var(--panel-2);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.6;
+    max-height: 260px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: #d8def0;
+    flex: 1;
+  }
+  .prompt-box::-webkit-scrollbar { width: 8px; }
+  .prompt-box::-webkit-scrollbar-thumb { background: #2a2f42; border-radius: 4px; }
+  .card-actions {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 8px;
+  }
+  .btn {
+    flex: 1;
+    padding: 9px 14px; font-size: 13px; font-weight: 600;
+    border: 1px solid var(--border); background: var(--panel-2);
+    color: var(--text); border-radius: 7px; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn:hover { background: var(--accent); color: #0f1115; border-color: var(--accent); }
+  .btn.primary {
+    background: var(--accent); color: #0f1115; border-color: var(--accent);
+  }
+  .btn.primary:hover { background: #38bdf8; }
+  .btn.copied { background: var(--ok); color: white; border-color: var(--ok); }
+  .empty {
+    text-align: center; padding: 60px 20px; color: var(--muted);
+  }
+  details.tpl {
+    margin: 0 16px 12px;
+    background: var(--panel-2); border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  details.tpl summary {
+    padding: 10px 14px; cursor: pointer; font-size: 13px; color: var(--accent);
+    user-select: none;
+  }
+  details.tpl[open] summary { border-bottom: 1px solid var(--border); }
+  .tpl-form {
+    padding: 12px 14px; display: grid; gap: 10px;
+  }
+  .tpl-form label {
+    font-size: 12px; color: var(--muted); display: block;
+  }
+  .tpl-form input {
+    width: 100%; padding: 7px 10px;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); border-radius: 5px; font-size: 13px;
+    margin-top: 4px;
+  }
+  .tpl-form input:focus { outline: none; border-color: var(--accent); }
+  .stats {
+    padding: 12px 24px; font-size: 13px; color: var(--muted);
+    border-bottom: 1px solid var(--border); background: var(--panel);
+  }
+  footer {
+    padding: 30px 24px; text-align: center;
+    color: var(--muted); font-size: 12px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+  .note {
+    margin: 0 0 16px; padding: 14px 16px;
+    background: rgba(125, 211, 252, 0.08);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    font-size: 13px; color: #c8d1e4;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>AI 圖像提示詞互動圖庫</h1>
+    <p class="subtitle">GPT Image 2 · Nano Banana · Midjourney · Gemini — 55 組精選提示詞，一鍵複製、即填即用、點圖放大</p>
+    <div class="meta">
+      <span>來源：</span>
+      <a href="https://applealmond.com/posts/312152" target="_blank">蘋果仁 (3)</a>
+      <span>·</span>
+      <a href="https://www.meigen.ai/" target="_blank">MeiGen.ai (12)</a>
+      <span>·</span>
+      <a href="https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete" target="_blank">數位時代 / 蘇柔瑋 (40)</a>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap" style="display:flex;gap:12px;flex-wrap:wrap;width:100%;">
+    <input type="text" id="search" placeholder="🔍 搜尋提示詞（中文 / 英文皆可，例如：海報、portrait、Lisbon）">
+    <div class="filters" id="filters"></div>
+  </div>
+</div>
+
+<div class="stats" id="stats"></div>
+
+<main>
+  <div class="wrap">
+    <div class="note">
+      💡 <strong>使用方式：</strong>找到喜歡的風格 → 點「複製提示詞」→ 貼到 ChatGPT（GPT Image 2）或 Gemini（Nano Banana）對話框，需要時附上參考圖。包含 <code>[BRAND]</code>、<code>[DESTINATION]</code> 等佔位符的提示詞，可展開「模板填空」直接套用變數。
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="empty" id="empty" style="display:none;">找不到符合的提示詞，試試其他關鍵字。</div>
+  </div>
+</main>
+
+<footer>
+  本工具僅整理公開分享的提示詞，原作者版權歸屬請見各卡片來源連結。<br>
+  Built for personal use — 2026
+</footer>
+
+<script>
+const PROMPTS = [
+  {
+    id: "applealmond-1",
+    title: "韓系個人插畫照",
+    category: "手繪風格",
+    model: "ChatGPT / Gemini",
+    source: "蘋果仁 / @jamiee._c",
+    sourceUrl: "https://applealmond.com/posts/312152",
+    previewImage: "https://applealmond.com/wp-content/uploads/2026/05/1778214623-a017e0caf9119cc47e6729799c0161ba.jpg",
+    note: "可附上自己的照片，把指令開頭改為「以這張照片為參考」",
+    prompt: `生成一張你想象中我這個「蘋果仁」的樣子、韓系插畫風、角色特徵鮮明、情緒自然表情、半身構圖、動態姿態、服裝細節精緻、手繪塗鴉風、潑墨筆觸、隨性線條、粉彩與墨色混合、漫畫草稿質感、白色簡約背景、周圍科學化元素點綴、氛圍感強、高細節、高品質。臉的細節要細緻一點`,
+    placeholders: []
+  },
+  {
+    id: "applealmond-2",
+    title: "紅筆吐槽手寫塗鴉",
+    category: "手繪風格",
+    model: "ChatGPT / Gemini",
+    source: "蘋果仁 / @jamiee._c",
+    sourceUrl: "https://applealmond.com/posts/312152",
+    previewImage: "https://applealmond.com/wp-content/uploads/2026/05/1778214927-a017e0caf9119cc47e6729799c0161ba.jpg",
+    note: "需附上一張圖片（截圖、文章、照片皆可）讓 AI 在上面塗鴉",
+    prompt: `將社群帳號截圖製作成紙張列印效果，畫面帶輕微陰影與紙張紋理。使用紅色原子筆手寫風格，在圖片上加入大量中文吐槽批註與塗鴉。包含箭頭、圈選、底線、放大重點、驚嘆號、問號、情緒表情（無語、翻白眼、問號臉）。風格像朋友或老師在旁邊邊看邊吐槽，語氣幽默、誇張、帶一點毒但不惡意攻擊。畫面稍亂但有重點，像隨手亂畫但其實很好笑的那種。`,
+    placeholders: []
+  },
+  {
+    id: "applealmond-3",
+    title: "手帳紀錄／旅遊日記註解",
+    category: "手繪風格",
+    model: "ChatGPT / Gemini",
+    source: "蘋果仁 / @jamiee._c",
+    sourceUrl: "https://applealmond.com/posts/312152",
+    previewImage: "https://applealmond.com/wp-content/uploads/2026/05/1778209656-d2f8130ad1a5dc55feb46894ffe4f286.png",
+    note: "需附上旅遊照、生活照、食物照",
+    prompt: `請觀察照片中的元素，並為每個物件加上有意義的手繪風註解。
+
+【畫面內容】
+・請填寫照片中的物品（例：冰奶茶、甜甜圈）
+
+【描寫規則】
+・使用像白色筆畫的細手繪線條
+・一筆畫風格，隨性、略帶不均勻感
+・沿著物件外圍加上描邊輪廓
+・用箭頭或虛線做出視線引導
+
+【文字規則】
+・手寫風格字體（偏日系可愛感,但要中文字）
+・句子簡短，像自言自語的小碎念
+・語氣偏日記感、帶一點情緒
+
+【註解生成規則】
+・飲料 → 味道、溫度、心情（例：清爽、微甜、剛剛好）
+・食物 → 口感、好吃程度（例：鬆軟、超好吃）
+・空間 → 氛圍（例：很放鬆、喜歡這種感覺）
+・整體 → 一句總結（例：今天有點幸福～）
+
+【裝飾】
+・適度加入熱氣、閃光、愛心、小表情等元素
+・不要過多，保留一些留白
+
+【完成風格】
+・像 Instagram 限時動態、雜誌隨手筆記風
+・自然、有質感、帶點慵懶感`,
+    placeholders: []
+  },
+  {
+    id: "meigen-kids",
+    title: "韓系兒童時尚編輯海報",
+    category: "海報設計",
+    model: "GPT Image",
+    source: "@ChillaiKalan__",
+    sourceUrl: "https://www.meigen.ai/prompt/2053761999583297716",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053761999583297716/0.jpg",
+    prompt: `Create a premium playful kids-fashion editorial poster for [BRAND_NAME].
+
+TOPIC: [KIDS_CAMPAIGN_TOPIC]
+
+STYLE & ART DIRECTION:
+Cute playful studio aesthetic, Korean kids-fashion photography style, Monochromatic color-coordinated composition, Minimal lifestyle editorial branding, Bright cheerful atmosphere, Pinterest-inspired kids campaign, Soft studio photography, Fun doodle typography design, Modern children-brand commercial aesthetic, Clean playful composition.
+
+MAIN SUBJECT:
+A realistic happy child prominently seated or posed in the center, coordinated fashion outfit matching the props and background, cute expressive smile and playful emotion, fashionable kids styling, a large playful prop integrated into the composition (telephone / toy / chair / object), premium realistic children photography, bright emotional atmosphere, soft realistic shadows beneath all objects, strong color harmony across all elements.
+
+LAYOUT: Child centered prominently, single-color studio background, large playful typography integrated into the composition, hand-drawn doodles and sketch graphics around the subject, spacious clean layout.
+
+TEXT & TYPOGRAPHY:
+Main playful text: "[MAIN_TEXT]"
+Small supporting text: "[TAGLINE]"
+Playful handwritten typography, rounded children-brand fonts, fun doodle text style.
+
+COLOR PALETTE: [PRIMARY_COLOR], soft pastel accents, white playful typography.
+
+QUALITY: Ultra realistic kids photography, Premium children-brand campaign, Pinterest-quality editorial design, Ultra high resolution.`,
+    placeholders: ["BRAND_NAME", "KIDS_CAMPAIGN_TOPIC", "MAIN_TEXT", "TAGLINE", "PRIMARY_COLOR"]
+  },
+  {
+    id: "meigen-lv",
+    title: "Louis Vuitton 極簡商業廣告",
+    category: "品牌 & 商品",
+    model: "GPT Image",
+    source: "@MrDasOnX",
+    sourceUrl: "https://www.meigen.ai/prompt/2053542240941936914",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053542240941936914/0.jpg",
+    prompt: `Minimalist commercial ad featuring oversized white Louis Vuitton handbag, ultra-clean design. A young woman in all-white outfit leans casually against the giant bag, relaxed confident pose, eyes closed, also holding the same handbag. Soft gradient blue background with large bold white "LOUIS VUITTON" text behind. Glossy reflective floor, soft studio lighting, modern high-end fashion/product photography. Small top-right text "Designed by [DESIGNER]". Bottom center tagline in small white font: "Luxury in every detail."`,
+    placeholders: ["DESIGNER"]
+  },
+  {
+    id: "meigen-travel-line",
+    title: "極簡線條風城市旅遊海報",
+    category: "海報設計",
+    model: "GPT Image",
+    source: "@Goodmanprotocol",
+    sourceUrl: "https://www.meigen.ai/prompt/2052974175435026714",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2052974175435026714/0.jpg",
+    prompt: `Create an ultra-high-resolution minimalist line-art travel poster of [DESTINATION], portraying the city as a stylish everyday urban scene rather than a tourist postcard.
+
+CORE COMPOSITION:
+- Central composition shows the city's most iconic street, intersection, alley, tram street, or pedestrian avenue
+- Foreground includes locals, commuters, cyclists, travelers, shoppers, students, café visitors
+- Background filled with realistic local signage, cafés, restaurants, transportation signs, storefronts, and architectural details
+- Landmarks should appear naturally integrated into everyday life, never exaggerated
+- Large bold typography at the top center: "[DESTINATION]"
+- Subtitle below: local language + country name (e.g. 東京 JAPAN, 서울 KOREA)
+
+STYLE: ultra clean vector illustration, Swiss modernist travel poster, minimal line art, monoline drawing, mid-century editorial aesthetic, architectural illustration, Japanese graphic poster style, precise geometric perspective, premium travel branding aesthetic.
+
+LINE STYLE: monochrome line-based illustration only, thin and highly precise linework, minimal fill areas, intricate city-map-like detail density, rhythmic layering of signs, buildings, windows.
+
+COLOR SYSTEM — VERY IMPORTANT:
+- use only ONE main color + ONE background color
+- monochrome silkscreen poster aesthetic
+- color should reflect the city's architecture, climate, nightlife, and cultural identity
+Examples: Tokyo → vivid red on warm ivory; Paris → deep navy on cream; New York → charcoal black on light gray; Kyoto → muted burgundy on warm cream; Hong Kong → teal blue on pale ivory.
+
+COMPOSITION: vertical poster layout, frontal street-level perspective, pedestrians crossing streets naturally, balanced urban rhythm.
+
+TEXT QUALITY: all typography must be readable and accurate, no random characters, no broken letters, local signage should feel authentic.
+
+OUTPUT: vertical poster composition, 8K ultra detailed, print-ready, ultra sharp vector quality.`,
+    placeholders: ["DESTINATION"]
+  },
+  {
+    id: "meigen-lisbon",
+    title: "復古水彩旅遊插畫海報",
+    category: "海報設計",
+    model: "GPT Image",
+    source: "@Taaruk_",
+    sourceUrl: "https://www.meigen.ai/prompt/2053674823117926700",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053674823117926700/0.jpg",
+    prompt: `Dreamy vintage travel poster illustration of [CITY], [COUNTRY], featuring [ICONIC_ELEMENT] moving through a steep cobblestone street, pastel buildings with floral balconies, cozy café tables, soft Mediterranean sunlight, distant ocean view, warm nostalgic atmosphere, watercolor and gouache painting texture, elegant serif typography saying "[CITY] – [TAGLINE]", European summer aesthetic, cinematic composition, highly detailed architecture, soft grain and paper texture, romantic travel journal vibe, vintage postcard style, ultra detailed, high quality.
+
+Example reference: Lisbon, Portugal, featuring the iconic yellow tram, tagline "Everyday Urban Rhythm".`,
+    placeholders: ["CITY", "COUNTRY", "ICONIC_ELEMENT", "TAGLINE"]
+  },
+  {
+    id: "meigen-triptych",
+    title: "品牌三聯式 Hero Banner（自動品牌調研）",
+    category: "品牌 & 商品",
+    model: "GPT Image",
+    source: "@AmirMushich",
+    sourceUrl: "https://www.meigen.ai/prompt/2053158175138861411",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053158175138861411/0.jpg",
+    note: "進階模板：AI 會自動分析品牌的真實色彩、字體、代言人與campaign",
+    prompt: `[BRAND_NAME]
+
+Act as a Senior Brand Art Director creating a horizontal triptych hero banner — three vertical panels side by side forming a single unified wide-format campaign image. The entire composition is driven by [BRAND_NAME]'s real brand identity, real campaign information, and real cultural associations. References: Adidas FIFA World Cup campaign, Nike hero banners, Puma campaign triptychs, luxury brand editorial hero images.
+
+PHASE 0 — BRAND INTELLIGENCE (autonomous research):
+Identify [BRAND_NAME]'s real two dominant hero colors (Color 1 = dark/neutral for portrait panel, Color 2 = saturated brand accent for center panel). Identify typographic character (script italic / bold condensed grotesque / extended serif). Identify most current iconic campaign (campaign name, hero product, product descriptor sentence, CTA). Identify one real cultural figure with documented [BRAND_NAME] relationship.
+
+PHASE 1 — STRUCTURE: aspect ratio 3:1 or 16:5 ultrawide. Three equal-width vertical panels, no gap, panels bleed seamlessly. Panel 1 = Color 1 dark; Panel 2 = Color 2 vivid; Panel 3 = Color 2 (slight variation).
+
+PHASE 2 — LEFT PANEL: dramatic close-up portrait of cultural figure, head and upper shoulders (60–70% frame), profile or 3/4 view looking toward center. Wearing [BRAND_NAME] product. Strong side lighting, deep shadows. Upper-left: figure's name small caps light color. Lower-left: white content block with campaign title + product descriptor + CTA button with arrow.
+
+PHASE 3 — CENTER PANEL: most explosive element. Flat Color 2 background. One or two figures in dynamic physical pose wearing [BRAND_NAME] products. A single key campaign word repeated THREE TIMES vertically in italic/script display typeface, varying sizes (top medium cropped, middle largest 40-50% panel height, bottom medium-large cropped). Figures sit between background and type layers — creates depth. Small all-caps tracked campaign identifier above and below figures.
+
+PHASE 4 — RIGHT PANEL: tight editorial crop of [BRAND_NAME] hero product on Color 2 background. Partial figure (torso/hands/legs only, no face). Large graphic number or letter as typographic accent.
+
+PHASE 5 — TYPOGRAPHY: all type consistent with [BRAND_NAME]'s documented visual language. Repeating center word in brand's display style. Attribution and CTA in clean sans-serif all-caps tracked.
+
+PHASE 6 — LIGHTING: left = dramatic single side light; center = even bright studio; right = soft product photography light. Unified campaign session feel.
+
+PHASE 7 — UNITY: type may bleed across panel edges; figure's gaze in left points to center; reading direction portrait → typographic explosion → product detail.
+
+PHASE 8 — TECH SPECS: 3:1 or 16:5 single flat image, no borders between panels. Exactly Color 1 + Color 2 + white/neutral. No additional colors, no gradients, no textures. Editorial campaign quality. Final result looks like the actual hero banner on [BRAND_NAME]'s official website.`,
+    placeholders: ["BRAND_NAME"]
+  },
+  {
+    id: "meigen-manga",
+    title: "全彩動感漫畫頁（人像轉漫畫）",
+    category: "插畫 & 3D",
+    model: "GPT Image",
+    source: "@Mind_Boticni",
+    sourceUrl: "https://www.meigen.ai/prompt/2053120130864058531",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053120130864058531/0.jpg",
+    note: "需附上人物照片，AI 會保留五官特徵改畫成漫畫主角",
+    prompt: `Create a full-page ultra-detailed colored manga illustration based on the provided reference photo. Preserve the exact facial identity, hairstyle, expression, and overall aura of the person, but reinterpret the subject as a stylish, powerful female protagonist. Use an authentic Japanese manga page composition with 5–7 dynamic interconnected panels flowing cinematically across the page. Style should feel like a premium modern seinen manga mixed with high-fashion action comic aesthetics.
+
+The character wears a luxurious tailored black outfit with a modern feminine edge — a fitted black blazer over a sleek dark top. Color theme: neon purple, electric blue, soft pink highlights, and cool cyan lighting, creating a futuristic cyber-fashion mood. Add glowing rim lights and soft atmospheric reflections.
+
+Atmosphere: powerful, elegant, ambitious, mysterious, emotionally intense.
+
+Include multiple dynamic scenes:
+- extreme close-up portrait with confident, fearless expression
+- rooftop city scene overlooking a neon-lit cyberpunk skyline
+- dramatic heroic standing pose with strong low-angle perspective
+- creative workspace scene with soft neon-lit desk ambiance
+- intense action panel where the character leaps forward with flowing motion energy
+- close-up eye panel showing deep emotion, determination, focus
+
+Authentic manga elements: speed lines, impact frames, halftone textures, rough ink sketch lines, ink splatter brush strokes, graffiti-inspired neon paint effects, cinematic panel transitions, expressive handwritten dialogue bubbles, English comic-style sound effects like "BAM!!", "WHOOSH", "SHHNK", "FLASH!!".
+
+Dialogue (motivational, cinematic, empowering):
+"I DON'T WAIT FOR THE RIGHT TIME. I CREATE IT."
+"STAY STRONG. STAY FEARLESS."
+"DREAMS NEED EXECUTION."
+"THIS IS JUST THE BEGINNING!!"
+
+Use vibrant manga-style coloring with black base + neon purple, blue, and pink highlights. Blend clean polished rendering with raw hand-drawn manga textures. Professional manga illustration aesthetic, highly detailed, dynamic composition, HD quality.`,
+    placeholders: []
+  },
+  {
+    id: "meigen-folkart",
+    title: "童話奇幻民間藝術插畫",
+    category: "插畫 & 3D",
+    model: "GPT Image",
+    source: "@Minahil42298354",
+    sourceUrl: "https://www.meigen.ai/prompt/2053687599319896509",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053687599319896509/0.jpg",
+    prompt: `Two illustrations showcasing a whimsical, folk-art style characterized by vibrant colors, intricate patterns, and a dreamlike sense of wonder. Both images feature a central female figure with large, expressive eyes and rosy cheeks, placed within a magical environment where scale and physics are reimagined.
+
+Image 1: soaring through a starlit night sky on the back of a giant teal whale over a sleepy village.
+Image 2: standing amidst a towering, colorful castle garden alongside a flying dragon.
+
+Consistent use of heavy stippling, dotted textures, and swirling line work creates a cohesive aesthetic that feels like a page from a modern fairy tale.`,
+    placeholders: []
+  },
+  {
+    id: "meigen-pixar",
+    title: "Pixar × 設計師玩具 3D 角色海報",
+    category: "插畫 & 3D",
+    model: "GPT Image",
+    source: "@Just_sharon7",
+    sourceUrl: "https://www.meigen.ai/prompt/2053422368803131660",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053422368803131660/0.jpg",
+    prompt: `Create a high-resolution vertical 3D character illustration in a stylized Pixar-meets-designer-toy aesthetic.
+
+Main character: [CONCEPT_NAME] — [REAL_PERSON_NAME] — depicted as a [HEIGHT_DESCRIPTION] Pixar-style 3D character. Maintain [REAL_PERSON_NAME]'s iconic facial features, hairstyle, signature aura, and expression — translated into clean, simplified designer-toy proportions with refined geometric stylization. The figure must remain instantly recognizable in full-body view, embodying [CONCEPT_NAME]'s core idea.
+
+Pose: stands alone in a subtly theatrical pose, one hand inside [pocket/etc], the other [holding object]. Posture relaxed yet emotionally distant. Head tilted slightly downward. Communicates [EMOTION_KEYWORDS].
+
+Background: bold, high-saturation [BG_COLOR] background inspired by [LOCATION_REFERENCE]. The wall is flat vivid [BG_COLOR] with a slightly darker reflective floor. No gradients. No realistic scenery. Infinite, minimal, graphic, philosophically theatrical — like a conceptual gallery poster.
+
+Lighting: one strong directional spotlight from the upper-left, creating a massive sharp-edged symbolic shadow stretching dramatically across both wall and floor.
+
+KEY CONCEPT — Shadow as spiritual projection:
+The shadow must NOT resemble the human silhouette. Instead it transforms into a monumental symbolic projection of [CONCEPT_NAME] itself. The shadow becomes: [SYMBOLIC_SHADOW_ELEMENTS — e.g. gigantic endless looping staircase spiraling upward into nothingness, floating boulders, fragmented suns, collapsing clocks without hands, infinite geometric corridors]. Surreal, philosophical, poetic, emotionally infinite, existentially unsettling. The symbolic projection dominates the composition and acts as the soul of the poster.
+
+Typography:
+Main title (top-left, refined elegant serif uppercase, gallery-style hierarchy):
+[CONCEPT_NAME]
+Subtitle below (minimalist):
+"[REAL_PERSON_NAME]"
+
+Rendering: Pixar-style 3D with designer-toy influence — soft sculpted forms, matte textures, simplified geometry, cinematic clarity, premium visual polish, subtle artistic film grain.
+
+Composition: strong conceptual poster composition with dramatic negative space. The quiet human figure anchors one point; the overwhelming symbolic shadow expands across most of the frame.
+
+Mood: existential, poetic, philosophical, surreal, melancholic, symbolic, intellectually powerful, visually unforgettable.`,
+    placeholders: ["CONCEPT_NAME", "REAL_PERSON_NAME", "HEIGHT_DESCRIPTION", "EMOTION_KEYWORDS", "BG_COLOR", "LOCATION_REFERENCE", "SYMBOLIC_SHADOW_ELEMENTS"]
+  },
+  {
+    id: "meigen-veluna",
+    title: "高級保養品商業 Banner",
+    category: "品牌 & 商品",
+    model: "GPT Image",
+    source: "@abs_uiux",
+    sourceUrl: "https://www.meigen.ai/prompt/2053171146917339323",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053171146917339323/0.jpg",
+    prompt: `Create a premium clean mockup banner for a [PRODUCT_TYPE] product advertisement.
+
+Brand name: [BRAND_NAME]
+Product name: [PRODUCT_NAME]
+Tagline: [TAGLINE]
+
+Design a polished high-end [PRODUCT_TYPE] campaign with a realistic [PRIMARY_PACKAGE] and matching [SECONDARY_PACKAGE] as the hero products. The packaging should look modern, minimal, luxurious, and professionally branded.
+
+Use a soft luxury color palette: warm cream, ivory white, soft beige, champagne gold, and deep brown typography. Place the product prominently on a clean reflective studio surface with smooth shadows and realistic highlights.
+
+Add tasteful ingredients around the product: [INGREDIENT_LIST]. Keep everything elegant, clean, uncluttered, and premium.
+
+Banner text layout:
+[BRAND_NAME]
+[PRODUCT_NAME]
+[TAGLINE]
+[FEATURE_LINE_1]
+[FEATURE_LINE_2]
+[FEATURE_LIST_PILLS]
+
+Style: ultra-realistic product mockup, luxury [PRODUCT_TYPE] advertising, clean brand design, elegant typography, soft natural lighting, premium beauty campaign, high-end commercial banner, 16:9 aspect ratio, crisp details, polished professional design.`,
+    placeholders: ["PRODUCT_TYPE", "BRAND_NAME", "PRODUCT_NAME", "TAGLINE", "PRIMARY_PACKAGE", "SECONDARY_PACKAGE", "INGREDIENT_LIST", "FEATURE_LINE_1", "FEATURE_LINE_2", "FEATURE_LIST_PILLS"]
+  },
+  {
+    id: "meigen-pmark",
+    title: "印度食品/家用品場景式廣告海報",
+    category: "品牌 & 商品",
+    model: "GPT Image",
+    source: "@auqibhabib",
+    sourceUrl: "https://www.meigen.ai/prompt/2053523222386397481",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053523222386397481/0.jpg",
+    prompt: `Ultra realistic premium [REGION] [PRODUCT_CATEGORY] advertisement poster for "[BRAND_NAME] [PRODUCT_FULL_NAME]", warm luxury [SCENE_LOCATION] interior during golden hour sunlight, beautiful young [MODEL_DESCRIPTION] [ACTION_VERB] on [APPLIANCE], soft wavy brown hair, elegant natural makeup, wearing [OUTFIT] with branded apron featuring [BRAND_NAME] logo, holding [TOOL] while [ACTIVITY] with visible steam, cozy modern [SCENE_LOCATION] background with wooden shelves, [SCENE_PROPS], cinematic commercial aesthetic, realistic lighting, shallow depth of field, DSLR quality, highly detailed skin and fabric textures.
+
+Foreground: multiple [BRAND_NAME] [PRODUCT_TYPE] bottles and one large container placed aesthetically near [APPLIANCE], [INGREDIENT_BOWL] in front, branding clearly visible, vibrant brand colors.
+
+Commercial advertising composition, clean luxury branding, ultra realistic product placement, warm golden tones, magazine quality, 4k, vertical poster ratio 4:5.`,
+    placeholders: ["REGION", "PRODUCT_CATEGORY", "BRAND_NAME", "PRODUCT_FULL_NAME", "SCENE_LOCATION", "MODEL_DESCRIPTION", "ACTION_VERB", "APPLIANCE", "OUTFIT", "TOOL", "ACTIVITY", "SCENE_PROPS", "PRODUCT_TYPE", "INGREDIENT_BOWL"]
+  },
+  {
+    id: "meigen-eco",
+    title: "生態建築百科風資訊圖表",
+    category: "建築 & 資訊圖",
+    model: "GPT Image",
+    source: "@j_smeaton99",
+    sourceUrl: "https://www.meigen.ai/prompt/2053673104237613458",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053673104237613458/0.jpg",
+    prompt: `Create a premium square reference-style architectural infographic centered around a beautiful aesthetic [STRUCTURE_TYPE], designed as a curated eco-architecture handbook page rather than a tourism advertisement.
+
+The composition should feel like a modern visual encyclopedia mixed with a luxury eco-retreat design manual and high-end editorial infographic system.
+
+Visual Direction: 1:1 square composition; soft earthy-toned background with subtle blueprint textures, hand-drawn architectural sketches, and natural paper textures; elegant muted palette (warm beige, natural wood brown, olive green, soft cream, bamboo tan, charcoal accents); refined editorial typography hierarchy; rounded modular information cards with clean spacing; gentle realistic shadows and premium UI-style dividers; minimal eco-architectural iconography; extremely detailed central [STRUCTURE_TYPE] render in dramatic three-quarter perspective during warm golden-hour lighting; thin precision annotation lines pointing toward construction systems and natural design features; clean, organized "knowledge-first" layout with high information density but breathable spacing.
+
+Main Subject: Ultra-detailed realistic render of an aesthetic [STRUCTURE_TYPE] at the center, featuring natural wood textures, bamboo structures, thatched roofing, warm ambient interior lighting, lush landscaping, handcrafted architecture, cozy tropical atmosphere, premium eco-luxury realism.
+
+Surround with scientific and architectural callouts and modular sections for: Overview, Architectural Specifications, Floor Plan Overview, Material Palette, Sustainability Features, Passive Design Benefits, Interior Lifestyle Concepts, Sectional Architectural View, Construction & Material Breakdown, Daylight & Ventilation Analysis, Site Plan Layout, Cost Breakdown, Advantages vs Considerations, Construction Timeline, Top 5 Incredible Facts, Ideal Locations & Use Cases.
+
+Style Keywords: "premium eco-architecture encyclopedia", "editorial nature retreat handbook", "high-end tropical hut infographic", "scientific sustainable architecture poster", "museum-quality eco-home reference page".
+
+Avoid: generic travel brochure aesthetics, fantasy fairytale huts, cluttered infographic layouts, overly futuristic architecture, dark moody environments.`,
+    placeholders: ["STRUCTURE_TYPE"]
+  },
+  {
+    id: "meigen-kfashion",
+    title: "Y2K 韓系時尚編輯海報",
+    category: "時尚 & 攝影",
+    model: "GPT Image",
+    source: "@doctorwasif",
+    sourceUrl: "https://www.meigen.ai/prompt/2053063766921593298",
+    previewImage: "https://images.meigen.ai/cdn-cgi/image/format=auto,quality=85/tweets/2053063766921593298/0.jpg",
+    prompt: `Ultra-stylized luxury fashion editorial poster featuring a confident young [ETHNICITY] [GENDER] centered in frame, glossy skin, soft dewy makeup, [HAIR_DESCRIPTION], wearing premium modern [FASHION_STYLE]. High-contrast studio flash lighting, cinematic composition, ultra-sharp fashion photography with detailed textures. Background packed with retro Y2K pop-art magazine aesthetics, layered typography, holographic chrome graphics, futuristic UI elements, stickers, sparkles, barcode strips, speech bubbles, and collage-style design. Japanese and Korean-inspired typography accents blended into the layout. Nostalgic 2000s teen magazine vibe fused with modern luxury campaign energy, bold colors, polished commercial advertising look, surreal trendy aesthetic, ultra-crisp 8K fashion poster quality.`,
+    placeholders: ["ETHNICITY", "GENDER", "HAIR_DESCRIPTION", "FASHION_STYLE"]
+  },
+  {
+    id: "bnext-social-1",
+    title: "社群貼文圖片（IG 療癒風）",
+    category: "社群圖文",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/7kn7-1778561308.png?w=600&output=webp",
+    prompt: `請幫我生成一張適合 Instagram 的社群圖片，主題為日常療癒生活，帶有奶油色調、文青風格與自然留白，畫面溫暖且適合搭配短文。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-social-2",
+    title: "YouTube 縮圖（資訊型）",
+    category: "社群圖文",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/ndb5-1778561306.png?w=600&output=webp",
+    prompt: `請幫我設計一張資訊型 YouTube 縮圖，主題是 AI 提升工作效率，使用醒目的大字標題、強烈對比色與科技感背景，讓畫面在手機上也容易閱讀。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-brand-1",
+    title: "高質感商品形象照",
+    category: "品牌 & 商品",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/rzn8-1778561307.png?w=600&output=webp",
+    prompt: `請幫我把這個產品製作成高質感商品攝影風格，使用柔和自然光、乾淨背景與簡約構圖，畫面像保養品牌官網，帶有高級生活感與細膩陰影。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-brand-2",
+    title: "EDM 行銷主圖 / 廣告 Banner",
+    category: "品牌 & 商品",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/5n6x-1778561693.png?w=600&output=webp",
+    prompt: `請幫我設計一張 EDM 主視覺，主題是會員限定優惠，畫面乾淨吸睛，適合品牌電子報使用。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-brand-3",
+    title: "品牌吉祥物絨毛玩偶商品照",
+    category: "品牌 & 商品",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/hprg-1778561307.png?w=600&output=webp",
+    prompt: `請幫我把角色設計成品牌吉祥物商品，做成絨毛玩偶展示圖，風格溫暖可愛，像文創品牌商品頁會出現的形象照。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-poster-1",
+    title: "活動海報（黑金科技感）",
+    category: "海報設計",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/k8cw-1778561694.png?w=600&output=webp",
+    prompt: `請幫我製作一張科技論壇活動海報，使用黑金色調與現代字體，畫面具有高級感與專業感。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-social-3",
+    title: "IG 輪播封面圖",
+    category: "社群圖文",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/rmmj-1778561691.png?w=600&output=webp",
+    prompt: `請幫我設計 Instagram 輪播封面圖，主題是「AI工具推薦」，使用現代感字體與簡潔版面。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-work-1",
+    title: "AI 工具教學資訊圖",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/m55k-1778564625.png?w=600&output=webp",
+    prompt: `請幫我把 AI 工具使用方法做成教學型資訊圖，搭配流程箭頭與簡單 icon，適合社群分享。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-brand-4",
+    title: "品牌 Logo 三風格概念圖",
+    category: "品牌 & 商品",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/eprb-1778564624.png?w=600&output=webp",
+    prompt: `請幫我生成三種不同風格的 Logo 概念圖，風格包含極簡、科技感與高級精品感。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-social-4",
+    title: "品牌社群模板組",
+    category: "社群圖文",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/t3c7-1778564624.png?w=600&output=webp",
+    prompt: `請幫我設計一套品牌社群模板，包含公告、活動、引用語錄與新品發布版型，風格統一且容易套用。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-work-2",
+    title: "商業簡報封面",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/d5nb-1778567468.png?w=600&output=webp",
+    prompt: `請幫我製作一張專業簡報封面，主題是新服務提案，使用簡潔排版、企業感配色與現代曲線設計，畫面像顧問公司或科技企業簡報。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-work-3",
+    title: "公司介紹視覺圖卡",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/f96r-1778567467.png?w=600&output=webp",
+    prompt: `請幫我製作一張公司介紹視覺，內容包含品牌理念、服務項目與核心特色，版面簡潔有專業感。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-work-4",
+    title: "產品方案比較表",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/hib6-1778567466.png?w=600&output=webp",
+    prompt: `請幫我把不同方案做成視覺化比較表，使用簡潔欄位設計、圖示與重點標示，讓資訊更容易閱讀與理解。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-work-5",
+    title: "Q&A 問答圖卡",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/cde6-1778567458.png?w=600&output=webp",
+    prompt: `請幫我設計一張 FAQ 問答卡片，把常見問題與回答整理成視覺化版面，讓內容更容易閱讀，適合品牌客服或網站使用。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-brand-5",
+    title: "App Icon 設計（含設計理念）",
+    category: "品牌 & 商品",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/dcua-1778567457.png?w=600&output=webp",
+    prompt: `請幫我設計一款現代感 App icon，以簡約幾何風格呈現，使用柔和綠色與白色配色，適合寵物養成類型 App，呈現多種功能，寫出設計理念，具有辨識度。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-work-6",
+    title: "操作流程步驟圖解",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/txda-1778567458.png?w=600&output=webp",
+    prompt: `請幫我把「帳號註冊流程」做成步驟式圖解，使用 icon、箭頭與簡單文字說明，風格清楚、現代、容易閱讀。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-work-7",
+    title: "數據視覺化資訊圖",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/7zvx-1778567912.png?w=600&output=webp",
+    prompt: `請幫我把市場調查數據做成視覺化資訊圖，版面清楚、數據重點明確，適合簡報使用。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-work-8",
+    title: "工作 Checklist 圖卡",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/je9i-1778567458.png?w=600&output=webp",
+    prompt: `請幫我設計一張工作用 Checklist 圖卡，主題是活動籌備確認事項，使用乾淨排版與勾選框設計，看起來專業又實用。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-social-5",
+    title: "部落格文章首圖",
+    category: "社群圖文",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/g7k5-1778567914.png?w=600&output=webp",
+    prompt: `請幫我設計一張部落格文章首圖，主題圍繞生活風格與工作效率，版面乾淨、有閱讀感，搭配柔和配色與自然元素，風格像 Medium 或品牌內容網站首頁。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-social-6",
+    title: "IG 語錄分享卡片",
+    category: "社群圖文",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/sby9-1778567915.png?w=600&output=webp",
+    prompt: `請幫我製作一張適合 Instagram 分享的語錄卡片，風格簡約文青，搭配柔和背景與重點字體設計，適合創業或生活類內容。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-poster-2",
+    title: "文青風咖啡館菜單",
+    category: "海報設計",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/3h1g-1778568429.png?w=600&output=webp",
+    prompt: `請幫我製作一張文青風咖啡館菜單，版面包含飲品、甜點、價格與簡單插畫。使用奶油色背景、手寫字體、咖啡杯與植物元素，整體乾淨溫暖，像小型獨立咖啡店的紙本菜單。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-illust-1",
+    title: "春季主題月曆設計",
+    category: "插畫 & 3D",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/d9v9-1778568676.png?w=600&output=webp",
+    prompt: `請幫我生成一張春季主題月曆設計，畫面包含月份日期排版、櫻花枝、柔和天空與可愛小插圖。整體使用粉色、米白與淺綠色，版面清楚好讀，適合做成手機桌布、桌曆或社群圖片。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-illust-2",
+    title: "四格漫畫（日系上班族）",
+    category: "插畫 & 3D",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/gaq4-1778568424.png?w=600&output=webp",
+    prompt: `請幫我把「每天開會的崩潰日常」做成四格漫畫，用幽默方式呈現上班族心聲，角色可愛、節奏輕鬆、有日系漫畫感。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-illust-3",
+    title: "旅行日記插畫頁",
+    category: "手繪風格",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/1mrv-1778568428.png?w=600&output=webp",
+    prompt: `請幫我生成一頁旅行日記風格插畫，包含地圖、車票、手寫字與沿途風景，像旅人隨身筆記本。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-poster-3",
+    title: "獨立樂團黑膠唱片封面",
+    category: "海報設計",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/ae29-1778568426.png?w=600&output=webp",
+    prompt: `請幫我設計一張獨立樂團風格黑膠唱片封面，畫面帶有情緒感、低飽和色調與文藝攝影氛圍，像 indie music 專輯。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-illust-4",
+    title: "少年冒險漫畫封面",
+    category: "插畫 & 3D",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/mptf-1778568676.png?w=600&output=webp",
+    prompt: `請幫我製作一張冒險漫畫封面，主角站在壯闊山脈與天空前方，畫面中有標題區、集數編號與強烈動態構圖。風格熱血、有故事張力，像少年冒險漫畫第一集封面。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-illust-5",
+    title: "LINE 貼圖角色組（4 表情）",
+    category: "插畫 & 3D",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/1z5x-1778568672.png?w=600&output=webp",
+    prompt: `請幫我設計一組 Q 版角色貼圖，角色表情誇張可愛，包含開心、無奈、生氣與驚訝四種情緒，風格簡單乾淨，適合聊天使用。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-poster-4",
+    title: "奇幻小說書封設計",
+    category: "海報設計",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/xyig-1778569138.png?w=600&output=webp",
+    prompt: `請幫我生成一本奇幻小說書封，畫面有巨大古城、夜空與神秘角色，整體像奇幻文學封面設計。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-illust-6",
+    title: "草莓鬆餅美食插圖",
+    category: "插畫 & 3D",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/ijke-1778568823.png?w=600&output=webp",
+    prompt: `請幫我畫一張草莓鬆餅插畫，使用溫暖餐廳風格與細膩食物質感，擺盤乾淨精緻，看起來像餐廳菜單上的主視覺。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-poster-5",
+    title: "90 年代日系雜誌封面",
+    category: "海報設計",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/u18w-1778569053.png?w=600&output=webp",
+    prompt: `請幫我設計一張 90 年代日本生活風格雜誌封面，整體像日本 old school lifestyle magazine。使用大面積雜誌標題、復古排版、多欄文字設計與大量日文標題，畫面帶有懷舊感與生活氣息。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-1",
+    title: "衝破手機螢幕（電影感 3D）",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/4pjd-1777873964.png?w=600&output=webp",
+    note: "需附上人像照；提示詞中【填入自己的社群帳號】請替換",
+    prompt: `創建一個高度擬真、具電影感的場景：我正從自己的社群貼文中走進現實世界。
+將我置於一支智慧型手機螢幕中，畫面顯示一個照片分享型社群貼文介面，並讓我從螢幕中突破出來。人物姿勢需重新設計為動態行走中，一腳向前跨出，並使用強烈3D透視前縮效果（foreshortening），讓腳朝向觀者延伸，呈現強烈臨場感與空間深度。整體動作自然、具有真實物理感，像是正從畫面中走出來。
+社群介面需為原創設計（不可模仿任何品牌），風格乾淨簡約，包含：上方標題列（含限時動態圓圈與通知圖示）、個人頭像與使用者名稱[SOCIAL_HANDLE]（粗體無襯線字）、中央圓角貼文圖片區塊、下方互動圖示（按讚、留言、分享、收藏）、簡短貼文說明文字，以及底部導覽列。畫面中[SOCIAL_HANDLE]需清楚出現在標題與使用者名稱位置。
+在人物突破螢幕的接觸點加入特效：玻璃破裂碎片（具光線折射）、向外噴散的數位像素碎片、前景手腳帶有動態模糊拖影，以及螢幕邊界帶有微微發光的數位殘影效果。
+整體畫面需達電影級質感：超擬真光影（輪廓光與柔和補光）、自然肌膚紋理與真實服裝細節、淺景深（人物清晰、手機略微虛化）、精準陰影與反射，具有前景、中景、背景的層次分離。
+構圖為4:5直式（1080×1350），畫面完整不裁切，介面與人物需完整呈現，具強烈前後景深與平衡的編輯感構圖。
+請使用原創介面設計，不可複製任何具版權的 UI。`,
+    placeholders: ["SOCIAL_HANDLE"]
+  },
+  {
+    id: "bnext-photo-2",
+    title: "個人形象潑墨插畫",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/ptzh-1777872072.png?w=600&output=webp",
+    note: "需附上一張人像照",
+    prompt: `以這張照片為基礎，將人物轉換為日系手繪插畫風，保留原本的臉部五官、髮型、表情與姿勢。
+半身構圖，人物動態自然，情緒表現自然柔和，角色特徵清晰且接近真人。
+整體風格為手繪塗鴉＋水彩速寫，使用隨性線條與鬆散墨線，帶有漫畫草稿質感與手繪筆觸
+色彩以粉彩與淡墨色混合，加入水彩暈染與輕微潑墨效果，整體色調柔和。
+背景為白色簡約風，加入符號化塗鴉元素點綴，如小愛心、星星、簡單圖形與筆刷痕跡，營造手帳與插畫氛圍。
+畫面氛圍清新、輕盈、帶點夢幻感，高細節、高品質，插畫與素描融合風格。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-3",
+    title: "角色設定海報（Character Profile）",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/iten-1777875994.png?w=600&output=webp",
+    note: "需附上人像照",
+    prompt: `請根據我提供的照片，將人物轉換為日系寫實插畫風角色設定海報。
+保留人物原本的臉部特徵、髮型與整體氣質，轉為細緻的數位手繪插畫風格，線條乾淨但帶有手繪筆觸，質感介於寫實與插畫之間。
+整體版面設計為角色設定卡（character profile poster），畫面以人物半身或胸像為主視覺，搭配多個小場景插畫（如日常、工作或不同狀態的自己），呈現多面向形象。
+版面需包含結構化資訊區塊，例如：
+角色定位、性格特質、核心價值、能力優勢、生活風格等，以視覺化排版呈現（標題＋簡短文字），風格像設計感資訊圖表。
+畫面中可加入：
+手寫字、箭頭標記、筆記感標註、墨點潑墨、線條草圖元素，增加設計感與個人風格。
+整體風格為：
+日系寫實插畫＋角色設定卡＋資訊設計排版，色調統一，畫面乾淨但具有層次。
+背景以淺色或紙張質感為主，帶有設計稿或手帳感。
+整體氛圍專業、有個性、帶有故事感與個人品牌識別度，高細節、高品質。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-4",
+    title: "個人穿搭風格解析海報",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/v9s6-1777877777.png?w=600&output=webp",
+    note: "需附上全身或半身照，AI 會根據臉型、膚色、身形分析",
+    prompt: `請根據我提供的人物照片，生成一張個人穿搭風格解析海報。
+分析必須明確根據此人物的臉型、膚色、身形比例與整體氣質進行，不可使用通用模板或固定風格分類。
+整體風格需呈現此人物的獨特性，風格命名需具個人特色，避免使用常見分類（如韓系、日系等泛用標籤）。
+每一項穿搭建議需說明與人物特徵的關聯，例如比例修飾、氣質強化或視覺平衡，而非一般化描述。
+穿搭內容需拆解為：
+上半身、下半身、整體比例、配色與配件，並提供具體且有差異的建議。
+版面仍為簡約資訊設計風，但內容需具有明顯個人辨識度。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-5",
+    title: "復古電子寵物像素風",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/d5jm-1777983646.png?w=600&output=webp",
+    note: "需附上人像照或場景照",
+    prompt: `請把原始圖片轉化為具有 90 年代虛擬寵物機風格的畫面，呈現像早期電子寵物液晶顯示器中的內容。
+在保留人物位置與場景互動關係的情況下，將整體視覺簡化為 8-bit 像素形式，角色與背景風格偏向柔軟、輕鬆，帶點慵懶與療癒感，表情可愛中帶一點呆萌氣息。
+畫面採用類似早期 LCD 的顯示質感，使用有限色彩（最多 4 色），並以柔和的粉彩配色為主，例如奶油白、淡粉紅、薄荷綠與淡紫色，搭配明顯的像素顆粒感與低解析度效果。
+同時加入復古數位介面元素，例如：電量指示、狀態欄、小圖示（如愛心、選單符號）、等級或數值資訊、日期與時間顯示、簡短的像素字樣。
+整體畫面需呈現為「液晶螢幕內容本身」，填滿整個畫面範圍，避免出現任何裝置外觀元素，例如機殼、按鍵或邊框。
+最終風格需同時帶有懷舊感與輕鬆可愛的數位寵物氛圍。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-6",
+    title: "Q 版 3D 小人風（IG 感性合成）",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/4fbq-1777985929.png?w=600&output=webp",
+    note: "需附上一張人像照，AI 會在你周圍生成多個迷你 3D 分身",
+    prompt: `基於這張圖片，以照片中的人物為中心，請生成一張「迷你角色在周圍生動活動的感性合成圖片」。
+
+[核心概念] 「日常中的小分身」可愛又帶點玩心，同時具有感性的呈現。Instagram 風格＋具有故事感的圖片。
+
+[1. 人物處理 - 重要] 原始人物必須去背使用（臉部／姿勢絕對不可更動）；人物放在畫面中心或稍微偏前；加入自然陰影；人物外圍加上細白邊（貼紙感，不要太厚）。
+
+[2. 迷你角色生成 - 核心] 生成多個以人物為基礎的「迷你角色」。風格：3D 可愛 SD 角色（可帶 Roblox／像素風）。臉部、髮型、服裝特徵需完整保留。迷你角色特徵：尺寸小（手掌大小感）、數量多個（約 3～7 個）。
+
+[3. 迷你角色動作 - 重要] 每個角色都必須在動作中，例如：跳躍玩耍、揮手、模仿人物、坐在物品上、爬到人物肩膀／頭上、彼此對話。👉 禁止靜止角色。
+
+[4. 佈局呈現] 自然配置在書本上／包包上／肩膀／地面／手上等位置；部分在人物前方，部分在後方 → 形成空間感；加入陰影讓其看起來像真實存在。
+
+[5. 標題生成 - 核心功能] 分析圖片氛圍，自動生成簡短且感性的「韓文標題」。標題規則：2～5 個單詞；不做說明，只傳達感覺；避免過於流行語；語氣自然且具有情感。範例感覺：今天的瞬間、就是美好的一天、平凡的一天、屬於我的節奏、沒什麼特別的幸福。👉 必須依照圖片氛圍重新生成。
+
+[6. 標題配置] 部分文字在人物後方，部分在前方 → 形成有層次的立體結構；不要太大（保持感性）；柔和字體感。
+
+[7. 塗鴉＆貼紙元素] 加入手寫感塗鴉（細筆風），例如：箭頭 →、圓圈標註、星星 ✨、愛心 ♡、虛線。👉 約 3～6 個（不要過多）。
+
+[8. 輔助文字（選擇）] 小型貼紙文字，例如：mini me、today、mood、lol、daily。
+
+[9. 整體風格] 明亮且溫暖的色調；維持自然色彩；避免過度 CG 感；呈現「真實照片＋可愛合成」的感覺。
+
+[10. 禁止事項] 禁止更動臉部；避免角色看起來像分離存在；禁止遊戲 UI 風格；避免過度效果；避免卡片新聞風格。
+
+[最終目標] 讓人想收藏的 Instagram 圖片，帶有「我也想試試看」的感覺，可愛又有巧思的呈現。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-7",
+    title: "電影海報風",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-04/93y5-1777010863.png?w=600&output=webp",
+    note: "需附上照片",
+    prompt: `請將這張圖片轉化為電影海報風格。
+讓畫面具有強烈敘事感、情緒張力與主視覺焦點，看起來像一部電影的正式海報。
+請強化光影對比、角色或物件的存在感，以及整體構圖的戲劇性。
+可以加入片名、大字標題、副標語、上映宣傳語或演員名單風格的小字排版。
+整體風格請有電影感、故事感與視覺衝擊力，像文藝片、愛情片、懸疑片或青春片海報。
+請依照原圖氛圍決定是溫柔、浪漫、神秘或帶點史詩感。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-8",
+    title: "日系白邊手繪註解風",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-04/b53y-1776940840.png?w=600&output=webp",
+    note: "需附上一張照片，AI 會自動辨識物件並加上日文手寫註解",
+    prompt: `請觀察照片中出現的元素，並為每個元素加入有意義的手繪註解。
+
+【畫面中的物件】
+※請在此填入照片中的項目（例如：冰紅茶、甜甜圈、世界上最可愛的〇〇醬）※
+
+【描寫規則】
+・使用像白色筆畫出的細手繪線條
+・線條要有一筆畫風格，隨性、略帶不均勻感
+・沿著物件外輪廓加上描邊
+・用箭頭或虛線引導視線
+
+【文字規則】
+・使用日文手寫字風格（平假名約 7 成，簡單漢字約 3 成）
+・文字要短，像自言自語一樣的註解
+・語氣偏向「日記感、短句、情緒感」
+
+【評論生成規則】
+・飲料 → 描述味道、溫度、心情（例如：清爽、溫柔的甜味）
+・食物 → 描述口感、美味程度（例如：濕潤、超好吃）
+・空間 → 描述氛圍（例如：很放鬆、很棒的時光）
+・整體 → 用一句話總結（例如：幸福到不行～）
+
+【裝飾】
+・可低調加入蒸氣、閃亮、小愛心、小顏文字等元素
+・不要太多，保留適度留白
+
+【成品風格】
+・像 Instagram 限時動態風格，也像雜誌上的隨手筆記風
+・整體要有時髦感，同時帶點輕鬆不費力的氛圍`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-9",
+    title: "雜誌編輯草稿風",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-04/tyuq-1776940839.png?w=600&output=webp",
+    note: "需附上一張照片",
+    prompt: `請將這張圖片轉化為雜誌編輯草稿風的視覺版面。
+畫面保留主體物件，同時加入像雜誌編輯過程中的元素，例如細框線、裁切線、手寫註記、小標題、頁面編號、簡短旁註與排版參考記號。
+整體版面請有明確留白，呈現有設計感但不過度完成的狀態，像是一本風格雜誌的內頁草稿。
+色調請維持乾淨、時髦、自然，避免過於花俏。
+文字風格簡潔，像編輯快速記下的概念備忘。
+整體氛圍要有質感、輕鬆、帶一點未完成的草率感。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-10",
+    title: "讀書筆記風",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-04/ece9-1777011262.png?w=600&output=webp",
+    note: "可附上照片或主題內容描述",
+    prompt: `請將這張圖片或主題內容轉化為讀書筆記風。
+整體版面請像一本有質感的學習筆記頁，包含手寫感標題、重點底線、簡單框線、小箭頭、便利貼感區塊與清楚的段落分類。
+請讓內容看起來像真的有人閱讀後整理出的重點，而不是過度制式的簡報。
+文字排版請清楚、自然、有層次，適度保留留白。
+可以加入少量可愛小圖示、符號、標記或重點圈選，增加閱讀感與手作感。
+整體風格要有知識感、溫度感與收藏價值，像社群上會被存起來的讀書筆記頁。`,
+    placeholders: []
+  },
+];
+
+const CATEGORIES = ["全部", "手繪風格", "照片轉換", "海報設計", "社群圖文", "簡報 & 工作", "品牌 & 商品", "插畫 & 3D", "建築 & 資訊圖", "時尚 & 攝影"];
+const CAT_CLASS_MAP = {
+  "手繪風格": "cat-1",
+  "照片轉換": "cat-1",
+  "海報設計": "cat-2",
+  "社群圖文": "cat-2",
+  "簡報 & 工作": "cat-4",
+  "品牌 & 商品": "cat-4",
+  "插畫 & 3D": "cat-3",
+  "建築 & 資訊圖": "cat-3",
+  "時尚 & 攝影": "cat-4"
+};
+let activeFilter = "全部";
+let searchTerm = "";
+
+const filtersEl = document.getElementById("filters");
+const gridEl = document.getElementById("grid");
+const emptyEl = document.getElementById("empty");
+const statsEl = document.getElementById("stats");
+const searchEl = document.getElementById("search");
+
+function renderFilters() {
+  filtersEl.innerHTML = "";
+  CATEGORIES.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "filter-btn" + (cat === activeFilter ? " active" : "");
+    btn.textContent = cat;
+    btn.onclick = () => { activeFilter = cat; render(); };
+    filtersEl.appendChild(btn);
+  });
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function buildCard(p) {
+  const card = document.createElement("div");
+  card.className = "card";
+  const hasPlaceholders = p.placeholders && p.placeholders.length > 0;
+  const catClass = CAT_CLASS_MAP[p.category] || "cat-1";
+  const previewHtml = p.previewImage ? `
+    <div class="preview-wrap" data-full="${escapeHtml(p.previewImage)}" data-title="${escapeHtml(p.title)}">
+      <div class="preview-skeleton">載入中…</div>
+      <img src="${escapeHtml(p.previewImage)}" alt="${escapeHtml(p.title)} 示意圖" loading="lazy" referrerpolicy="no-referrer">
+    </div>
+  ` : "";
+  card.innerHTML = `
+    ${previewHtml}
+    <div class="card-head">
+      <h3 class="card-title">${escapeHtml(p.title)}</h3>
+      <span class="tag ${catClass}">${escapeHtml(p.category)}</span>
+    </div>
+    <div class="card-meta">
+      <span class="model">${escapeHtml(p.model)}</span>
+      <span>·</span>
+      <a href="${p.sourceUrl}" target="_blank" rel="noopener">${escapeHtml(p.source)}</a>
+      ${p.note ? `<span style="width:100%;margin-top:4px;font-style:italic;">📌 ${escapeHtml(p.note)}</span>` : ""}
+    </div>
+    ${hasPlaceholders ? buildTemplateForm(p) : ""}
+    <pre class="prompt-box" data-original="${escapeHtml(p.prompt)}" id="prompt-${p.id}">${escapeHtml(p.prompt)}</pre>
+    <div class="card-actions">
+      <button class="btn primary copy-btn" data-target="prompt-${p.id}">📋 複製提示詞</button>
+      <button class="btn reset-btn" data-target="prompt-${p.id}" style="${hasPlaceholders ? '' : 'display:none;'}">↻ 重設</button>
+    </div>
+  `;
+  return card;
+}
+
+function buildTemplateForm(p) {
+  const fields = p.placeholders.map(ph => `
+    <label>${escapeHtml(ph)}
+      <input type="text" data-placeholder="${escapeHtml(ph)}" data-prompt-id="${p.id}" placeholder="填入 ${escapeHtml(ph)}">
+    </label>
+  `).join("");
+  return `
+    <details class="tpl">
+      <summary>⚙ 模板填空（${p.placeholders.length} 個變數）</summary>
+      <div class="tpl-form" data-prompt-id="${p.id}">${fields}</div>
+    </details>
+  `;
+}
+
+function render() {
+  renderFilters();
+  gridEl.innerHTML = "";
+  const term = searchTerm.toLowerCase();
+  const filtered = PROMPTS.filter(p => {
+    const catMatch = activeFilter === "全部" || p.category === activeFilter;
+    const searchMatch = !term ||
+      p.title.toLowerCase().includes(term) ||
+      p.prompt.toLowerCase().includes(term) ||
+      p.category.toLowerCase().includes(term) ||
+      p.source.toLowerCase().includes(term);
+    return catMatch && searchMatch;
+  });
+  if (filtered.length === 0) {
+    emptyEl.style.display = "block";
+    statsEl.textContent = `目前顯示 0 / ${PROMPTS.length} 組提示詞`;
+    return;
+  }
+  emptyEl.style.display = "none";
+  filtered.forEach(p => gridEl.appendChild(buildCard(p)));
+  statsEl.textContent = `目前顯示 ${filtered.length} / ${PROMPTS.length} 組提示詞${activeFilter !== '全部' ? `｜分類：${activeFilter}` : ''}${term ? `｜搜尋：「${searchTerm}」` : ''}`;
+  attachHandlers();
+}
+
+function attachHandlers() {
+  // Image load / error handling + lightbox click
+  document.querySelectorAll(".preview-wrap").forEach(wrap => {
+    const img = wrap.querySelector("img");
+    const skel = wrap.querySelector(".preview-skeleton");
+    if (img.complete && img.naturalWidth > 0) {
+      img.classList.add("loaded");
+      if (skel) skel.remove();
+    } else {
+      img.addEventListener("load", () => {
+        img.classList.add("loaded");
+        if (skel) skel.remove();
+      });
+      img.addEventListener("error", () => {
+        if (skel) skel.remove();
+        img.style.display = "none";
+        const err = document.createElement("div");
+        err.className = "preview-error";
+        err.textContent = "（示意圖無法載入，請點來源連結）";
+        wrap.appendChild(err);
+      });
+    }
+    wrap.addEventListener("click", () => {
+      const full = wrap.dataset.full;
+      if (full) openLightbox(full);
+    });
+  });
+  document.querySelectorAll(".copy-btn").forEach(btn => {
+    btn.onclick = () => {
+      const targetId = btn.dataset.target;
+      const promptEl = document.getElementById(targetId);
+      const text = promptEl.textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = "✓ 已複製!";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove("copied");
+        }, 1500);
+      });
+    };
+  });
+  document.querySelectorAll(".reset-btn").forEach(btn => {
+    btn.onclick = () => {
+      const targetId = btn.dataset.target;
+      const promptEl = document.getElementById(targetId);
+      promptEl.textContent = promptEl.dataset.original;
+      const form = btn.closest(".card").querySelector(".tpl-form");
+      if (form) form.querySelectorAll("input").forEach(i => i.value = "");
+    };
+  });
+  document.querySelectorAll(".tpl-form input").forEach(input => {
+    input.oninput = () => {
+      const promptId = input.dataset.promptId;
+      const card = input.closest(".card");
+      const promptEl = card.querySelector(".prompt-box");
+      let text = promptEl.dataset.original;
+      card.querySelectorAll("input[data-placeholder]").forEach(i => {
+        const ph = i.dataset.placeholder;
+        const val = i.value.trim();
+        if (val) {
+          const re = new RegExp("\\[" + ph.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\]", "g");
+          text = text.replace(re, val);
+        }
+      });
+      promptEl.textContent = text;
+    };
+  });
+}
+
+searchEl.addEventListener("input", e => { searchTerm = e.target.value; render(); });
+
+// Lightbox logic
+const lightbox = document.createElement("div");
+lightbox.className = "lightbox";
+lightbox.innerHTML = `<button class="lightbox-close" aria-label="關閉">✕</button><img alt="放大示意圖">`;
+document.body.appendChild(lightbox);
+const lightboxImg = lightbox.querySelector("img");
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeLightbox() {
+  lightbox.classList.remove("open");
+  document.body.style.overflow = "";
+  lightboxImg.src = "";
+}
+lightbox.addEventListener("click", e => {
+  if (e.target === lightbox || e.target.classList.contains("lightbox-close")) closeLightbox();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
+});
+
+render();
+</script>
+</body>
+</html>
