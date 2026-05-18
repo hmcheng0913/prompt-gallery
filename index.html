@@ -248,14 +248,14 @@
 <header>
   <div class="wrap">
     <h1>AI 圖像提示詞互動圖庫</h1>
-    <p class="subtitle">GPT Image 2 · Nano Banana · Midjourney · Gemini — 56 組精選提示詞，一鍵複製、即填即用、點圖放大</p>
+    <p class="subtitle">GPT Image 2 · Nano Banana · Midjourney · Gemini — 67 組精選提示詞，一鍵複製、即填即用、點圖放大</p>
     <div class="meta">
       <span>來源：</span>
       <a href="https://applealmond.com/posts/312152" target="_blank">蘋果仁 (3)</a>
       <span>·</span>
       <a href="https://www.meigen.ai/" target="_blank">MeiGen.ai (12)</a>
       <span>·</span>
-      <a href="https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete" target="_blank">數位時代 / 蘇柔瑋 (40)</a>
+      <a href="https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete" target="_blank">數位時代 / 蘇柔瑋 (51)</a>
       <span>·</span>
       <span>個人收藏 (1)</span>
     </div>
@@ -1198,6 +1198,138 @@ Avoid: generic travel brochure aesthetics, fantasy fairytale huts, cluttered inf
     note: "需附上本人照片作為參考；[COFFEE_BRAND] 可替換為任何咖啡品牌（如：星巴克、Blue Bottle、Louisa、% Arabica）；[BAG_BRAND] 可替換為任何精品包款（如：柏金包Birkin 35、Chanel Classic Flap、LV Neverfull、Goyard Saint Louis）",
     prompt: `根據參考圖中的人物，這是一幅具有電影寫真風格的都會街拍人像攝影作品，8K高清畫質，以純慾朦朧濾鏡營造出曖昧的氛圍。圖中是一位冷白皮美女，化著自然清透甜美的妝容，留著棕色長髮，髮絲被風吹起，盡顯清冷與純慾之感。她白嫩嫩的皮膚如瓊玉般潤滑，戴著耳環，身旁放著一個卡其色的[BAG_BRAND]。她坐在咖啡館裡，穿著同款一模一樣的衣服，一款黑色太陽眼鏡掛在衣領處，姿態慵懶，雙手拿著[COFFEE_BRAND]咖啡，眼神不經意地看向一旁，充滿大明星既視感，彷彿是不經意間被抓拍下來的瞬間`,
     placeholders: ["COFFEE_BRAND", "BAG_BRAND"]
+  },
+  {
+    id: "bnext-poster-6",
+    title: "旅遊雜誌拼貼風海報（多日行程）",
+    category: "海報設計",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/cefz-1778819417.png?w=600&output=webp",
+    note: "[CITY] 填入城市、[DAYS_NIGHTS] 填入天數（例如「4 天 3 夜」）；會輸出規劃表＋雜誌風文章＋海報三段",
+    prompt: `先完整規劃「[CITY] [DAYS_NIGHTS]自由行行程」，再將內容改寫成具畫面感的旅遊雜誌風格攻略文章，最後生成一張直式旅遊雜誌拼貼風海報。行程需考量人潮分布、交通順序、區域集中與旅行節奏；融合經典景點、海景療癒、韓系咖啡廳、美食、購物與夜景；先輸出完整日程規劃表；再改寫成具故事感與畫面感的旅遊雜誌文章；最後生成適合 AI 製圖的旅遊海報提示詞`,
+    placeholders: ["CITY", "DAYS_NIGHTS"]
+  },
+  {
+    id: "bnext-illust-7",
+    title: "編織毛線小人城市氣象圖",
+    category: "插畫 & 3D",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/i95r-1778819418.png?w=600&output=webp",
+    note: "[CITY] 填入想要的城市",
+    prompt: `中央是一個編織風格的氣象資訊牌，顯示 [CITY]、日期、天氣狀況、溫度範圍與降雨機率。周圍是以毛線與鉤針材質打造的立體城市景觀。整個畫面像是微縮模型與編織玩偶結合的城市世界。畫面中有可愛編織小人正在旅行、拍照、散步、搭車、逛街或品嚐美食。街道、樹木、房屋、車輛、招牌、山丘、河流或海港都以毛線編織材質呈現。`,
+    placeholders: ["CITY"]
+  },
+  {
+    id: "bnext-work-9",
+    title: "24 小時時間分配圖",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/wkxy-1778829477.png?w=600&output=webp",
+    prompt: `請幫我把一天 24 小時做成時間分配圖，區分工作、學習、運動、娛樂與休息時間。使用時間軸與色塊設計，像 productivity app 的介面。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-work-10",
+    title: "一週習慣追蹤表（Habit Tracker）",
+    category: "簡報 & 工作",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/w25j-1778829263.png?w=600&output=webp",
+    prompt: `請幫我設計一張一週 habit tracker，包含運動、閱讀、喝水、冥想、早睡與學習等欄位。版面簡潔療癒，搭配小圖示與打勾區域，像文具品牌會推出的生活規劃模板。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-social-7",
+    title: "電影觀後感筆記卡片",
+    category: "社群圖文",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/8waj-1778829687.png?w=600&output=webp",
+    prompt: `請幫我製作一張電影觀後感卡片，內容包含電影評分、角色分析、經典台詞與心得。畫面帶有電影感與文青風格，像影評帳號分享圖卡。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-fashion-1",
+    title: "男性日系時尚雜誌封面",
+    category: "時尚 & 攝影",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/xt9f-1778827365.png?w=600&output=webp",
+    prompt: `日系時尚雜誌封面風格，一位有氣質的模特站在東京街頭，穿著簡約高級感穿搭，日系都會時尚風格，乾淨俐落髮型，自然神情，帶有 Men's Non-no、POPEYE、UOMO、FINEBOYS 類型的日系雜誌氛圍。
+柔和自然光，低飽和色調，生活感街拍攝影，現代東京都市背景，真實雜誌封面排版，包含日文標題、封面文案與條碼，整體風格清新、時髦、成熟、有質感，超寫實攝影，高解析度。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-social-8",
+    title: "寵物衝出 IG 拍照框",
+    category: "社群圖文",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/f61x-1778824798.png?w=600&output=webp",
+    note: "[PET] 填入寵物類型，例如「柴犬」「橘貓」「米克斯」",
+    prompt: `超可愛 [PET] 從巨大 Instagram 拍照框中走出來，前腳超近距離伸向鏡頭，帶有強烈透視感與廣角效果，露出開心微笑與吐舌表情。
+背景是陽光燦爛的夢幻花園小徑，四周盛開大量粉色、橘色、黃色花朵，空中飛舞著蝴蝶，藍天白雲清晰明亮。
+畫面中央有大型白色 Instagram UI 相框，上面顯示帳號名稱、愛心、留言、收藏圖示與高按讚數。整體風格像高質感社群媒體廣告與 petstagram 視覺設計，色彩鮮豔，高彩度，超寫實毛髮細節，電影感光影，淺景深，夢幻春日氛圍，超精緻 3D 感，照片級 realism，8k。`,
+    placeholders: ["PET"]
+  },
+  {
+    id: "bnext-illust-8",
+    title: "黏土 Q 版角色踏出手機螢幕",
+    category: "插畫 & 3D",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/imst-1778825281.png?w=600&output=webp",
+    prompt: `Q版角色公仔從巨大手機螢幕中走出來，形成「踏出手機畫面」的立體效果，角色穿著符合主題風格的服裝，露出活潑可愛笑容，動作像正在向前奔跑或走向鏡頭。
+背景是與角色主題相關的迷你場景與日系街景，整體像超精緻黏土模型與收藏級公仔展示台。畫面周圍漂浮大量可愛立體小物件與貼圖元素，包括主題相關道具、愛心通知、like 圖示、對話框、旗幟、小圖標、社群媒體 icon。手機螢幕內能看到完整主題世界與藍天白雲背景。
+整體風格為日系 kawaii toy aesthetic、3D clay art、miniature diorama、collectible figurine style、超高細節、暖色陽光、柔和景深、療癒系色彩、高彩度、精緻材質紋理、社群媒體風格展示構圖、Instagram toy photography aesthetic、超可愛 Q 版公仔風格、8k、photorealistic clay render。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-11",
+    title: "大尺寸與迷你版自己（微縮夢境）",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/knss-1778821089.png?w=600&output=webp",
+    note: "需附上一張人像照；可自行選擇迷你版人物的動作",
+    prompt: `請使用我提供的照片作為角色參考。不要重新設計角色，也不要改變人物風格。大尺寸人物與迷你人物必須是同一個人，迷你角色是縮小版的自己。畫面是一個溫暖療癒的微縮夢境場景。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-12",
+    title: "日本極道千金/少爺電影風",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/gcvu-1778828222.png?w=600&output=webp",
+    note: "需附上一張人像照",
+    prompt: `根據我提供的照片，請保留照片中人物原本的五官特徵、臉型輪廓、神情與辨識度。日本黑道電影風格，一位年輕的日本極道千金站在打開的黑色高級轎車車門前，保鑣替她拉開車門並撐著黑傘，黑色豪華轎車停靠在雨後潮濕的東京歌舞伎町街頭，車燈照亮積水地面與霓虹倒影。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-photo-13",
+    title: "Y2K 電梯鏡子四格大頭貼",
+    category: "照片轉換",
+    model: "GPT Image 2",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    previewImage: "https://image-cdn.learnin.tw/bnextmedia/image/album/2026-05/82gk-1778827662.png?w=600&output=webp",
+    note: "需附上一張人像照",
+    prompt: `根據我提供的圖片，製作一張 2x2 四分格魚眼鏡頭拼貼大頭貼，畫面是在有鏡子的電梯裡自拍。整體構圖像早期日系拍貼機與 Y2K 網路自拍相簿風格，每格都是超近距離大頭貼視角。`,
+    placeholders: []
   }
 ];
 
