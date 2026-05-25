@@ -242,13 +242,116 @@
     border-radius: 6px;
     font-size: 13px; color: #c8d1e4;
   }
+
+  /* ── Tab Navigation ── */
+  .tab-nav {
+    background: var(--panel);
+    border-bottom: 2px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .tab-nav .wrap {
+    display: flex; gap: 4px; padding: 0 24px;
+  }
+  .tab-btn {
+    padding: 14px 22px; border: none; background: transparent;
+    color: var(--muted); cursor: pointer; font-size: 14px; font-weight: 600;
+    border-bottom: 3px solid transparent; margin-bottom: -2px;
+    transition: color .2s, border-color .2s;
+  }
+  .tab-btn:hover { color: var(--accent); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* ── Page visibility ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── Text Prompt Cards (資料庫頁) ── */
+  .db-toolbar {
+    padding: 16px 24px; background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+  }
+  .db-toolbar input {
+    flex: 1; min-width: 220px; padding: 9px 14px;
+    background: var(--panel-2); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; font-size: 14px;
+  }
+  .db-toolbar input:focus { outline: none; border-color: var(--accent); }
+  .db-model-select {
+    padding: 9px 12px; background: var(--panel-2); border: 1px solid var(--border);
+    color: var(--text); border-radius: 8px; font-size: 13px; cursor: pointer;
+  }
+  .db-filters {
+    padding: 12px 24px; display: flex; gap: 8px; flex-wrap: wrap;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+  }
+  .db-stats {
+    padding: 10px 24px; font-size: 13px; color: var(--muted);
+    border-bottom: 1px solid var(--border); background: var(--panel);
+  }
+  .text-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 16px; padding: 24px;
+  }
+  .text-card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px; display: flex; flex-direction: column;
+    gap: 10px; transition: border-color .2s, box-shadow .2s;
+  }
+  .text-card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent)22; }
+  .text-card-head {
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
+  }
+  .text-card-title {
+    font-size: 15px; font-weight: 600; color: var(--text); flex: 1; margin: 0;
+  }
+  .text-card-actions {
+    display: flex; gap: 6px; flex-shrink: 0;
+  }
+  .fav-btn {
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 6px; padding: 4px 8px; cursor: pointer;
+    color: var(--muted); font-size: 14px; transition: all .2s;
+  }
+  .fav-btn.active { color: #f59e0b; border-color: #f59e0b; background: rgba(245,158,11,.1); }
+  .fav-btn:hover { border-color: #f59e0b; color: #f59e0b; }
+  .text-card-meta {
+    font-size: 12px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap;
+    align-items: center;
+  }
+  .text-card-meta a { color: var(--accent); text-decoration: none; }
+  .text-card-meta a:hover { text-decoration: underline; }
+  .text-prompt-box {
+    background: var(--panel-2); border-radius: 8px; padding: 12px 14px;
+    font-size: 13px; color: #c8d1e4; white-space: pre-wrap; word-break: break-word;
+    line-height: 1.7; max-height: 160px; overflow: hidden; position: relative;
+    transition: max-height .3s; cursor: pointer;
+    border: 1px solid var(--border);
+  }
+  .text-prompt-box.expanded { max-height: 2000px; }
+  .text-prompt-box::after {
+    content: "▾ 展開";
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 18px 14px 8px;
+    background: linear-gradient(transparent, var(--panel-2));
+    text-align: center; font-size: 12px; color: var(--accent);
+  }
+  .text-prompt-box.expanded::after { content: "▴ 收起"; background: transparent; padding: 6px 14px; }
+  .text-card-footer { display: flex; gap: 8px; }
+  .show-fav-only { 
+    padding: 9px 14px; background: var(--panel-2); border: 1px solid var(--border);
+    color: var(--muted); border-radius: 8px; font-size: 13px; cursor: pointer;
+    transition: all .2s;
+  }
+  .show-fav-only.active { color: #f59e0b; border-color: #f59e0b; background: rgba(245,158,11,.1); }
+
 </style>
 </head>
 <body>
 <header>
   <div class="wrap">
-    <h1>AI 圖像提示詞互動圖庫</h1>
-    <p class="subtitle">GPT Image 2 · Nano Banana · Midjourney · Gemini — 74 組精選提示詞，一鍵複製、即填即用、點圖放大</p>
+    <h1>🗂️ AI 提示詞中心</h1>
+    <p class="subtitle">圖像圖庫 · 提示詞資料庫 — 雙頁籤，涵蓋生圖、工作流、職場、學習全場景應用</p>
     <div class="meta">
       <span>來源：</span>
       <a href="https://applealmond.com/posts/312152" target="_blank">蘋果仁 (3)</a>
@@ -264,6 +367,14 @@
   </div>
 </header>
 
+<nav class="tab-nav">
+  <div class="wrap">
+    <button class="tab-btn active" data-tab="image">🖼️ 圖像提示詞圖庫</button>
+    <button class="tab-btn" data-tab="text">📚 提示詞資料庫</button>
+  </div>
+</nav>
+
+<div id="page-image" class="page active">
 <div class="toolbar">
   <div class="wrap" style="display:flex;gap:12px;flex-wrap:wrap;width:100%;">
     <input type="text" id="search" placeholder="🔍 搜尋提示詞（中文 / 英文皆可，例如：海報、portrait、Lisbon）">
@@ -282,8 +393,30 @@
     <div class="empty" id="empty" style="display:none;">找不到符合的提示詞，試試其他關鍵字。</div>
   </div>
 </main>
+</div><!-- /page-image -->
 
-<footer>
+<div id="page-text" class="page">
+  <div class="db-toolbar">
+    <input type="text" id="db-search" placeholder="🔍 搜尋提示詞（例如：DRAG框架、費曼學習法、NotebookLM）">
+    <select class="db-model-select" id="db-model">
+      <option value="">全部模型</option>
+      <option value="ChatGPT">ChatGPT</option>
+      <option value="Claude">Claude</option>
+      <option value="Gemini">Gemini</option>
+      <option value="通用">通用</option>
+    </select>
+    <button class="show-fav-only" id="db-fav-toggle">⭐ 只看收藏</button>
+  </div>
+  <div class="db-filters" id="db-filters"></div>
+  <div class="db-stats" id="db-stats">尚未載入提示詞</div>
+  <main>
+    <div class="wrap" style="padding: 0;">
+      <div class="text-grid" id="db-grid"></div>
+      <div class="empty" id="db-empty" style="display:none;">找不到符合的提示詞，試試其他關鍵字。</div>
+    </div>
+  </main>
+</div><!-- /page-text -->
+
   本工具僅整理公開分享的提示詞，原作者版權歸屬請見各卡片來源連結。<br>
   Built for personal use — 2026
 </footer>
@@ -1625,6 +1758,183 @@ document.addEventListener("keydown", e => {
 });
 
 render();
+
+// ══════════════════════════════════════════════
+// Tab Navigation
+// ══════════════════════════════════════════════
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    const tab = btn.dataset.tab;
+    document.getElementById("page-" + tab).classList.add("active");
+    // restore hash for bookmarking
+    history.replaceState(null, "", "#" + tab);
+  });
+});
+// Restore tab from hash on load
+(function() {
+  const hash = location.hash.replace("#","");
+  if (hash === "text") {
+    document.querySelector('[data-tab="text"]').click();
+  }
+})();
+
+// ══════════════════════════════════════════════
+// 提示詞資料庫 (Text Prompts)
+// ══════════════════════════════════════════════
+const TEXT_PROMPTS = [
+  // 由 prompt-gallery-curator skill 自動新增
+];
+
+const TEXT_CATEGORIES = [
+  "全部", "提示詞技巧", "模型指南", "職場商業",
+  "AI圖像", "工具專屬", "翻譯校正", "學習成長", "AI觀念"
+];
+
+const TEXT_CAT_EMOJI = {
+  "提示詞技巧": "📝",
+  "模型指南": "🤖",
+  "職場商業": "💼",
+  "AI圖像": "🖼️",
+  "工具專屬": "🛠️",
+  "翻譯校正": "🌐",
+  "學習成長": "📚",
+  "AI觀念": "💡"
+};
+
+const TEXT_CAT_CLASS_MAP = {
+  "提示詞技巧": "cat-1", "模型指南": "cat-2", "職場商業": "cat-4",
+  "AI圖像": "cat-2", "工具專屬": "cat-3", "翻譯校正": "cat-3",
+  "學習成長": "cat-1", "AI觀念": "cat-4"
+};
+
+const FAV_KEY = "prompt_gallery_favs";
+let dbFavs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
+let dbFilter = "全部";
+let dbSearch = "";
+let dbModel = "";
+let dbFavOnly = false;
+
+function saveFavs() { localStorage.setItem(FAV_KEY, JSON.stringify([...dbFavs])); }
+
+function renderDbFilters() {
+  const el = document.getElementById("db-filters");
+  if (!el) return;
+  el.innerHTML = "";
+  TEXT_CATEGORIES.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "filter-btn" + (cat === dbFilter ? " active" : "");
+    const emoji = TEXT_CAT_EMOJI[cat] || "";
+    btn.textContent = (emoji ? emoji + " " : "") + cat;
+    btn.onclick = () => { dbFilter = cat; renderDb(); };
+    el.appendChild(btn);
+  });
+}
+
+function buildTextCard(p) {
+  const isFav = dbFavs.has(p.id);
+  const catClass = TEXT_CAT_CLASS_MAP[p.category] || "cat-1";
+  const emoji = TEXT_CAT_EMOJI[p.category] || "";
+  const card = document.createElement("div");
+  card.className = "text-card";
+  const noteHtml = p.note ? `<div style="font-size:12px;color:var(--muted);font-style:italic;">📌 ${escapeHtml(p.note)}</div>` : "";
+  const tagsHtml = (p.tags||[]).map(t => `<span style="background:var(--panel-2);padding:2px 7px;border-radius:99px;font-size:11px;">${escapeHtml(t)}</span>`).join(" ");
+  card.innerHTML = `
+    <div class="text-card-head">
+      <h3 class="text-card-title">${escapeHtml(p.title)}</h3>
+      <div class="text-card-actions">
+        <button class="fav-btn${isFav ? " active" : ""}" data-id="${p.id}" title="${isFav ? "取消收藏" : "加入收藏"}">${isFav ? "⭐" : "☆"}</button>
+      </div>
+    </div>
+    <div class="text-card-meta">
+      <span class="tag ${catClass}">${emoji} ${escapeHtml(p.category)}</span>
+      <span class="model">${escapeHtml(p.model)}</span>
+      <span>·</span>
+      <a href="${p.sourceUrl}" target="_blank" rel="noopener">${escapeHtml(p.source)}</a>
+    </div>
+    ${noteHtml}
+    ${tagsHtml}
+    <pre class="text-prompt-box" id="tp-${p.id}" data-original="${escapeHtml(p.prompt)}">${escapeHtml(p.prompt)}</pre>
+    <div class="text-card-footer">
+      <button class="btn primary copy-btn" data-target="tp-${p.id}">📋 複製提示詞</button>
+    </div>
+  `;
+  return card;
+}
+
+function renderDb() {
+  renderDbFilters();
+  const grid = document.getElementById("db-grid");
+  const empty = document.getElementById("db-empty");
+  const stats = document.getElementById("db-stats");
+  if (!grid) return;
+  grid.innerHTML = "";
+  const term = dbSearch.toLowerCase();
+  const filtered = TEXT_PROMPTS.filter(p => {
+    if (dbFavOnly && !dbFavs.has(p.id)) return false;
+    if (dbFilter !== "全部" && p.category !== dbFilter) return false;
+    if (dbModel && !p.model.includes(dbModel)) return false;
+    if (term && !(
+      p.title.toLowerCase().includes(term) ||
+      p.prompt.toLowerCase().includes(term) ||
+      (p.source||"").toLowerCase().includes(term) ||
+      (p.tags||[]).some(t => t.toLowerCase().includes(term))
+    )) return false;
+    return true;
+  });
+  if (filtered.length === 0) {
+    empty.style.display = "block";
+    stats.textContent = TEXT_PROMPTS.length === 0
+      ? "資料庫建置中，提示詞陸續新增..."
+      : `找不到符合條件的提示詞（共 ${TEXT_PROMPTS.length} 筆）`;
+    return;
+  }
+  empty.style.display = "none";
+  filtered.forEach(p => grid.appendChild(buildTextCard(p)));
+  stats.textContent = `顯示 ${filtered.length} / ${TEXT_PROMPTS.length} 筆提示詞${dbFilter !== "全部" ? "｜" + dbFilter : ""}${term ? "｜搜尋：「" + dbSearch + "」" : ""}${dbFavOnly ? "｜僅收藏" : ""}`;
+  // Attach handlers
+  grid.querySelectorAll(".fav-btn").forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.dataset.id;
+      if (dbFavs.has(id)) { dbFavs.delete(id); } else { dbFavs.add(id); }
+      saveFavs();
+      btn.classList.toggle("active");
+      btn.textContent = dbFavs.has(id) ? "⭐" : "☆";
+      btn.title = dbFavs.has(id) ? "取消收藏" : "加入收藏";
+    };
+  });
+  grid.querySelectorAll(".text-prompt-box").forEach(box => {
+    box.addEventListener("click", () => box.classList.toggle("expanded"));
+  });
+  grid.querySelectorAll(".copy-btn").forEach(btn => {
+    btn.onclick = () => {
+      const el = document.getElementById(btn.dataset.target);
+      navigator.clipboard.writeText(el.dataset.original||el.textContent).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = "✓ 已複製！";
+        btn.classList.add("copied");
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove("copied"); }, 1500);
+      });
+    };
+  });
+}
+
+// DB search / model / fav wiring
+const dbSearchEl = document.getElementById("db-search");
+const dbModelEl = document.getElementById("db-model");
+const dbFavToggle = document.getElementById("db-fav-toggle");
+if (dbSearchEl) dbSearchEl.addEventListener("input", e => { dbSearch = e.target.value; renderDb(); });
+if (dbModelEl) dbModelEl.addEventListener("change", e => { dbModel = e.target.value; renderDb(); });
+if (dbFavToggle) dbFavToggle.addEventListener("click", () => {
+  dbFavOnly = !dbFavOnly;
+  dbFavToggle.classList.toggle("active", dbFavOnly);
+  renderDb();
+});
+
+renderDb();
+
 </script>
 </body>
 </html>
