@@ -391,6 +391,15 @@
     </div>
     <div class="grid" id="grid"></div>
     <div class="empty" id="empty" style="display:none;">找不到符合的提示詞，試試其他關鍵字。</div>
+
+    <!-- AI圖像指南：文字提示詞指南 -->
+    <div id="image-guides-section" style="margin-top:48px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:0 4px;">
+        <h2 style="font-size:18px;font-weight:700;color:var(--text);margin:0;">📝 圖像生成技法 & 指南</h2>
+        <span style="font-size:13px;color:var(--muted);">文字型教學，點擊可展開完整提示詞</span>
+      </div>
+      <div class="text-grid" id="image-guides-grid" style="gap:12px;"></div>
+    </div>
   </div>
 </main>
 </div><!-- /page-image -->
@@ -3057,14 +3066,13 @@ Let's begin: ask me what I want to learn.`,
 
 const TEXT_CATEGORIES = [
   "全部", "提示詞技巧", "模型指南", "職場商業",
-  "AI圖像", "工具專屬", "翻譯校正", "學習成長", "AI觀念"
+  "工具專屬", "翻譯校正", "學習成長", "AI觀念"
 ];
 
 const TEXT_CAT_EMOJI = {
   "提示詞技巧": "📝",
   "模型指南": "🤖",
   "職場商業": "💼",
-  "AI圖像": "🖼️",
   "工具專屬": "🛠️",
   "翻譯校正": "🌐",
   "學習成長": "📚",
@@ -3073,7 +3081,7 @@ const TEXT_CAT_EMOJI = {
 
 const TEXT_CAT_CLASS_MAP = {
   "提示詞技巧": "cat-1", "模型指南": "cat-2", "職場商業": "cat-4",
-  "AI圖像": "cat-2", "工具專屬": "cat-3", "翻譯校正": "cat-3",
+  "工具專屬": "cat-3", "翻譯校正": "cat-3",
   "學習成長": "cat-1", "AI觀念": "cat-4"
 };
 
@@ -3200,7 +3208,44 @@ if (dbFavToggle) dbFavToggle.addEventListener("click", () => {
   renderDb();
 });
 
+function renderImageGuides() {
+  const grid = document.getElementById("image-guides-grid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  const guides = TEXT_PROMPTS.filter(p => p.category === "AI圖像");
+  guides.forEach(p => {
+    const card = buildTextCard(p);
+    grid.appendChild(card);
+  });
+  // Re-attach event handlers for guide cards
+  grid.querySelectorAll(".fav-btn").forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.dataset.id;
+      if (dbFavs.has(id)) { dbFavs.delete(id); } else { dbFavs.add(id); }
+      saveFavs();
+      btn.classList.toggle("active");
+      btn.textContent = dbFavs.has(id) ? "⭐" : "☆";
+      btn.title = dbFavs.has(id) ? "取消收藏" : "加入收藏";
+    };
+  });
+  grid.querySelectorAll(".text-prompt-box").forEach(box => {
+    box.addEventListener("click", () => box.classList.toggle("expanded"));
+  });
+  grid.querySelectorAll(".copy-btn").forEach(btn => {
+    btn.onclick = () => {
+      const el = document.getElementById(btn.dataset.target);
+      navigator.clipboard.writeText(el.dataset.original||el.textContent).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = "✓ 已複製！";
+        btn.classList.add("copied");
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove("copied"); }, 1500);
+      });
+    };
+  });
+}
+
 renderDb();
+renderImageGuides();
 
 </script>
 </body>
