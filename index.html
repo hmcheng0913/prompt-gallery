@@ -1786,6 +1786,1273 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 // ══════════════════════════════════════════════
 const TEXT_PROMPTS = [
   // 由 prompt-gallery-curator skill 自動新增
+
+  {
+    id: "bnext-technique-1",
+    title: "萬用 XML 框架提示詞模板",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/90344/master-ai-prompt-engineering-essential-guide-to-high-quality-responses",
+    note: "適用 ChatGPT/Claude/Gemini，以 <role><constraints><context><task><steps><format><examples> 七區塊組織指令",
+    tags: ["框架", "XML", "結構化提示詞", "通用模板"],
+    prompt: `<role>
+你是一位擅長 [特定技能] 的 [特定專家]。
+[在此補充專業背景與特質，例如：擁有 10 年經驗，語氣專業且精煉]
+</role>
+
+<constraints>
+[必須遵守的原則一]
+[必須遵守的原則二]
+[負向約束：絕對禁止發生的行為]
+[語言/格式要求：例如：使用繁體中文]
+</constraints>
+
+<context>
+[在此置入背景資訊、受眾分析、平台資訊或原始數據]
+[模型會將此區塊視為「資料來源」，而非直接指令]
+</context>
+
+<task>
+[清楚說明核心任務目標：你希望模型完成什麼？]
+</task>
+
+<steps>
+[第一步：分析與思考路徑]
+[第二步：核心執行動作]
+[第三步：自查與最終優化]
+</steps>
+
+<format>
+[指定輸出格式：例如 Markdown 表格、JSON、或具備特定層次的文字]
+</format>
+
+<examples>
+[範例 1]
+[範例 2]
+</examples>`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-2",
+    title: "Meta Prompting 元提示：讓 AI 幫你寫指令",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 李慕約（FC未來商務）",
+    sourceUrl: "https://www.bnext.com.tw/article/85553/prompt-engineering-ai-workflow-sop",
+    note: "當你不確定怎麼下指令時，先讓 AI 反問你、釐清需求，再請它生成最精準的指令",
+    tags: ["Meta Prompting", "元提示", "需求釐清", "指令生成"],
+    prompt: `我想做這件事，但我不確定我有沒有講清楚的地方。請先不要回答我，先問我幾個問題來釐清我的需求。
+
+（與 AI 來回對話後）
+
+根據我們剛剛的討論，請幫我寫一個最適合給 ChatGPT 的指令。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-3",
+    title: "降低 AI 幻覺三步驟提示詞",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（一天一AI）",
+    sourceUrl: "https://www.bnext.com.tw/article/89750/ai-hallucination-control-prompts",
+    note: "定義輸入、控管流程、界定輸出，三段指令疊加使用可大幅降低 AI 憑空捏造的機率",
+    tags: ["幻覺防控", "可信度", "引用來源", "自我驗證"],
+    prompt: `【定義輸入】請只從以下指定來源（[學術論文資料庫 / 官方網站 / 我提供的文件]）查詢資料，不要在整個網路自行搜尋。
+
+【控管流程】請在提供最終答案前，先進行「逐步拆解」並「自我驗證」每個推論步驟。如有需要，請先幫我修改我的提示詞，若有缺乏的資訊，請先向我提問。
+
+【界定輸出】在回答中請標註內容的資料來源。如果你不知道答案，請直接說「我不知道」，不要猜測或捏造。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-4",
+    title: "提問前讓 AI 先修改你的問題",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（一天一AI）",
+    sourceUrl: "https://www.bnext.com.tw/article/85547/ai-prompt-tips-smart-questions",
+    note: "簡立峰推薦：提問後接這句話，讓 AI 優化你的問題再作答，適合任何主題",
+    tags: ["提問優化", "簡立峰", "自我改善", "問題重構"],
+    prompt: `回答之前，請幫我修改我的問題。如果要產生更有效地回答，我該怎麼問？`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-5",
+    title: "防止 AI 偷懶的依賴檢查機制",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（一天一AI）",
+    sourceUrl: "https://www.bnext.com.tw/article/90361/fix-ai-lazy-prompt-tips",
+    note: "加入提示詞防止 AI 跳過前置步驟，適合多步驟任務或有明確流程依賴的工作",
+    tags: ["流程控制", "步驟依賴", "防偷懶", "品質保障"],
+    prompt: `執行任何動作前，先確認是否需要查詢、資料檢索或取用指定步驟。不要因為最終目標看起來明確，就跳過前置步驟。若任務依賴前一步驟的輸出，請先解決該依賴，再繼續執行。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-6",
+    title: "產出前的 AI 自我審核機制",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（一天一AI）",
+    sourceUrl: "https://www.bnext.com.tw/article/90361/fix-ai-lazy-prompt-tips",
+    note: "要求 AI 在交出答案前進行四維度自我檢查，可寫入 Custom Instructions 一勞永逸",
+    tags: ["自我審核", "品質把關", "Custom Instructions", "安全確認"],
+    prompt: `在產出成果前，先確保確認：
+正確性： 輸出是否滿足所有要求？
+依據性： 事實是否有上下文的根據？
+格式： 是否符合要求的結構或樣式？
+安全性： 若有外部副作用（如傳送、刪除、寫入正式環境），先徵得確認再執行。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-7",
+    title: "先計畫後執行的萬用提示詞",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（一天一AI）",
+    sourceUrl: "https://www.bnext.com.tw/article/90299/ai-workflow-step-plan-optimization",
+    note: "複雜任務尾端加這一句，強迫 AI 先交執行計畫等待確認再動手，避免方向跑偏",
+    tags: ["先計畫後執行", "審批流程", "工作流", "複雜任務"],
+    prompt: `請先列出 step-by-step plan（步驟計畫），等我批准後再執行。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-8",
+    title: "AI 工作流設計師提示詞",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（一天一AI）",
+    sourceUrl: "https://www.bnext.com.tw/article/89719/ai-workflow-system-master-prompt",
+    note: "Step 1：請 AI 扮演架構師，為重複性任務設計三種工作流方案並推薦最佳起點",
+    tags: ["工作流設計", "重複任務", "系統化", "人機協作"],
+    prompt: `你現在是我的 AI 工作流設計師。我想達成 [填入你的目標，例如：整理跨部門專案會議記錄]。
+
+請列出 3 種不同的工作流，讓我能用 [填入你常用的 AI，例如：GPT-5.2/Gemini] 穩定地完成這項任務。每個方案需包含：每一步我該怎麼跟你互動、要附什麼背景資料、需使用的工具、以及人類應在哪個節點進行驗證或檢核。
+
+最後，請用 3 句話推薦我最該從哪一個方案開始，並說明理由。`,
+    placeholders: ["\u586b\u5165\u4f60\u7684\u76ee\u6a19\uff0c\u4f8b\u5982\uff1a\u6574\u7406\u8de8\u90e8\u9580\u5c08\u6848\u6703\u8b70\u8a18\u9304", "\u586b\u5165\u4f60\u5e38\u7528\u7684 AI\uff0c\u4f8b\u5982\uff1aGPT-5.2/Gemini"]
+  },
+  {
+    id: "bnext-technique-9",
+    title: "生成可重複使用的 Master Prompt",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（一天一AI）",
+    sourceUrl: "https://www.bnext.com.tw/article/89719/ai-workflow-system-master-prompt",
+    note: "Step 2：選定工作流方案後，請 AI 生成主指令＋跟進指令，存入 Gemini Gem 或 ChatGPT Project 一鍵召喚",
+    tags: ["Master Prompt", "主指令", "跟進指令", "Gemini Gem"],
+    prompt: `我們來執行方案 [填入數字]。
+
+請幫我寫一個『主指令（Master Prompt）』，讓我直接存起來重複使用。
+
+寫出 3-5 個 follow-up prompts（例如：『列出待辦清單』、『提取爭議點』、『生成下週追蹤表』），讓我之後也能複製貼上。`,
+    placeholders: ["\u586b\u5165\u6578\u5b57"]
+  },
+  {
+    id: "bnext-technique-10",
+    title: "讓AI自我迭代到滿分的萬用提示詞",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/84991/chatgpt-prompt-tips",
+    note: "請AI先定義滿分標準再自我修改，直到達標才交卷",
+    tags: ["自我迭代", "品質提升", "評分標準", "ChatGPT"],
+    prompt: `在回覆之前，請先制定一份內部評分標準，定義『世界一流』的答案。然後，在內部反覆修改完善，直到你的答案完全符合評分標準（10/10），最後只向我展示最終的完美版本。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-11",
+    title: "定義目標與限制讓AI提出最佳方案",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/85498/ai-command-evolution",
+    note: "外包「任務目標」而非「執行步驟」，給AI更大自由度找到更好解法",
+    tags: ["任務導向", "意圖指令", "自動化", "效率"],
+    prompt: `目標： [描述你想達成的結果，例如：Google 雲端硬碟存放新圖片後，要把分享圖片的網址快速填進 Google Sheet，方便之後一次取用]
+
+限制： [描述使用的工具或環境限制，例如：圖片都放在這個資料夾（提供網址），想填入這個 Google Sheet 的第一張工作表（提供網址）]
+
+有哪些建議做法讓我高效完成這件事？`,
+    placeholders: ["\u63cf\u8ff0\u4f60\u60f3\u9054\u6210\u7684\u7d50\u679c", "\u63cf\u8ff0\u4f7f\u7528\u7684\u5de5\u5177\u6216\u74b0\u5883\u9650\u5236"]
+  },
+  {
+    id: "bnext-technique-12a",
+    title: "靈感拓荒：產生10種截然不同方案",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/89661/ai-smart-thinking-prompts",
+    note: "跳脫框架，依優先排序獲得最佳方案推薦",
+    tags: ["腦力激盪", "多方案", "決策", "優先排序"],
+    prompt: `請針對解決 [描述你的問題] 產生 10 種截然不同的方法。針對每一項，請提供：一句話摘要、最佳適用場景、以及一個潛在缺點。最後，請根據我的優先順序 [速度 / 成本 / 品質 / 風險 的排序] 推薦最強的 2 個方案。`,
+    placeholders: ["\u63cf\u8ff0\u4f60\u7684\u554f\u984c", "\u901f\u5ea6 / \u6210\u672c / \u54c1\u8cea / \u98a8\u96aa \u7684\u6392\u5e8f"]
+  },
+  {
+    id: "bnext-technique-12b",
+    title: "80/20法則任務梳理術",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/89661/ai-smart-thinking-prompts",
+    note: "用帕列托法則篩出20%高價值任務，並給出15分鐘啟動步驟",
+    tags: ["時間管理", "80/20", "任務優先化", "生產力"],
+    prompt: `請用 80/20 法則重新梳理我的任務清單：[貼上清單]
+
+核心骨幹 (The 20%) ：對目標最有產出的關鍵任務。
+維護瑣事 (The 80%) ：必須完成但價值較低的雜事。
+暫時跳過： 低產出、可延後或應刪除的任務。
+總結： 我今天第一件該做的事是什麼？請給出 15 分鐘的啟動步驟。`,
+    placeholders: ["\u8cbc\u4e0a\u6e05\u55ae"]
+  },
+  {
+    id: "bnext-technique-13",
+    title: "優化提示詞前先讓AI提問補漏",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/89750/ai-hallianation-control-prompts",
+    note: "在正式執行任務前，先讓AI幫你優化指令並補充缺失資訊，降低幻覺風險",
+    tags: ["降低幻覺", "提示詞優化", "自我檢查", "品質控管"],
+    prompt: `請先修改我的提示詞。如有缺乏的資訊，先向我提問。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-14",
+    title: "提問前讓AI告訴你還需要什麼資訊",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/85547/ai-prompt-tips-smart-questions",
+    note: "簡立峰推薦：先讓AI指出問題缺口再正式提問，提升回答精準度",
+    tags: ["聰明提問", "簡立峰", "資訊補充", "精準回答"],
+    prompt: `我要問你關於[某某主題]的問題，還需要提供什麼資訊給你，你的回答才會精準？`,
+    placeholders: ["\u67d0\u67d0\u4e3b\u984c"]
+  },
+  {
+    id: "bnext-technique-15",
+    title: "讓AI擔任設計師拆解風格指示",
+    category: "提示詞技巧",
+    model: "ChatGPT",
+    source: "數位時代 / Ruby Hung",
+    sourceUrl: "https://www.bnext.com.tw/article/85572/chatgpt-prompt-2025",
+    note: "截圖喜歡的設計風格，請AI拆解為可給美編執行的設計指示",
+    tags: ["設計師角色", "風格轉譯", "簡報", "視覺設計"],
+    prompt: `假裝你是簡報設計師，我要請美編做成這樣的風格，請你幫我整理出一份我可以直接剪貼給美編的設計指示。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-16",
+    title: "Gemini代理工作流：強制先思考再行動",
+    category: "提示詞技巧",
+    model: "Gemini",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/85556/google-gemini-api-prompt",
+    note: "Google官方Gemini提示詞指南：用代理工作流強制AI分步驟思考，降低幻覺",
+    tags: ["Gemini", "代理工作流", "思維鏈", "分步思考", "官方指南"],
+    prompt: `在回答前，請依序執行：
+計畫：將目標拆解為子任務。
+執行：執行計畫。
+驗證：檢查輸出是否符合用戶要求。
+格式化：呈現最終答案。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-technique-17",
+    title: "漸進式AI腦力訓練：四級難度測驗",
+    category: "提示詞技巧",
+    model: "通用",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/89874/ai-application-polarization-from-brain-wheelchair-to-mind-gym",
+    note: "用AI扮演嚴格考官進行漸進式提問，強化自身思考能力而非依賴AI",
+    tags: ["思維鏈", "漸進訓練", "批判思考", "DRAG框架", "腦力激盪"],
+    prompt: `不要急著修改報告，先列出三個最重要的改進領域，告訴我為什麼，並建議如何處理。一步一步思考（think step by step），並向我展示每一個步驟的思考過程。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-model-1",
+    title: "GPT-5.5結果導向提示詞：客服場景示範",
+    category: "模型指南",
+    model: "ChatGPT",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/90833/gpt-5-5-prompt-writing-guide-result-oriented-vs-process-oriented",
+    note: "OpenAI官方GPT-5.5指南：結果導向寫法，只描述完成狀態與成功標準",
+    tags: ["GPT-5.5", "結果導向", "客服", "提示詞格式", "OpenAI"],
+    prompt: `幫我處理這位客戶的問題，處理到解決為止。
+
+完成標準：
+- 根據現有資料判斷是否符合處理條件
+- 能直接處理的事先做完，再回覆
+- 最終回覆要說清楚：做了什麼、給客戶的說明、還有什麼卡住了
+- 資訊不夠時，只問最關鍵的那一個問題`,
+    placeholders: []
+  },
+  {
+    id: "bnext-model-2",
+    title: "Claude 4.6新版提示詞：精簡指令範例",
+    category: "模型指南",
+    model: "Claude",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/90140/anthropic-claude-prompt-engineering",
+    note: "Anthropic官方Claude 4.6指南：少即是多，精簡指令比冗長囑咐更有效",
+    tags: ["Claude", "Anthropic", "精簡指令", "少即是多", "模型指南"],
+    prompt: `分析以下問題，給出完整解釋。
+
+建立一個完整的數據分析儀表板，包含關鍵指標、互動篩選與視覺化圖表
+
+如果使用搜尋能提升答案準確性，請使用。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-model-3",
+    title: "Google Gemini PTCF四要素提示詞框架",
+    category: "模型指南",
+    model: "Gemini",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/89977/efficient-google-workspace-ai-prompt-tips",
+    note: "Google Workspace官方指南：Persona、Task、Context、Format四要素框架",
+    tags: ["Gemini", "PTCF", "Google Workspace", "框架", "職場"],
+    prompt: `[角色] 你是一位 [某產業] 的專案經理。
+[任務] 請草擬一封給 [某對象] 的執行摘要郵件，
+[情境] 內容根據 [相關專案文件的細節]。
+[格式] 請以列點方式呈現。`,
+    placeholders: ["\u67d0\u7522\u696d", "\u67d0\u5c0d\u8c61", "\u76f8\u95dc\u5c08\u6848\u6587\u4ef6\u7684\u7d30\u7bc0"]
+  },
+  {
+    id: "bnext-model-4",
+    title: "Google白皮書：少樣本提示詞寫法",
+    category: "模型指南",
+    model: "通用",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/83008/google-prompt-engineering",
+    note: "Google提示工程白皮書10大技巧：少樣本提示、角色扮演、思維鏈等",
+    tags: ["Google", "提示工程", "少樣本", "角色扮演", "思維鏈"],
+    prompt: `你是一位審查這段 Python 程式碼的資深工程師。找出三個潛在的安全漏洞。
+
+以 JSON 格式列出市值前五名的加密貨幣，包含名稱、價格和24小時變動欄位。
+
+撰寫一篇300字的文章，向高中生解釋海洋溫度上升如何影響珊瑚礁。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-model-5",
+    title: "簡立峰教你用AI問出好問題的提示詞",
+    category: "模型指南",
+    model: "通用",
+    source: "數位時代 / 編輯",
+    sourceUrl: "https://www.bnext.com.tw/article/89681/ai-prompt-tips-jian-lifeng",
+    note: "Google前台灣董事總經理簡立峰：讓AI教你如何與它互動",
+    tags: ["簡立峰", "提問技巧", "元提示詞", "AI思維", "淘金式思考"],
+    prompt: `我該如何問你一個好問題，才能得到關於 [XX主題] 的最佳答案？
+
+為了回答這個問題，你還需要我提供哪些資訊？`,
+    placeholders: ["XX\u4e3b\u984c"]
+  },
+  {
+    id: "bnext-model-6",
+    title: "各大AI工具官方提示詞懶人包索引",
+    category: "模型指南",
+    model: "通用",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/89828/explore-the-best-ai-tools-and-prompt-applications",
+    note: "整理Gemini、ChatGPT、Claude、Notion等各大AI工具官方提示詞資源，屬導覽文章",
+    tags: ["Gemini", "ChatGPT", "Claude", "Notion", "官方提示詞"],
+    prompt: `請幫我摘要這一整串郵件往來，列出所有行動項目和各自的截止日期。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-biz-1",
+    title: "OpenAI職場提示詞：專業郵件與會議議程",
+    category: "職場商業",
+    model: "ChatGPT",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/84622/chat-gpt-prompt-pack-2025",
+    note: "OpenAI Academy針對11大職能釋出的提示詞懶人包精選",
+    tags: ["OpenAI", "職場", "郵件", "會議", "溝通"],
+    prompt: `撰寫一封給 [收件人] 的專業電子郵件。主題為 [主題]，語氣需禮貌、清楚且精簡。請提供郵件主旨與簡短結尾。
+
+為一場關於 [主題] 的會議建立結構化議程。會議時長為 [時間]，參與者包含 [參與者]。請分段並提供每段的時間估算與目標。
+
+請將此訊息改寫給 [受眾類型：主管、同儕或客戶]。此訊息原本寫給 [情境]。請調整語氣、用字與風格以符合目標受眾。文字：[貼上文字]`,
+    placeholders: ["\u6536\u4ef6\u4eba", "\u4e3b\u984c", "\u6642\u9593", "\u53c3\u8207\u8005", "\u53d7\u773e\u985e\u578b", "\u60c5\u5883", "\u8cbc\u4e0a\u6587\u5b57"]
+  },
+  {
+    id: "bnext-biz-2",
+    title: "Google Gemini行政差旅規劃提示詞",
+    category: "職場商業",
+    model: "Gemini",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/90033/gemini-prompts-pack-2026",
+    note: "Google Workspace 71頁提示詞指南：行政、客服、人資、行銷等9大職位",
+    tags: ["Gemini", "Google Workspace", "行政", "差旅", "職場"],
+    prompt: `我是一名行政助理，需要為一趟在 [地點]、於 [日期] 進行的兩天商務旅行規劃行程。我的主管將入住 [飯店名稱]。請在離飯店步行 10 分鐘內，分別推薦不同的早餐與晚餐選項各數家，並提供一個娛樂選項，例如電影院、在地藝術展或熱門觀光景點。請幫我整理成表格呈現。`,
+    placeholders: ["\u5730\u9ede", "\u65e5\u671f", "\u98ef\u5e97\u540d\u7a31"]
+  },
+  {
+    id: "bnext-biz-3",
+    title: "5分鐘快速認識一家公司的萬用Prompt",
+    category: "職場商業",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90402/ai-company-research-prompt-guide",
+    note: "投資、面試前使用，強迫AI回答六個核心商業問題",
+    tags: ["公司研究", "投資", "面試", "商業分析", "一天一AI"],
+    prompt: `研究 [公司名稱]，並給我一份 briefing，包含以下段落：
+1. 他們實際上在做什麼（用一段話說清楚，不要用行話）
+2. 商業模式（他們怎麼賺錢、誰付錢）
+3. 關鍵數字，可以做成表格（營收、募資、員工數、成長率）
+4. 主要競爭對手，以及他們有什麼不同
+5. 這家公司業務面臨的最大風險
+6. 大多數人最容易誤解他們的哪一點
+
+只使用你能透過網路搜尋驗證的資訊。任何不確定的地方都要標示出來。並附上你引用的出處和原文連結。`,
+    placeholders: ["\u516c\u53f8\u540d\u7a31"]
+  },
+  {
+    id: "bnext-biz-4",
+    title: "AI多角色辯論框架：四專家協作提示詞",
+    category: "職場商業",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90199/grok-420-ai-debate-collaboration",
+    note: "模仿Grok 4.20四代理模式，讓AI扮演四個角色互相辯論以降低幻覺率",
+    tags: ["多角色辯論", "Grok", "創意發想", "行銷策略", "AI協作"],
+    prompt: `我現在有一個複雜的任務：[填入你需要解決的問題，例如：幫我寫一份下半年的社群行銷策略草案]。
+
+請你捨棄單一思考，同時扮演以下 4 個角色，並以對話的形式展開一場激烈的會議討論：
+
+Lucas（創意人員）：負責發散思考，提出最天馬行空、不同凡響的新觀點。
+Harper（研究員）：負責事實查核，用最嚴苛的標準檢視 Lucas 的點子是否符合市場現況與數據。
+Benjamin（邏輯學家）：負責檢查整個討論的邏輯推演，挑出推理上的漏洞或前後矛盾。
+Grok（協調員）：作為會議主席，負責調和分歧，並在最後將大家的意見收斂成一份「去蕪存菁」的最終解答。`,
+    placeholders: ["\u586b\u5165\u4f60\u9700\u8981\u89e3\u6c7a\u7684\u554f\u984c"]
+  },
+  {
+    id: "bnext-biz-5",
+    title: "AI多角色辯論：產品英翻中命名決策",
+    category: "職場商業",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90303/grok-ai-product-naming-debate",
+    note: "讓6位虛擬專家辯論英文產品名的最佳中文譯名，適合品牌在地化決策",
+    tags: ["產品命名", "品牌在地化", "多角色辯論", "翻譯策略", "Grok"],
+    prompt: `【角色設定】
+你是頂尖的「產品/品牌在地化」辯論主持人，任務是引導一場多角色辯論，產出最符合商業效益且低風險的中文譯名。
+
+【戰場設定】
+英文原名：[NoRush]
+產品類別：[無咖啡因提神飲／草本機能飲]
+目標受眾：[30歲上班族＋大學生]
+品牌定位：[自然草本、溫和提神、理性放鬆]
+市場區域：[台灣]
+語言方向：[英翻中]
+
+【辯論流程與任務】
+請嚴格按以下 3 步驟執行：
+1. 各自提案：6 位專家各提 1 個中文名，並說明使用的「翻譯策略」與理由（限 1 句話）。
+2. 交叉質詢：請「行銷經理」質疑其他提案的吸引力；並請「文化顧問」與「法務顧問」聯手挑出所有提案的公關地雷與侵權風險。
+3. 裁判決策：結束辯論。請你以裁判身份，列出6個譯名並用一句話比較差異，選出「最能承擔市場風險」的首選 1 個與備選 1 個，說明獲勝理由，並給出 1 句後續的風險提醒。
+
+記得附上【六大專家角色+產品名翻譯常用策略】`,
+    placeholders: ["NoRush", "\u7121\u5496\u5561\u56e0\u63d0\u795e\u98f2\uff0f\u8349\u672c\u6a5f\u80fd\u98f2", "30\u6b72\u4e0a\u73ed\u65cf\uff0b\u5927\u5b78\u751f", "\u81ea\u7136\u8349\u672c\u3001\u6eab\u548c\u63d0\u795e\u3001\u7406\u6027\u653e\u9b06", "\u53f0\u7063"]
+  },
+  {
+    id: "bnext-biz-6",
+    title: "Google PM三步驟建立客戶人設提示詞",
+    category: "職場商業",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/85251/ai-google-pm-persona-skills",
+    note: "Google產品經理用法：AI深度訪談建立精準客戶Persona文件",
+    tags: ["Google", "產品經理", "Persona", "客戶研究", "行銷"],
+    prompt: `你是一個客戶輪廓挖掘專家，你的任務是透過自然的聊天，一次問一個問題，收集足以產生可行 Persona 的所有資訊，其中須包含使用者的「核心痛點」、「每日的掙扎」、「過去失敗的嘗試」、「為何他做不到」、「心魔和阻礙」以及「期望產品和服務帶給他的轉變」，推導出站在使用者角度「具體的產品與服務優勢」，最終匯整成完整的人物誌（Persona Document）。先跟我說詳細的步驟和流程？`,
+    placeholders: []
+  },
+  {
+    id: "bnext-biz-7",
+    title: "AI促銷效益互動試算工具提示詞",
+    category: "職場商業",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90474/ai-promo-calc-tool",
+    note: "讓AI幫你做一個HTML促銷效益試算工具，反向確認機制避免錯誤",
+    tags: ["行銷", "促銷", "試算工具", "HTML", "Claude"],
+    prompt: `我有個任務是預測促銷活動的效益。
+每次辦活動前，會思考以下項目：
+1. 設定原價和折扣
+2. 預估這次活動能帶來多少廣告流量、自然流量
+3. 預估三個情境的轉換率（樂觀、普通、悲觀）
+4. 各情境分別算出：訂單數、總業績、廣告成本、商品成本、利潤、ROI
+5. 對照現有庫存，判斷會不會缺貨或滯銷
+6. 提出備貨建議
+
+你先問我幾個問題，確認完全理解我的邏輯後，
+再幫我做成一個 HTML 互動試算工具。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-biz-8",
+    title: "Gamma說服力簡報三場景提示詞",
+    category: "職場商業",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/85433/gamma-prompt-case",
+    note: "Gamma官方100個提示詞精選：付費電子報、業務計畫、公司政策三場景",
+    tags: ["Gamma", "簡報", "說服力", "業務計畫", "提案"],
+    prompt: `為我的付費電子報訂閱服務設計一份進入市場的計畫，內容涵蓋：目標受眾（對新商業、AI感興趣的領導者與工作者）、定價策略（月費 10 美元），以及打入市場策略（針對既有會員宣傳）。
+
+制定一份第一季的業務版圖計畫，根據「購買意圖信號」對 15 個重點客戶進行優先排序。分類如下：5 個高度潛在客戶（正在試用產品）、7 個中度潛在客戶（曾參加網路研討會或下載內容），以及 3 個低互動但高價值客戶（符合理想客戶樣貌和預算時間點）。
+
+請為公司草擬一份「週休三日」試辦計畫的提案書。內容應包含：導入理由（佐以生產力相關研究）、為期 3 個月的試行方案、成效衡量標準以及潛在疑慮與回應。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-biz-9",
+    title: "AI找好公司再找好職缺的求職提示詞",
+    category: "職場商業",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/85607/ai-job-search-good-company",
+    note: "轉職利器：不從職缺出發，先讓AI挖出符合你價值觀的好公司",
+    tags: ["求職", "轉職", "職涯", "公司研究", "Perplexity"],
+    prompt: `請列出 15 家位於 [城市]、過去 6 個月在台灣的 [你指定的好公司、產業，例如：成長快速、獲得融資的AI新創] 公司。
+我想找 [你指定的職務或技能，例如：非工程師的職缺]
+如果他們有開，請附上官方招聘頁面網址。`,
+    placeholders: ["\u57ce\u5e02", "\u4f60\u6307\u5b9a\u7684\u597d\u516c\u53f8\u3001\u7522\u696d", "\u4f60\u6307\u5b9a\u7684\u8077\u52d9\u6216\u6280\u80fd"]
+  },
+  {
+    id: "bnext-biz-10",
+    title: "Google Sheet AI公式：大量翻譯與廣告文案",
+    category: "職場商業",
+    model: "Gemini",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/85081/google-sheet-ai-function-formula",
+    note: "Google Sheet AI函數用法：=AI(\"提示詞\", 儲存格範圍)，需英文提示詞",
+    tags: ["Google Sheet", "AI公式", "翻譯", "廣告文案", "試算表"],
+    prompt: `=AI("Translated into Chinese", A2)
+
+=AI("Write a formal ad copy for the product. Cater copy to the objective and target audience.", A2:C2)
+
+=AI("Generate slogan for event in 10 words or less", A2)
+
+=AI("For the customer, write a one sentence summary of their feedback.", A2:D2)
+
+=AI("Classify the body of the email, as either positive, negative, or neutral.", D2)`,
+    placeholders: []
+  },
+  {
+    id: "bnext-biz-11",
+    title: "ChatGPT串接Figma：甘特圖簡報萬用提示詞",
+    category: "職場商業",
+    model: "ChatGPT",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/85544/chatgpt-figma-slides-buzz",
+    note: "ChatGPT串接Figma生成FigJam圖表、Slides簡報、Buzz社群素材的萬用模板",
+    tags: ["Figma", "FigJam", "甘特圖", "簡報", "ChatGPT"],
+    prompt: `請參考我提供的 [貼上文字筆記，或說明已上傳附件]，在 FigJam 幫我製作一個 [圖表類型]（例如：流程圖/甘特圖/決策樹/心智圖）。
+我的目的是 [說明用途]（例如：向客戶解釋下單流程 / 規劃六個月的專案進度）。
+請在圖表中特別標註或強調 [關鍵細節]（例如：付款失敗的處理路徑 / 關鍵里程碑日期）。
+圖表內的所有文字與標籤，請全部使用「繁體中文 (Traditional Chinese)」撰寫。`,
+    placeholders: ["\u8cbc\u4e0a\u6587\u5b57\u7b46\u8a18\u6216\u8aaa\u660e\u5df2\u4e0a\u50b3\u9644\u4ef6", "\u5716\u8868\u985e\u578b", "\u8aaa\u660e\u7528\u9014", "\u95dc\u9375\u7d30\u7bc0"]
+  },
+  {
+    id: "bnext-biz-12",
+    title: "微軟CEO納德拉每日5個Copilot提示詞",
+    category: "職場商業",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/84567/microsoft-ceo-ai-prompt-efficiency",
+    note: "Satya Nadella公開的5個高階主管日常使用提示詞，適用Microsoft Copilot",
+    tags: ["Microsoft", "Copilot", "高階主管", "時間管理", "納德拉"],
+    prompt: `根據我與 [/person] 先前的互動，列出對方在我們下次會議中最可能關注的 5 件事。
+
+根據郵件、聊天紀錄和 [/series] 中的所有會議，撰寫一份專案更新報告：包括 KPI 與目標的差距、成敗分析、風險點、競爭對手動態，以及可能被問到的尖銳問題與建議回答。
+
+我們是否準備好在 11 月推出 [Product]？請檢查工程進度、試點計畫成果和潛在風險，並提供一個成功機率。
+
+請分析我過去一個月的行事曆與電子郵件，整理出 5 到 7 類我花最多時間處理的專案，列出各自的時間占比與簡短說明。`,
+    placeholders: ["/person", "/series", "Product"]
+  },
+  {
+    id: "bnext-biz-13",
+    title: "NotebookLM財報分析：入門與進階版提示詞",
+    category: "職場商業",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90905/notebooklm-ai-stock-report-analysis",
+    note: "用NotebookLM分析台股/美股財報，入門版白話摘要+進階版資深分析師視角",
+    tags: ["NotebookLM", "財報分析", "投資", "台股", "美股"],
+    prompt: `【入門版】
+針對〔公司名稱〕〔年份，例如 2025〕〔季度，例如 Q1〕的財報與法說會資料，用繁體中文、白話文整理以下內容，每個項目簡短說明「這個數字代表什麼意思」：
+1. 這一季公司賺了多少錢？跟上一季、去年同期比是變好還是變差？
+2. 公司有沒有提到為什麼變好或變差？
+3. 公司自己預測下一季會怎樣？
+4. 法說會上，大家最關心哪些問題？公司怎麼說？
+5. 跟〔年份〕〔上一季度〕相比，有什麼明顯變化？
+
+【進階版】
+扮演資深分析師，針對〔公司名稱〕〔年份〕〔季度〕的財報與法說會資料，用繁體中文整理以下內容：
+1. 本季營收、毛利率、營業利益率、稅後淨利率、EPS，與去年同期（YoY）及上季（QoQ）比較，並說明毛利率變動的可能原因
+2. 存貨與應收帳款的變動，判斷營運效率是否出現警訊
+3. 營業現金流與淨利的比較，及本季自由現金流（FCF）狀況
+4. 公司對下季與全年的財務預測，未來 6–12 個月的成長動能與資本支出計畫
+5. 法說會中，公司競爭優勢是否有變化？是否提到關鍵客戶或新技術進展？
+6. 法人與市場目前最關注的三個核心議題`,
+    placeholders: ["\u516c\u53f8\u540d\u7a31", "\u5e74\u4efd", "\u5b63\u5ea6", "\u4e0a\u4e00\u5b63\u5ea6"]
+  },
+  {
+    id: "bnext-image-1",
+    title: "ChatGPT Image 2.0 指令大全：50組提示詞",
+    category: "AI圖像",
+    model: "ChatGPT",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90908/chatgpt-image-2-prompt-guide-complete",
+    note: "五大類型50組提示詞，涵蓋品牌社群、工作應用、生活實用等場景",
+    tags: ["ChatGPT", "菜單設計", "文青風", "圖像生成", "社群素材"],
+    prompt: `請幫我製作一張文青風咖啡館菜單，版面包含飲品、甜點、價格與簡單插畫。使用奶油色背景、手寫字體、咖啡杯與植物元素，整體乾淨溫暖，像小型獨立咖啡店的紙本菜單。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-image-2",
+    title: "ChatGPT Images 2.0 風格實測：8種提示詞",
+    category: "AI圖像",
+    model: "ChatGPT",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90765/chatgpt-image2.0-style-prompts",
+    note: "照片轉換8種風格：日系手繪、雜誌草稿、讀書筆記、食物宣傳圖等",
+    tags: ["ChatGPT", "照片風格轉換", "雜誌編輯風", "日系手繪", "社群圖卡"],
+    prompt: `請將這張圖片轉化為雜誌編輯草稿風的視覺版面。畫面保留主體物件，同時加入像雜誌編輯過程中的元素，例如細框線、裁切線、手寫註記、小標題、頁面編號、簡短旁註與排版參考記號。整體版面請有明確留白，呈現有設計感但不過度完成的狀態，像是一本風格雜誌的內頁草稿。色調請維持乾淨、時髦、自然，避免過於花俏。文字風格簡潔，像編輯快速記下的概念備忘。整體氛圍要有質感、輕鬆、帶一點未完成的草率感。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-image-3",
+    title: "ChatGPT Images 2.0 繁中生圖實測：7大題型",
+    category: "AI圖像",
+    model: "ChatGPT",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90749/chatgpt-images-2-free-instant-vs-paid-thinking-for-taiwan-users",
+    note: "測試繁中生圖能力，含地圖、海報、統計圖表等題型完整提示詞",
+    tags: ["ChatGPT", "繁中生圖", "促銷海報", "電商設計", "資訊圖表"],
+    prompt: `設計一張 A4 直式服飾品牌促銷海報，虛構品牌「日青選物」。主標寫「換季出清・全館五折起」，副標「會員再享額外九折」。列出四個優惠：「長袖上衣第二件七折」「針織外套買一送一限量配件」「牛仔褲全館五折」「滿千免運 會員集點雙倍回饋」。最下方寫「實體門市＋官方網站同步・優惠至五月五日止」。風格北歐極簡、米白色調。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-image-4",
+    title: "ChatGPT 衝破螢幕效果與人設生圖教學",
+    category: "AI圖像",
+    model: "ChatGPT",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90778/chatgpt-image2.0-create",
+    note: "5種社群高人氣玩法：衝破螢幕、潑墨插圖、角色設定、穿搭分析、像素風",
+    tags: ["ChatGPT", "衝破螢幕", "電影感", "照片生圖", "社群創意"],
+    prompt: `創建一個高度擬真、具電影感的場景：我正從自己的社群貼文中走進現實世界。
+
+將我置於一支智慧型手機螢幕中，畫面顯示一個照片分享型社群貼文介面，並讓我從螢幕中突破出來。人物姿勢需重新設計為動態行走中，一腳向前跨出，並使用強烈3D透視前縮效果（foreshortening），讓腳朝向觀者延伸，呈現強烈臨場感與空間深度。整體動作自然、具有真實物理感，像是正從畫面中走出來。
+
+社群介面需為原創設計（不可模仿任何品牌），風格乾淨簡約，包含：上方標題列（含限時動態圓圈與通知圖示）、個人頭像與使用者名稱【填入自己的社群帳號】（粗體無襯線字）、中央圓角貼文圖片區塊、下方互動圖示（按讚、留言、分享、收藏）、簡短貼文說明文字，以及底部導覽列。
+
+在人物突破螢幕的接觸點加入特效：玻璃破裂碎片（具光線折射）、向外噴散的數位像素碎片、前景手腳帶有動態模糊拖影，以及螢幕邊界帶有微微發光的數位殘影效果。
+
+整體畫面需達電影級質感：超擬真光影（輪廓光與柔和補光）、自然肌膚紋理與真實服裝細節、淺景深（人物清晰、手機略微虛化）、精準陰影與反射，具有前景、中景、背景的層次分離。構圖為4:5直式（1080×1350）。請使用原創介面設計，不可複製任何具版權的 UI。`,
+    placeholders: ["\u586b\u5165\u81ea\u5df1\u7684\u793e\u7fa4\u5e33\u865f"]
+  },
+  {
+    id: "bnext-image-5",
+    title: "ChatGPT Q版3D小人風結合Google Vids動態",
+    category: "AI圖像",
+    model: "ChatGPT",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/90838/chatgpt-google-vids-3d",
+    note: "上傳照片生成Q版3D小人分身，再用Google Vids製作動態短影片",
+    tags: ["ChatGPT", "Q版小人", "3D角色", "Google Vids", "動態短片"],
+    prompt: `基於這張圖片，以照片中的人物為中心，請生成一張「迷你角色在周圍生動活動的感性合成圖片」。
+
+[核心概念]
+「日常中的小分身」
+可愛又帶點玩心，同時具有感性的呈現
+Instagram 風格＋具有故事感的圖片
+
+[1. 人物處理 - 重要]
+原始人物必須去背使用（臉部／姿勢絕對不可更動）
+人物放在畫面中心或稍微偏前
+加入自然陰影
+人物外圍加上細白邊（貼紙感，不要太厚）
+
+[2. 迷你角色生成 - 核心]
+生成多個以人物為基礎的「迷你角色」
+風格：3D 可愛 SD 角色（可帶 Roblox／像素風）
+臉部、髮型、服裝特徵需完整保留
+
+[迷你角色特徵]
+尺寸小（手掌大小感）
+數量多個（約 3～7 個）
+
+[3. 迷你角色動作 - 重要]
+每個角色都必須在動作中（跳躍玩耍、揮手、爬到人物肩膀／頭上）
+禁止靜止角色
+
+[4. 佈局呈現]
+自然配置在書本上／包包上／肩膀／地面／手上等位置
+加入陰影讓其看起來像真實存在
+
+[5. 標題生成]
+分析圖片氛圍，自動生成簡短且感性的「韓文標題」（2～5個單詞）
+
+[整體風格]
+明亮且溫暖的色調，呈現「真實照片＋可愛合成」的感覺
+
+[禁止事項]
+禁止更動臉部、禁止遊戲 UI 風格、避免過度效果`,
+    placeholders: []
+  },
+  {
+    id: "bnext-image-6",
+    title: "Gemini 生成視覺筆記：3步驟標準化提示詞",
+    category: "AI圖像",
+    model: "Gemini",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/89711/using-ai-for-high-quality-visual-sketchnotes",
+    note: "先用AI助理結構化摘要，再用Gemini生成手繪視覺筆記的雙階段工作流",
+    tags: ["Gemini", "視覺筆記", "sketchnote", "手繪風", "知識視覺化"],
+    prompt: `為上述筆記製作一張手繪的『視覺筆記』(sketchnote) 圖像摘要。背景使用潔白的紙張（無格線）。藝術風格應為『圖像記錄』(graphic recording) 或『視覺思考』(visual thinking)，使用黑色細針筆描繪清晰的輪廓與文字。使用彩色馬克筆（具體為藍綠色、橘色和柔和的紅色）進行簡單的陰影處理與點綴。
+
+將主標題置中於一個立體風格的長方形框內。在標題周圍以放射狀分佈簡單的塗鴉、商業圖標、火柴人和圖表來說明概念。使用箭頭連接各個想法。文字應清晰獨特，採用手寫的全大寫印刷體風格，易於閱讀且條理分明，呈現出專業腦力激盪會議的氛圍。版面配置為 A4 大小。文字採用台灣繁體中文。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-image-7",
+    title: "ChatGPT Images 2.0 做圖片式簡報：6步驟",
+    category: "AI圖像",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/91005/chatgpt-images-2.0-ppt",
+    note: "從大綱、視覺規範、逐頁生圖到一鍵打包PPTX的完整工作流",
+    tags: ["ChatGPT", "簡報製作", "PPTX", "圖片式簡報", "Images 2.0"],
+    prompt: `請按照我們確認的大綱與視覺風格，分別以圖片方式生成第 1 到第 10 頁的 16:9 投影片（請確保一張 SLIDE = 一張圖片）。內容若有不足的地方請自行從附檔中擷取精華補上，版面設計上強調重點不超過兩種，請使用專業且不刺眼的顏色。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-image-8",
+    title: "Gemini JSON 復刻大師設計風格：3步驟",
+    category: "AI圖像",
+    model: "Gemini",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/89811/gemini-json-image-style-copy",
+    note: "用Gemini提取圖片JSON視覺DNA，再根據新JSON生成同風格新圖表",
+    tags: ["Gemini", "JSON", "風格復刻", "圖表設計", "提示詞技巧"],
+    prompt: `將此圖像轉換為 JSON 提示字元，包括尺寸和所有視覺細節。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-image-9",
+    title: "Gemini 修復老照片：3種提示詞完整收藏",
+    category: "AI圖像",
+    model: "Gemini",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90053/ai-old-photo-restoration-guide",
+    note: "修復老照片三招：保守修復、黑白填色、大力改造成插畫風",
+    tags: ["Gemini", "老照片修復", "黑白上色", "插畫風格轉換", "家族照片"],
+    prompt: `請幫我修復這張舊照片，稍微銳化、提高解析度，去除刮痕和照片皺摺，但保持人物臉型、表情和特徵足夠自然，有一些老照片的質感。不要加新東西。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-tool-1",
+    title: "NotebookLM 核心架構五問提示詞",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "數位時代 / 陳建鈞",
+    sourceUrl: "https://www.bnext.com.tw/article/89924/notebooklm-prompt",
+    note: "讓AI先提出5個核心問題，快速掌握資料整體架構",
+    tags: ["NotebookLM", "資料分析", "提問框架", "核心問題"],
+    prompt: `角色：資料分析師
+任務：分析以下所有文件內容，提出5個核心問題。
+要求：回答這5個問題，就能完整掌握所有資料的主要意思。
+輸出格式：
+1. 本質問題 1
+2. 本質問題 2
+3. 本質問題 3
+4. 本質問題 4
+5. 本質問題 5`,
+    placeholders: []
+  },
+  {
+    id: "bnext-tool-2",
+    title: "NotebookLM 紅隊壓力測試提示詞",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "數位時代 / 陳建鈞",
+    sourceUrl: "https://www.bnext.com.tw/article/89924/notebooklm-prompt",
+    note: "讓AI扮演批判審核員，找出策略或資料中隱藏的風險與缺陷",
+    tags: ["NotebookLM", "紅隊", "風險評估", "批判思考"],
+    prompt: `角色：紅隊審核員（風險評估專家）
+任務：對以下策略或計畫進行嚴苛審核。
+要求：
+1. 列出最致命的潛在問題
+2. 列出技術、市場、執行面風險
+3. 找出隱含假設
+4. 上線前必須回答的5個問題
+限制：
+- 嚴格批判
+- 忽略行銷包裝文字`,
+    placeholders: []
+  },
+  {
+    id: "bnext-tool-3",
+    title: "NotebookLM 簡報排版定稿指令",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "數位時代 / 羅秀如（經理人月刊）",
+    sourceUrl: "https://www.bnext.com.tw/article/90903/notebooklm-ai-slides",
+    note: "大綱確認後再交給AI排版，防止亂發揮與繁體中文破字問題",
+    tags: ["NotebookLM", "簡報", "投影片", "排版", "繁體中文"],
+    prompt: `請完全照著我給的大綱製作投影片，不可以自己加入任何觀點，也不可以漏掉任何一頁。投影片上的文字越精簡越好。請一頁一頁、一字一字仔細生成，並逐字確認，確保每個繁體中文字正確、清晰。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-tool-4",
+    title: "NotebookLM 競品分析簡報五步驟提示詞",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90279/notebooklm-ai-industry-analysis-workflow",
+    note: "使用Deep Research蒐集市場情報，再生成競爭對手比較簡報",
+    tags: ["NotebookLM", "競品分析", "市場洞察", "簡報", "Deep Research"],
+    prompt: `列出〇〇行業主要玩家（A、B、C）在過去一年的關鍵動向，每家公司用以下格式輸出：新產品/服務、定價變動、組織或M&A動態、市場策略轉變。
+
+（完成後）製作主要玩家和自家公司的競爭比較表，欄位包含：價格帶、主打功能、目標客群、近期動作。
+
+（最後）製作給主管看的8張簡報：第1張執行摘要、第2-5張各競爭對手分析、第6張定位圖、第7張對本公司的啟示、第8張推薦行動（按優先級排序）。`,
+    placeholders: ["\u3007\u3007\u884c\u696d", "A\u3001B\u3001C\uff08\u4e3b\u8981\u73a9\u5bb6\u540d\u7a31\uff09"]
+  },
+  {
+    id: "bnext-tool-5",
+    title: "NotebookLM 供應商報價比較表指令",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90457/notebooklm-auto-comparison-table-guide",
+    note: "上傳多份報價文件後，讓AI自動生成採購比較表並匯出試算表",
+    tags: ["NotebookLM", "採購", "報價單", "比較表", "資料表"],
+    prompt: `請生成一份供應商提案比較表，包含廠商名稱、總價（含稅）、三大核心規格差異、保固期限與售後服務條款。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-tool-6",
+    title: "Perplexity 串接 Google 日曆客戶情報指令",
+    category: "工具專屬",
+    model: "Perplexity",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/89744/perplexity-google-calendar-meeting-briefing",
+    note: "自動掃描行事曆中含「拜訪」的行程，整理客戶情報並設為每週自動任務",
+    tags: ["Perplexity", "Google Calendar", "客戶情報", "自動化", "會議準備"],
+    prompt: `Role: 你是一位幫我管理商務日程的 AI 助理。
+Task: 請掃描我的 Google Calendar，檢查台灣時間「下週一到週五」的所有行程，找出標題含「拜訪」的會議。上面會有拜訪公司的名稱和會議目的。
+Output: 對每一場符合的會議，請整理出：
+- 公司與產業背景 (2-3 句話)
+- 近期重要新聞 (找找有沒有剛發布的產品或異動)
+- 破冰話題 (基於與會者背景)
+- 關鍵提問 (建議我可以問的 5 個策略性問題)
+請以「每場會議一個小節」呈現，最後給我一個「本週準備優先順序」的總結。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-tool-7",
+    title: "Claude Skill Creator 報帳小幫手設定指令",
+    category: "工具專屬",
+    model: "Claude",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90328/claude-skill-efficiency-guide",
+    note: "透過Skill Creator建立專屬報帳技能，拍照上傳發票即可輸出Excel",
+    tags: ["Claude", "Skill", "報帳", "自動化", "Excel"],
+    prompt: `用 Skill Creator 幫我建一個『報帳小幫手』的 Skill。
+我的工作場景：
+我會上傳一堆發票、計程車收據和高鐵票的照片。
+你的任務：
+自動辨識照片內容，幫我整理成一個表格。請務必提取以下欄位：
+消費日期
+項目名稱（如：交通、餐飲）
+發票號碼
+總金額
+回報格式：
+最後請輸出成 Excel。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-tool-8",
+    title: "Claude Cowork 簡報製作進階指令",
+    category: "工具專屬",
+    model: "Claude",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90505/claude-cowork-ppt-workflow-guide",
+    note: "告訴Claude先收集背景資訊再製作簡報，確保需求精準",
+    tags: ["Claude", "Cowork", "PPT", "簡報", "桌面版"],
+    prompt: `請先運用 AskUserQuestion 工具，向我收集足夠的背景資訊後再開始執行。
+
+（收集後，在指令中包含以下資訊）
+預計頁數：[X頁]
+簡報主題：[主題]
+目標對象：[受眾]
+視覺風格：[風格描述]
+最終目的：[目的說明]`,
+    placeholders: ["\u9810\u8a08\u9801\u6578", "\u7c21\u5831\u4e3b\u984c", "\u76ee\u6a19\u5c0d\u8c61", "\u8996\u89ba\u98a8\u683c", "\u6700\u7d42\u76ee\u7684"]
+  },
+  {
+    id: "bnext-tool-9",
+    title: "Gemini 串接 Google 日曆排程指令",
+    category: "工具專屬",
+    model: "Gemini",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90211/wbc-gemini-google-calendar-tutorial",
+    note: "讓Gemini讀取網頁資訊後自動排入Google行事曆並附備注",
+    tags: ["Gemini", "Google Calendar", "行事曆", "自動排程"],
+    prompt: `請參考這篇文章：[文章網址]，幫我挑出[篩選條件]的場次並列出來。接著，請幫我預定在我的 Google Calendar，並且在行事曆的備註欄位裡，清楚寫上『[備注內容]』。`,
+    placeholders: ["\u6587\u7ae0\u7db2\u5740", "\u7be9\u9078\u689d\u4ef6", "\u5099\u6ce8\u5167\u5bb9"]
+  },
+  {
+    id: "bnext-tool-10",
+    title: "NotebookLM 會議紀錄與通知信提示詞",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90875/notebooklm-3-steps-ai-meeting-minutes-and-email-notes",
+    note: "上傳錄音檔後3分鐘產出結構清晰的會議紀錄與通知信草稿",
+    tags: ["NotebookLM", "會議紀錄", "Action Items", "通知信", "錄音"],
+    prompt: `請根據這份會議紀錄，幫我整理出結構清晰的重點。請嚴格遵守以下格式：
+會議核心目的：用一句話說明。
+關鍵討論觀點：條列式列出 3-5 個重要論點，並簡述理由。
+最終決策：明確列出大家拍板定案的項目（若無，請標記「未定」）。
+待辦事項 (Action Items)：依照「負責人」分類，列出「任務內容」與「截止日期」。若內容未提到負責人或期限，請標示為「待確認」。
+待討論事項：有哪些問題尚未解決，需要下次會議討論？
+請嚴格依據上傳的文件內容進行分析，不要加入任何文件以外的推測。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-tool-11",
+    title: "NotebookLM 矛盾偵測跨文件分析提示詞",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90338/how-to-ask-questions-effectively-in-ai-era",
+    note: "找出多份文件中互相矛盾的論點並評估哪方證據較強",
+    tags: ["NotebookLM", "矛盾偵測", "跨文件分析", "研究", "批判思考"],
+    prompt: `逐一比對我上傳的所有文件，找出任何兩份以上來源在同一議題上出現不一致、矛盾或相反結論的地方。針對每個分歧點：
+1）分別摘要各方立場；
+2）如果能判斷分歧原因（假設前提不同、時間點不同、數據集不同、定義不同），請說明；
+3）根據我的素材，哪一方目前有更強的支撐？為什麼？`,
+    placeholders: []
+  },
+  {
+    id: "bnext-tool-12",
+    title: "NotebookLM 會議逐字稿轉行動清單指令",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "數位時代 / 數位書選（趙胤丞、Esor著）",
+    sourceUrl: "https://www.bnext.com.tw/article/89862/ai-workflow-for-meeting-summary-and-action-items",
+    note: "讓AI擔任「會議行動轉譯官」，將逐字稿生成三段式摘要與任務清單",
+    tags: ["NotebookLM", "會議紀錄", "逐字稿", "行動清單", "Email"],
+    prompt: `你是一名「會議行動轉譯官」，任務是根據下面逐字稿生成會後追蹤Email。請嚴格依流程輸出：
+1. 會議摘要（三段式：背景議題／重點觀察／行動建議）
+2. 任務清單（What／Who／When）
+3. Email草稿（以專業、精簡語氣撰寫，結尾請列出下一個檢視節點）。請在內容中善用條列，確保收件者一眼就能掌握重點。
+
+逐字稿：（貼上會議逐字稿）`,
+    placeholders: ["\u9010\u5b57\u7a3f\u5167\u5bb9"]
+  },
+  {
+    id: "bnext-trans-1",
+    title: "商務簡報中翻英優化提示詞",
+    category: "翻譯校正",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（文藻外語翻譯系主任王慧娟）",
+    sourceUrl: "https://www.bnext.com.tw/article/90241/ai-ppt-translation-expert-tips",
+    note: "含角色設定、任務背景、翻譯規則的完整簡報中翻英框架",
+    tags: ["翻譯", "簡報", "中翻英", "商務英文", "平行句型"],
+    prompt: `【角色設定】
+你是一位擁有 15 年經驗的跨國企業母語級雙語簡報專家，擅長將中文簡報內容轉化為精煉、具備高掃讀性（Scannable）的專業英文投影片。
+
+【任務背景】
+請將以下中文簡報內容翻譯成英文。
+簡報性質：[填入性質，例如：對外募資提案 / 內部技術匯報 / 新產品發表會]
+目標受眾：[填入受眾，例如：美國華爾街投資人 / 英國區高階主管]
+簡報語氣：[填入語氣，例如：極度專業且具說服力 / 客觀嚴謹 / 輕鬆但具啟發性]
+拼字與度量衡：請使用 [美式 / 英式] 拼字與對應的度量衡標準。
+
+【翻譯與排版規則】
+1. 極致掃讀性（Scannable Content）：中翻英後字元數容易膨脹，請大幅精簡冗長敘述。採用「關鍵字：核心重點」格式，維持畫面乾淨。
+
+2. 平行句型（Parallel Structure）：條列式重點必須使用平行的文法結構。請優先使用強而有力的主動動詞（Action Verbs）開頭。
+
+3. 精準在地化：絕不直譯中文特有的浮誇用語或成語（如：重磅推出、拔得頭籌），請轉換為符合當地商業習慣的專業表述。
+
+4. 專有名詞查核：請嚴格遵守下方提供的《專有名詞對照表》。若遇到未列在表內但不確定的職稱、姓名或產品型號，請在該詞彙後方標註 【需核對】。
+
+5. 商務慣用語與吸睛字眼轉譯：避免逐字直譯中文特有的奪目用詞。請先分析該詞彙背後的「實質商業意圖或功能」，並替換為符合英文母語人士習慣的標準商務對應詞。`,
+    placeholders: ["\u7c21\u5831\u6027\u8cea", "\u76ee\u6a19\u53d7\u773e", "\u7c21\u5831\u8a9e\u6c23", "\u7f8e\u5f0f/\u82f1\u5f0f"]
+  },
+  {
+    id: "bnext-trans-2",
+    title: "去AI味中翻英五種策略提示詞",
+    category: "翻譯校正",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（文藻外語翻譯系主任王慧娟）",
+    sourceUrl: "https://www.bnext.com.tw/article/90054/ai-translation-strategies-tips-guide",
+    note: "五種翻譯策略提示詞組合，去除AI味與翻譯腔",
+    tags: ["翻譯", "去AI味", "翻譯腔", "語態", "中翻英"],
+    prompt: `翻譯時請依照台灣中文及英文的自然表達，考慮上下文的流暢度，選用最恰當的主動或被動語態。
+
+翻譯時以不漏譯為前提；譯文過長則分句，過短則合句，並保持中文語意連貫與自然語感。
+
+翻譯時依目標語習慣採正反互換，避免字面直譯；中文可用合適成語或雙重否定，使語氣更自然。
+
+英譯中時，若語境適合，可運用疊詞或重複句式加強重點或增加節奏。
+
+請去AI味，這是一份回覆報價的商用書信，請維持其正式度。`,
+    placeholders: ["\u6587\u4ef6\u985e\u578b/\u8a9e\u6c23\u8aaa\u660e"]
+  },
+  {
+    id: "bnext-trans-3",
+    title: "商業公告中翻英避雷提示詞",
+    category: "翻譯校正",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（文藻外語翻譯系主任王慧娟）",
+    sourceUrl: "https://www.bnext.com.tw/article/90047/ai-translation-professional-guide-from-professor",
+    note: "針對內部公告的完整翻譯提示詞，含時態確認與專有名詞標記",
+    tags: ["翻譯", "商業英文", "內部公告", "時態", "專有名詞"],
+    prompt: `請依照公司「內部公告」文體，將以下中文翻譯成英文（發布於 Email/Teams）。中高正式度、客觀中性、用語一致，避免口語、情緒化語氣。讀者為英文母語同仁，句子精簡、資訊清楚，不刻意採用艱深字。若原文有需依附件、連結、表格才能判讀的資訊、專有名詞（人名、部門、職稱、系統、品牌、外部單位）需採公司或官方既定英文寫法，請用【需核對】標示，請勿擅自編寫。依據上下文，確認時態精準，若中文未寫清楚是否已發生／何時生效／何時完成，請標【時態待確認】，並避免隨機套用時態；日期時間一律用 YYYY-MM-DD HH:MM。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-trans-4",
+    title: "國際研討會翻譯避坑提示詞",
+    category: "翻譯校正",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（文藻外語翻譯系主任王慧娟）",
+    sourceUrl: "https://www.bnext.com.tw/article/90453/seminar-ai-translation-pitfalls",
+    note: "研討會標題與講者介紹的學術英文翻譯技巧提示詞",
+    tags: ["翻譯", "學術英文", "研討會", "會議", "標題改寫"],
+    prompt: `翻譯這個活動標題：[填入中文標題]。勿逐字直譯！請跳脫中文字面的框架，抓出核心含義，改寫成符合歐美習慣、簡煉且專業的「學術英文標題」。
+
+將講者介紹改寫為自然的英文學術語氣，避免誇飾性用語（如 internationally renowned），改用中性、保守且常見的表達。
+
+請在參考既有英文議程用語的前提下，翻譯這份中文議程。
+
+翻譯交通路線時，請避免口語敘述的連續句，改用英文的指令式與步驟化（如條列或分句）呈現，例如 Take... → turn left... → turn right...。`,
+    placeholders: ["\u4e2d\u6587\u6a19\u984c"]
+  },
+  {
+    id: "bnext-learn-1",
+    title: "30天AI自學計畫生成器",
+    category: "學習成長",
+    model: "ChatGPT",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/89695/ai-skill-building-30-day-plan",
+    note: "用Agent模式排出由淺到深的30天技能學習計劃，含免費資源與AI陪練指令",
+    tags: ["自學", "學習計畫", "30天", "技能養成", "AI家教"],
+    prompt: `Create a 30-day plan to build a new skill, broken down into weekly goals and daily tasks. The plan should be clear, actionable, and progressive.
+
+Choose a specific skill and define what success looks like at the end of 30 days.
+
+1. For each week (and preferably each day), recommend specific free learning resources, such as free online courses, YouTube tutorials, documentation, blogs, or interactive platforms. Each resource must include:
+-Title
+-Platform (e.g., YouTube, official docs, etc.)
+-Type (video, article, course, documentation)
+-Short description of what it teaches
+-URL
+
+2. About links:
+- Do not invent, guess, or hallucinate URLs.
+- If you are unsure about the exact URL, replace the URL with a search query in this format: Search: ""
+- Prefer official sites and well-known platforms.
+
+3. For every day that includes hands-on implementation / project work also include:
+-How-to Resource (Free): 1-2 free resources that directly show how to build that exact task.
+-AI Co-pilot Steps: Provide 3-5 bullet prompts the learner can paste into an AI assistant to complete the task.
+
+4. Add a "Deliverable" for each day: a concrete outcome that can be checked.
+
+5. Add a weekly section at the end of each week:
+-Weekly checkpoint (what should work by now)
+-Self-review questions (3 questions)
+-Mini demo (how to demonstrate the week's成果 in 2 minutes)
+
+The plan should follow this structure:
+Week 1 – Foundation: Days 1-3 Research basics; Days 4-7 Start structured learning
+Week 2 – Practice: Days 8-10 Apply in small projects; Days 11-14 Focus on challenging areas
+Week 3 – Advanced Learning: Days 15-17 Learn advanced techniques; Days 18-21 Apply in complex projects
+Week 4 – Mastery: Days 22-24 Refine skills; Days 25-27 Improve weak areas; Days 28-30 Complete final project
+
+Output in Traditional Chinese.
+
+我想要學的是：[填入你想學習的技能]`,
+    placeholders: ["\u586b\u5165\u4f60\u60f3\u5b78\u7fd2\u7684\u6280\u80fd"]
+  },
+  {
+    id: "bnext-learn-2",
+    title: "ChatGPT專屬家教互動式課程",
+    category: "學習成長",
+    model: "ChatGPT",
+    source: "數位時代 / 韋惟珊（原創 Ruben Hassid）",
+    sourceUrl: "https://www.bnext.com.tw/article/85030/chatgpt-tutor-learning",
+    note: "黃仁勳推薦學習法：讓AI扮演家教，透過蘇格拉底式提問幫你學任何主題",
+    tags: ["學習", "家教", "蘇格拉底", "互動課程", "技能學習"],
+    prompt: `Act as an expert tutor who helps me master any topic through an interactive, interview-style course. The process must be recursive and personalized.
+Here's what I want you to do:
+
+1. Ask me for a topic I want to learn.
+2. Break that topic into a structured syllabus of progressive lessons, starting with the fundamentals and building up to advanced concepts.
+3. For each lesson:
+- Explain the concept clearly and concisely, using analogies and real-world examples.
+- Ask me socratic-style questions to assess and deepen my understanding.
+- Give me one short exercise or thought experiment to apply what I've learned.
+- Ask if I'm ready to move on or if I need clarification.
+- If I say yes, move to the next concept.
+- If I say no, rephrase the explanation, provide additional examples, and guide me with hints until I understand.
+4. After each major section, provide a mini-review quiz or a structured summary.
+5. Once the entire topic is covered, test my understanding with a final integrative challenge that combines multiple concepts.
+6. Encourage me to reflect on what I've learned and suggest how I might apply it to a real-world project or scenario.
+Let's begin: ask me what I want to learn.`,
+    placeholders: []
+  },
+  {
+    id: "bnext-learn-3",
+    title: "費曼學習法AI雙角色提示詞",
+    category: "學習成長",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/85397/richard-feynman-ai-learning",
+    note: "讓AI分飾資深導師與職場小白兩角，用費曼技巧深度學習任何主題",
+    tags: ["費曼學習法", "學習", "互動", "雙角色", "知識內化"],
+    prompt: `我想利用「費曼學習法」來學習 [在此填入你想學的主題]。請你依照以下設定，分飾兩角協助我：
+
+【角色設定】
+角色 A：資深導師
+* 職責：負責「輸入」與「糾錯」。
+* 任務：幫我拆解學習地圖。當我卡關或解釋錯誤時，請提供正確答案，並指出我的觀念盲區。
+
+角色 B：職場小白
+* 職責：負責聽我「輸出」並「提問」。
+* 任務：你什麼都不懂，請用最直白的問題逼我把話講清楚。如果聽不懂行話，請追問：「為什麼是這樣？」或「那是甚麼意思？」。
+
+【互動流程】
+請依照以下四個步驟引導我：
+
+1. 導師導航： 請 [角色 A] 先出場，把這個主題拆解成 3-5 個關鍵知識點。
+2. 小白提問： 待我選擇其中一點開始解釋時，請切換成 [角色 B] 聽我說。如果你覺得我講得太複雜或聽不懂，請不斷追問，逼我說人話。
+3. 即時救援：如果在解釋過程中我答不出來、打「求救」，或明顯觀念錯誤，請切換回 [角色 A] 現身告訴我答案，補強我的知識盲區。
+4. 簡化與類比： 當我解釋通順後，請 [角色 A] 再次出場，協助將這個概念轉化為一個「生活化的類比」（例如把 API 比喻成餐廳服務生），幫我記得更牢。
+
+若你準備好了，請先由 [角色 A] 開始第一步。`,
+    placeholders: ["\u60f3\u5b78\u7684\u4e3b\u984c"]
+  },
+  {
+    id: "bnext-learn-4",
+    title: "AI引導自我反思人生目的宣言",
+    category: "學習成長",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/89787/ai-prompts-for-self-reflection-guide",
+    note: "以AI為人生目標教練，透過訪談式對話找出核心價值觀與人生目的宣言",
+    tags: ["自我反思", "人生目的", "價值觀", "生涯", "個人成長"],
+    prompt: `你是一位人生目標教練和價值觀探索專家。幫我找出真實且可持續的人生目的。
+
+步驟：
+1. 用 5-6 個有力的問題引導我反思：什麼時候我感到最投入和充實？哪些任務讓我忘記時間流逝？我希望被記得，是因為什麼？
+2. 根據我的回答，識別 3 個核心價值觀
+3. 綜合這些洞察，幫我創建一個 1-2 句的人生目的宣言（簡潔、可行、鼓舞人心）
+4. 解釋這個目的如何與我的興趣和價值觀相連結`,
+    placeholders: []
+  },
+  {
+    id: "bnext-learn-5",
+    title: "新年目標執行計畫生成器",
+    category: "學習成長",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（來源 Google 提示詞教學）",
+    sourceUrl: "https://www.bnext.com.tw/article/89775/2026-money-weight-loss-prompts",
+    note: "將大目標切成可執行小步驟，適用健身、理財、斷捨離、習慣養成",
+    tags: ["目標設定", "習慣養成", "計畫", "健身", "理財"],
+    prompt: `我想在 [時間目標，例如6個月內] 達到 [具體目標，例如：參加馬拉松 / 整理公寓 / 省下15%開銷 / 減少手機使用2小時]。
+
+請建立一份 [天數，例如30天] 計畫，將過程拆解為簡單的每日任務，每項任務不超過 [時間，例如20分鐘]，並說明:
+1. 每週目標
+2. 每日具體行動
+3. 可能遇到的阻礙與克服建議
+4. 每週進度檢核點`,
+    placeholders: ["\u6642\u9593\u76ee\u6a19", "\u5177\u9ad4\u76ee\u6a19", "\u5929\u6578", "\u6bcf\u65e5\u6642\u9593\u9650\u5236"]
+  },
+  {
+    id: "bnext-learn-6",
+    title: "Ikigai生涯探索AI顧問提示詞",
+    category: "學習成長",
+    model: "ChatGPT",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90045/ikigai-ai",
+    note: "以日本Ikigai四圓圈概念為基礎，透過引導式對話找出生命意義與職涯方向",
+    tags: ["Ikigai", "生涯規劃", "職涯", "人生意義", "自我探索"],
+    prompt: `角色設定：
+你現在是一位結合了「生涯規劃師」與「哲學導師」特質的 AI 顧問。你的目標是運用日本的 Ikigai（生きがい） 概念，協助我釐清生命的意義與職涯方向。
+
+任務目標：
+請帶領我逐步探索 Ikigai 的四個核心圓圈，並最終找出它們的交集：
+1. 我熱愛的事： 內在驅動力與熱情所在。
+2. 我擅長的事： 天賦、技能與核心競爭力。
+3. 世界需要的事： 市場需求、社會價值與他人痛點。
+4. 能讓我獲得報酬的事： 商業模式與經濟支撐。
+
+執行步驟與準則：
+1. 引導式對話：不要一次丟出所有問題。請逐一針對每個圓圈對我進行深挖，問我具體、有啟發性的問題。
+2. 批判性思考：當我給出模糊的答案時，請溫柔地追問具體情境。
+3. 動態聯結：在討論過程中，請幫我指出不同圓圈之間的潛在連結。
+4. 綜合評析：當我們收集完資訊後，請為我總結出 2-3 個可能的「Ikigai 雛形」，並給出具體的行動建議。
+
+目前的背景資訊：
+[這裡請填入你目前的職業/學生身分]
+[這裡請填入你目前的困惑或想討論的切入點]
+
+現在，請先從「第一個圓圈：我熱愛的事」開始，問我 2-3 個關鍵問題來啟動討論。`,
+    placeholders: ["\u8077\u696d/\u5b78\u751f\u8eab\u5206", "\u76ee\u524d\u56f0\u60d1\u6216\u5207\u5165\u9ede"]
+  },
+  {
+    id: "bnext-learn-7",
+    title: "每日大腦熱身三組短提示詞",
+    category: "學習成長",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/90044/ai-mindfulness-morning-routine-brain-training",
+    note: "每天早晨向AI提三個小請求，喚醒覺察力、觀察力與思考彈性",
+    tags: ["正念", "覺察", "早晨習慣", "思考訓練", "大腦熱身"],
+    prompt: `【覺察任務】幫我設一個今天的生活小任務，讓我在日常裡多一點覺察，不用太難，30 秒講得完就好。
+
+【通勤任務】指定一個我今天通勤時可以玩的「觀察遊戲」。
+
+【視角任務】給我一個可以換個角度看今天生活的思考題，越具體越好。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-concept-1",
+    title: "AI多維度決策模擬教練",
+    category: "AI觀念",
+    model: "通用",
+    source: "數位時代 / 韋惟珊",
+    sourceUrl: "https://www.bnext.com.tw/article/89829/avoid-ai-making-brain-stupid",
+    note: "讓AI扮演挑戰者，模擬複雜情境幫你鍛鍊判斷力，避免外包大腦",
+    tags: ["決策", "思考訓練", "衝突目標", "判斷力", "批判思考"],
+    prompt: `我有這三個互相衝突的目標（[目標1，例如：預算砍半]、[目標2，例如：時程縮短]、[目標3，例如：品質不變]），請模擬一個情境，讓我決定該犧牲哪一個，並說明理由。不要直接給我建議，讓我先做決定。`,
+    placeholders: ["\u76ee\u6a191", "\u76ee\u6a192", "\u76ee\u6a193"]
+  },
+  {
+    id: "bnext-concept-2",
+    title: "AI腦力重訓嚴格教練設定",
+    category: "AI觀念",
+    model: "通用",
+    source: "數位時代 / 韋惟珊（松山高中陳育詮老師）",
+    sourceUrl: "https://www.bnext.com.tw/article/90508/ai-brain-training-thinking-skill",
+    note: "設定AI為嚴格教練，每次只問一個問題並逼你說細節，訓練深度思考",
+    tags: ["思考訓練", "腦力重訓", "教練模式", "深度思考", "批判思考"],
+    prompt: `做我的教練，每次只問我一個問題，並逼我講出細節。在我回答之前，不能給我任何讚美或總結。`,
+    placeholders: []
+  }
 ];
 
 const TEXT_CATEGORIES = [
