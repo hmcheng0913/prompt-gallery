@@ -3199,27 +3199,6 @@ if (dbFavToggle) dbFavToggle.addEventListener("click", () => {
   dbFavToggle.classList.toggle("active", dbFavOnly);
   renderDb();
 });
-      saveFavs();
-      btn.classList.toggle("active");
-      btn.textContent = dbFavs.has(id) ? "⭐" : "☆";
-      btn.title = dbFavs.has(id) ? "取消收藏" : "加入收藏";
-    };
-  });
-  grid.querySelectorAll(".text-prompt-box").forEach(box => {
-    box.addEventListener("click", () => box.classList.toggle("expanded"));
-  });
-  grid.querySelectorAll(".copy-btn").forEach(btn => {
-    btn.onclick = () => {
-      const el = document.getElementById(btn.dataset.target);
-      navigator.clipboard.writeText(el.dataset.original||el.textContent).then(() => {
-        const orig = btn.textContent;
-        btn.textContent = "✓ 已複製！";
-        btn.classList.add("copied");
-        setTimeout(() => { btn.textContent = orig; btn.classList.remove("copied"); }, 1500);
-      });
-    };
-  });
-}
 
 renderDb();
 
