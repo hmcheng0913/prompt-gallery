@@ -3160,6 +3160,92 @@ Let's begin: ask me what I want to learn.`,
 #只清理明確可判定的冗餘副產物
 例如已經不存在的 App 殘留、開發工具暫存、一次性安裝快取、舊版 Homebrew cache、pip/npm 暫存等。`,
     placeholders: []
+  },
+  {
+    id: "mt-codex-deck-1",
+    title: "Codex 盤點資料夾檔案（先確認再執行）",
+    category: "工具專屬",
+    model: "GPT-5.5 / Codex",
+    source: "經理人 / 林柏源",
+    sourceUrl: "https://www.managertoday.com.tw/articles/view/72295",
+    note: "Codex 簡報工作流第一步：讓 AI Agent 先回報資料夾內看到哪些檔案、各自代表什麼，確認抓對資料前不修改任何檔案",
+    tags: ["Codex", "AI Agent", "簡報工作流", "資料盤點"],
+    prompt: `請先檢查目前這個資料夾。
+
+請回報：1. 你看到了哪些檔案？2. 這些檔案可能分別代表什麼？請注意：先不要修改任何檔案，請等我確認後再執行。`,
+    placeholders: []
+  },
+  {
+    id: "mt-codex-deck-2",
+    title: "Codex 產出簡報大綱 Markdown",
+    category: "工具專屬",
+    model: "GPT-5.5 / Codex",
+    source: "經理人 / 林柏源",
+    sourceUrl: "https://www.managertoday.com.tw/articles/view/72295",
+    note: "文字邏輯先行：根據資料夾參考資料梳理大綱與各頁文字，輸出 Markdown；資訊不足時要先反問、不直接生成",
+    tags: ["Codex", "簡報大綱", "Markdown", "文字邏輯"],
+    prompt: `請根據資料夾內的參考資料，幫我梳理出簡報大綱與各頁投影片的文字。
+
+主題是〔你的主題〕，目標聽眾是〔你的目標受眾〕，預計製作〔X〕頁。
+
+請將結果整理成一份 Markdown 檔案。中間如果資訊不足，要先反問我，不要直接生成。`,
+    placeholders: ["\u3014\u4f60\u7684\u4e3b\u984c\u3015", "\u3014\u4f60\u7684\u76ee\u6a19\u53d7\u773e\u3015", "\u3014X\u3015"]
+  },
+  {
+    id: "mt-codex-deck-3",
+    title: "路線 A：依大綱產出可編輯 PPTX",
+    category: "工具專屬",
+    model: "GPT-5.5 / Codex",
+    source: "經理人 / 林柏源",
+    sourceUrl: "https://www.managertoday.com.tw/articles/view/72295",
+    note: "先在 Codex 外掛庫掛載 presentations 技能，再依確認好的 Markdown 大綱輸出保留文字方塊、可自由修改的 PPTX",
+    tags: ["Codex", "PPTX", "可編輯簡報", "presentations 技能"],
+    prompt: `請根據我們剛剛確認好的 Markdown 文字大綱，幫我製作一份完整的簡報，並輸出成 PPTX 檔案。`,
+    placeholders: []
+  },
+  {
+    id: "mt-codex-deck-4",
+    title: "路線 B：Images 2.0 生成 16:9 高質感簡報圖",
+    category: "工具專屬",
+    model: "GPT-5.5 / Codex / Images 2.0",
+    source: "經理人 / 林柏源",
+    sourceUrl: "https://www.managertoday.com.tw/articles/view/72295",
+    note: "建議先開啟 Thinking 並切換到延伸（Extended）模式提高多圖生成準確度；生成後壓 Logo、只交付 PNG 檔到資料夾，失敗時先詢問不得改用其他方式",
+    tags: ["Codex", "Images 2.0", "純圖片簡報", "16:9", "Logo 後製"],
+    prompt: `請根據〔XXX（簡報大綱的檔案名稱)〕製作簡報圖片，總共給我〔X〕張圖片。
+
+請用 Images 2.0 生成〔X〕張 16:9 簡報圖。生成後務必把〔X（例如企業 Logo）〕原檔後製壓在每張右上角，最後只交付「已壓 logo 的 PNG 檔」到資料夾，不要只顯示在對話中。
+
+若 Images 2.0 失敗，先詢問我，不要改用其他製作方式。`,
+    placeholders: ["\u3014XXX\uff08\u7c21\u5831\u5927\u7db1\u7684\u6a94\u6848\u540d\u7a31)\u3015", "\u3014X\u3015", "\u3014X\uff08\u4f8b\u5982\u4f01\u696d Logo\uff09\u3015"]
+  },
+  {
+    id: "mt-codex-deck-5",
+    title: "打包簡報圖片成 PDF",
+    category: "工具專屬",
+    model: "GPT-5.5 / Codex",
+    source: "經理人 / 林柏源",
+    sourceUrl: "https://www.managertoday.com.tw/articles/view/72295",
+    note: "路線 B 收尾指令：把生成好的簡報圖一次打包成可下載的 PDF 檔",
+    tags: ["Codex", "PDF", "打包", "簡報交付"],
+    prompt: `請幫我把這些生成的簡報圖片，直接放在同一份 PDF 檔案裡面給我下載。`,
+    placeholders: []
+  },
+  {
+    id: "mt-codex-deck-6",
+    title: "復盤流程並建立專屬 Skill（自動化按鈕）",
+    category: "工具專屬",
+    model: "GPT-5.5 / Codex",
+    source: "經理人 / 林柏源",
+    sourceUrl: "https://www.managertoday.com.tw/articles/view/72295",
+    note: "把跑通的完美工作流存成可一句話觸發的 Skill：AI 自動復盤用過的工具、風格規範與步驟，寫進規則文件，未來自動套用相同標準",
+    tags: ["Codex", "Skill", "自動化", "工作流復盤"],
+    prompt: `前面這個簡報檔案製作的流程非常棒。請幫我復盤一下過程，並把這次的簡報製作流程整理成 skill。觸發條件是我說「〔你設定的觸發詞〕」時使用。
+
+流程規範如下：先梳理大綱；等我確認每頁文字後，再依照這次的視覺風格、品牌色與版面規範產出 16:9 圖片；最後把所有圖片打包成 PDF。
+
+請一步一步分析你用了哪些工具，並寫進對應的規則文件中。`,
+    placeholders: ["\u3014\u4f60\u8a2d\u5b9a\u7684\u89f8\u767c\u8a5e\u3015"]
   }
 ];
 
