@@ -345,6 +345,57 @@
   }
   .show-fav-only.active { color: #f59e0b; border-color: #f59e0b; background: rgba(245,158,11,.1); }
 
+  /* ── Home / 總覽首頁 ── */
+  .home { padding: 24px; }
+  .home-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+  @media (max-width: 640px) { .home-stats { grid-template-columns: 1fr 1fr; } }
+  .home-stat { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+  .home-stat .num { font-size: 26px; font-weight: 700; color: var(--accent); }
+  .home-stat .lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .home-search-wrap { position: relative; margin-bottom: 22px; }
+  .home-search-wrap input { width: 100%; padding: 12px 16px; background: var(--panel-2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; font-size: 15px; }
+  .home-search-wrap input:focus { outline: none; border-color: var(--accent); }
+  .home-results { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+  .home-result { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 13px; transition: border-color .15s; }
+  .home-result:hover { border-color: var(--accent); }
+  .home-result .rtype { font-size: 11px; padding: 1px 7px; border-radius: 99px; background: var(--panel-2); color: var(--muted); flex-shrink: 0; }
+  .home-result .rtitle { flex: 1; color: var(--text); }
+  .home-result .rcat { font-size: 11px; color: var(--muted); flex-shrink: 0; }
+  .home-entries { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  @media (max-width: 640px) { .home-entries { grid-template-columns: 1fr; } }
+  .home-entry { border: 1px solid var(--border); border-radius: 14px; padding: 18px; cursor: pointer; transition: border-color .2s, transform .15s; background: var(--panel); }
+  .home-entry:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .home-entry h3 { margin: 0 0 4px; font-size: 17px; font-weight: 700; color: var(--text); }
+  .home-entry .sub { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .home-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .home-thumbs .th { aspect-ratio: 1; border-radius: 6px; background-size: cover; background-position: center; background-color: var(--panel-2); border: 1px solid var(--border); }
+  .home-entry .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .home-entry .chips span { font-size: 12px; padding: 3px 9px; border-radius: 99px; background: var(--panel-2); color: var(--text); }
+  .home-fav { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border: 1px solid var(--border); border-radius: 12px; cursor: pointer; margin-bottom: 24px; background: var(--panel); transition: border-color .2s; }
+  .home-fav:hover { border-color: #f59e0b; }
+  .home-fav .star { font-size: 20px; }
+  .home-fav .txt { flex: 1; font-size: 14px; color: var(--text); }
+  .home-fav .cnt { font-size: 13px; color: #f59e0b; font-weight: 600; }
+  .home-sec-title { font-size: 15px; font-weight: 700; color: var(--text); margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+  .cat-index { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 22px; }
+  .cat-chip { font-size: 12.5px; padding: 5px 11px; border-radius: 99px; background: var(--panel); border: 1px solid var(--border); color: var(--text); cursor: pointer; transition: all .15s; }
+  .cat-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .cat-chip .c { color: var(--muted); margin-left: 4px; font-size: 11px; }
+  .cat-group-label { font-size: 12px; color: var(--muted); width: 100%; margin: 4px 0 2px; }
+  .recent-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 12px; }
+  .recent-row { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 13px; transition: border-color .15s; }
+  .recent-row:hover { border-color: var(--accent); }
+  .recent-row .rtype { font-size: 11px; padding: 1px 7px; border-radius: 99px; background: var(--panel-2); color: var(--muted); flex-shrink: 0; }
+  .recent-row .rtitle { flex: 1; color: var(--text); }
+  .recent-row .rcat { font-size: 11px; color: var(--muted); flex-shrink: 0; }
+  /* group-toggle (圖庫分組切換) */
+  .group-toggle { padding: 9px 14px; background: var(--panel-2); border: 1px solid var(--border); color: var(--muted); border-radius: 8px; font-size: 13px; cursor: pointer; transition: all .2s; white-space: nowrap; }
+  .group-toggle.active { color: var(--accent); border-color: var(--accent); background: rgba(125,211,252,.1); }
+  .grid.grouped { display: block; }
+  .group-head { font-size: 16px; font-weight: 700; margin: 22px 0 12px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .group-head:first-child { margin-top: 4px; }
+  .group-head .gcount { font-size: 13px; color: var(--muted); font-weight: 500; }
+
 </style>
 </head>
 <body>
@@ -371,15 +422,22 @@
 
 <nav class="tab-nav">
   <div class="wrap">
-    <button class="tab-btn active" data-tab="image">🖼️ 圖像提示詞圖庫</button>
+    <button class="tab-btn active" data-tab="home">🏠 總覽</button>
+    <button class="tab-btn" data-tab="image">🖼️ 圖像圖庫</button>
     <button class="tab-btn" data-tab="text">📚 提示詞資料庫</button>
   </div>
 </nav>
 
-<div id="page-image" class="page active">
+<div id="page-home" class="page active">
+  <div class="home"><div class="wrap" id="home-content"></div></div>
+</div><!-- /page-home -->
+
+<div id="page-image" class="page">
 <div class="toolbar">
-  <div class="wrap" style="display:flex;gap:12px;flex-wrap:wrap;width:100%;">
+  <div class="wrap" style="display:flex;gap:12px;flex-wrap:wrap;width:100%;align-items:center;">
     <input type="text" id="search" placeholder="🔍 搜尋提示詞（中文 / 英文皆可，例如：海報、portrait、Lisbon）">
+    <button id="img-fav-toggle" class="show-fav-only">⭐ 只看收藏</button>
+    <button id="group-toggle" class="group-toggle">📑 依分類分組</button>
     <div class="filters" id="filters"></div>
   </div>
 </div>
@@ -1760,6 +1818,13 @@ const CAT_CLASS_MAP = {
 };
 let activeFilter = "全部";
 let searchTerm = "";
+let groupMode = false;
+let imgFavOnly = false;
+
+// Shared favorites store (image + text; ids are unique across both libraries)
+const FAV_KEY = "prompt_gallery_favs";
+let dbFavs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
+function saveFavs() { localStorage.setItem(FAV_KEY, JSON.stringify([...dbFavs])); }
 
 const filtersEl = document.getElementById("filters");
 const gridEl = document.getElementById("grid");
@@ -1787,8 +1852,9 @@ function buildCard(p) {
   card.className = "card";
   const hasPlaceholders = p.placeholders && p.placeholders.length > 0;
   const catClass = CAT_CLASS_MAP[p.category] || "cat-1";
+  const isFav = dbFavs.has(p.id);
   const previewHtml = p.previewImage ? `
-    <div class="preview-wrap" data-full="${escapeHtml(p.previewImage)}" data-title="${escapeHtml(p.title)}">
+    <div class="preview-wrap" data-full="${escapeHtml(p.previewImage)}" data-title="${escapeHtml(p.title)}" data-vid="${escapeHtml(p.id)}" data-vcat="${escapeHtml(p.category)}">
       <div class="preview-skeleton">載入中…</div>
       <img src="${escapeHtml(p.previewImage)}" alt="${escapeHtml(p.title)} 示意圖" loading="lazy" referrerpolicy="no-referrer">
     </div>
@@ -1797,7 +1863,10 @@ function buildCard(p) {
     ${previewHtml}
     <div class="card-head">
       <h3 class="card-title">${escapeHtml(p.title)}</h3>
-      <span class="tag ${catClass}">${escapeHtml(p.category)}</span>
+      <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+        <span class="tag ${catClass}">${escapeHtml(p.category)}</span>
+        <button class="fav-btn img-fav${isFav ? " active" : ""}" data-id="${escapeHtml(p.id)}" title="${isFav ? "取消收藏" : "加入收藏"}">${isFav ? "⭐" : "☆"}</button>
+      </div>
     </div>
     <div class="card-meta">
       <span class="model">${escapeHtml(p.model)}</span>
@@ -1808,7 +1877,7 @@ function buildCard(p) {
     ${hasPlaceholders ? buildTemplateForm(p) : ""}
     <pre class="prompt-box" data-original="${escapeHtml(p.prompt)}" id="prompt-${p.id}">${escapeHtml(p.prompt)}</pre>
     <div class="card-actions">
-      <button class="btn primary copy-btn" data-target="prompt-${p.id}">📋 複製提示詞</button>
+      <button class="btn primary copy-btn" data-target="prompt-${p.id}" data-vtype="image" data-vid="${escapeHtml(p.id)}" data-vtitle="${escapeHtml(p.title)}" data-vcat="${escapeHtml(p.category)}">📋 複製提示詞</button>
       <button class="btn reset-btn" data-target="prompt-${p.id}" style="${hasPlaceholders ? '' : 'display:none;'}">↻ 重設</button>
     </div>
   `;
@@ -1834,6 +1903,7 @@ function render() {
   gridEl.innerHTML = "";
   const term = searchTerm.toLowerCase();
   const filtered = PROMPTS.filter(p => {
+    if (imgFavOnly && !dbFavs.has(p.id)) return false;
     const catMatch = activeFilter === "全部" || p.category === activeFilter;
     const searchMatch = !term ||
       p.title.toLowerCase().includes(term) ||
@@ -1848,8 +1918,26 @@ function render() {
     return;
   }
   emptyEl.style.display = "none";
-  filtered.forEach(p => gridEl.appendChild(buildCard(p)));
-  statsEl.textContent = `目前顯示 ${filtered.length} / ${PROMPTS.length} 組提示詞${activeFilter !== '全部' ? `｜分類：${activeFilter}` : ''}${term ? `｜搜尋：「${searchTerm}」` : ''}`;
+  if (groupMode) {
+    gridEl.classList.add("grouped");
+    const order = CATEGORIES.filter(c => c !== "全部");
+    order.forEach(cat => {
+      const items = filtered.filter(p => p.category === cat);
+      if (items.length === 0) return;
+      const head = document.createElement("div");
+      head.className = "group-head";
+      head.innerHTML = `${escapeHtml(cat)} <span class="gcount">${items.length} 組</span>`;
+      gridEl.appendChild(head);
+      const sub = document.createElement("div");
+      sub.className = "grid";
+      items.forEach(p => sub.appendChild(buildCard(p)));
+      gridEl.appendChild(sub);
+    });
+  } else {
+    gridEl.classList.remove("grouped");
+    filtered.forEach(p => gridEl.appendChild(buildCard(p)));
+  }
+  statsEl.textContent = `目前顯示 ${filtered.length} / ${PROMPTS.length} 組提示詞${activeFilter !== '全部' ? `｜分類：${activeFilter}` : ''}${term ? `｜搜尋：「${searchTerm}」` : ''}${groupMode ? '｜依分類分組' : ''}`;
   attachHandlers();
 }
 
@@ -1877,11 +1965,15 @@ function attachHandlers() {
     }
     wrap.addEventListener("click", () => {
       const full = wrap.dataset.full;
-      if (full) openLightbox(full);
+      if (full) {
+        recordView("image", wrap.dataset.vid, wrap.dataset.title, wrap.dataset.vcat);
+        openLightbox(full);
+      }
     });
   });
   document.querySelectorAll(".copy-btn").forEach(btn => {
     btn.onclick = () => {
+      if (btn.dataset.vid) recordView(btn.dataset.vtype || "image", btn.dataset.vid, btn.dataset.vtitle, btn.dataset.vcat);
       const targetId = btn.dataset.target;
       const promptEl = document.getElementById(targetId);
       const text = promptEl.textContent;
@@ -1894,6 +1986,18 @@ function attachHandlers() {
           btn.classList.remove("copied");
         }, 1500);
       });
+    };
+  });
+  gridEl.querySelectorAll(".img-fav").forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.id;
+      if (dbFavs.has(id)) { dbFavs.delete(id); } else { dbFavs.add(id); }
+      saveFavs();
+      btn.classList.toggle("active");
+      btn.textContent = dbFavs.has(id) ? "⭐" : "☆";
+      btn.title = dbFavs.has(id) ? "取消收藏" : "加入收藏";
+      if (imgFavOnly) render();
     };
   });
   document.querySelectorAll(".reset-btn").forEach(btn => {
@@ -1951,27 +2055,7 @@ document.addEventListener("keydown", e => {
 
 render();
 
-// ══════════════════════════════════════════════
-// Tab Navigation
-// ══════════════════════════════════════════════
-document.querySelectorAll(".tab-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-    btn.classList.add("active");
-    const tab = btn.dataset.tab;
-    document.getElementById("page-" + tab).classList.add("active");
-    // restore hash for bookmarking
-    history.replaceState(null, "", "#" + tab);
-  });
-});
-// Restore tab from hash on load
-(function() {
-  const hash = location.hash.replace("#","");
-  if (hash === "text") {
-    document.querySelector('[data-tab="text"]').click();
-  }
-})();
+// (Tab navigation + home logic defined at end of script, after all data is loaded)
 
 // ══════════════════════════════════════════════
 // 提示詞資料庫 (Text Prompts)
@@ -3394,14 +3478,11 @@ const TEXT_CAT_CLASS_MAP = {
   "學習成長": "cat-1", "AI觀念": "cat-4"
 };
 
-const FAV_KEY = "prompt_gallery_favs";
-let dbFavs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || "[]"));
+const FAV_KEY_LEGACY_REMOVED = true;
 let dbFilter = "全部";
 let dbSearch = "";
 let dbModel = "";
 let dbFavOnly = false;
-
-function saveFavs() { localStorage.setItem(FAV_KEY, JSON.stringify([...dbFavs])); }
 
 function renderDbFilters() {
   const el = document.getElementById("db-filters");
@@ -3440,9 +3521,9 @@ function buildTextCard(p) {
     </div>
     ${noteHtml}
     ${tagsHtml}
-    <pre class="text-prompt-box" id="tp-${p.id}" data-original="${escapeHtml(p.prompt)}">${escapeHtml(p.prompt)}</pre>
+    <pre class="text-prompt-box" id="tp-${p.id}" data-original="${escapeHtml(p.prompt)}" data-vid="${escapeHtml(p.id)}" data-vtitle="${escapeHtml(p.title)}" data-vcat="${escapeHtml(p.category)}">${escapeHtml(p.prompt)}</pre>
     <div class="text-card-footer">
-      <button class="btn primary copy-btn" data-target="tp-${p.id}">📋 複製提示詞</button>
+      <button class="btn primary copy-btn" data-target="tp-${p.id}" data-vtype="text" data-vid="${escapeHtml(p.id)}" data-vtitle="${escapeHtml(p.title)}" data-vcat="${escapeHtml(p.category)}">📋 複製提示詞</button>
     </div>
   `;
   return card;
@@ -3490,10 +3571,14 @@ function renderDb() {
     };
   });
   grid.querySelectorAll(".text-prompt-box").forEach(box => {
-    box.addEventListener("click", () => box.classList.toggle("expanded"));
+    box.addEventListener("click", () => {
+      box.classList.toggle("expanded");
+      if (box.classList.contains("expanded") && box.dataset.vid) recordView("text", box.dataset.vid, box.dataset.vtitle, box.dataset.vcat);
+    });
   });
   grid.querySelectorAll(".copy-btn").forEach(btn => {
     btn.onclick = () => {
+      if (btn.dataset.vid) recordView(btn.dataset.vtype || "text", btn.dataset.vid, btn.dataset.vtitle, btn.dataset.vcat);
       const el = document.getElementById(btn.dataset.target);
       navigator.clipboard.writeText(el.dataset.original||el.textContent).then(() => {
         const orig = btn.textContent;
@@ -3518,6 +3603,263 @@ if (dbFavToggle) dbFavToggle.addEventListener("click", () => {
 });
 
 renderDb();
+
+// ══════════════════════════════════════════════
+// Group toggle (圖庫分組)
+// ══════════════════════════════════════════════
+const groupToggleEl = document.getElementById("group-toggle");
+if (groupToggleEl) {
+  groupToggleEl.addEventListener("click", () => {
+    groupMode = !groupMode;
+    groupToggleEl.classList.toggle("active", groupMode);
+    groupToggleEl.textContent = groupMode ? "🔲 全部平鋪" : "📑 依分類分組";
+    render();
+  });
+}
+const imgFavToggleEl = document.getElementById("img-fav-toggle");
+if (imgFavToggleEl) {
+  imgFavToggleEl.addEventListener("click", () => {
+    imgFavOnly = !imgFavOnly;
+    imgFavToggleEl.classList.toggle("active", imgFavOnly);
+    render();
+  });
+}
+
+// ══════════════════════════════════════════════
+// Tab navigation + deep-link router
+// ══════════════════════════════════════════════
+function switchTab(tab) {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  const pg = document.getElementById("page-" + tab);
+  if (pg) pg.classList.add("active");
+  if (tab === "home") renderHome();
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const t = btn.dataset.tab;
+    switchTab(t);
+    history.replaceState(null, "", "#" + t);
+  });
+});
+
+function goImage(cat) {
+  activeFilter = cat || "全部"; searchTerm = ""; if (searchEl) searchEl.value = "";
+  render(); switchTab("image");
+  history.replaceState(null, "", "#image" + (cat && cat !== "全部" ? ":" + encodeURIComponent(cat) : ""));
+}
+function goText(cat) {
+  dbFilter = cat || "全部"; dbSearch = ""; dbFavOnly = false;
+  if (dbSearchEl) dbSearchEl.value = ""; if (dbFavToggle) dbFavToggle.classList.remove("active");
+  renderDb(); switchTab("text");
+  history.replaceState(null, "", "#text" + (cat && cat !== "全部" ? ":" + encodeURIComponent(cat) : ""));
+}
+function goImageFav() {
+  imgFavOnly = true; activeFilter = "全部"; searchTerm = ""; if (searchEl) searchEl.value = "";
+  const t = document.getElementById("img-fav-toggle"); if (t) t.classList.add("active");
+  render(); switchTab("image");
+  history.replaceState(null, "", "#image:fav");
+}
+function goTextFav() {
+  dbFavOnly = true; dbFilter = "全部"; if (dbFavToggle) dbFavToggle.classList.add("active");
+  renderDb(); switchTab("text");
+  history.replaceState(null, "", "#text:fav");
+}
+function goFav() {
+  const hasTxt = TEXT_PROMPTS.some(p => dbFavs.has(p.id));
+  const hasImg = PROMPTS.some(p => dbFavs.has(p.id));
+  if (!hasTxt && hasImg) goImageFav();
+  else goTextFav();
+}
+function goImageSearch(t) {
+  activeFilter = "全部"; searchTerm = t; if (searchEl) searchEl.value = t;
+  render(); switchTab("image");
+}
+function goTextSearch(t) {
+  dbFilter = "全部"; dbFavOnly = false; dbSearch = t; if (dbSearchEl) dbSearchEl.value = t;
+  renderDb(); switchTab("text");
+}
+
+// ══════════════════════════════════════════════
+// 最近瀏覽 (localStorage)
+// ══════════════════════════════════════════════
+const RECENT_KEY = "prompt_gallery_recent";
+function loadRecent() {
+  try { return JSON.parse(localStorage.getItem(RECENT_KEY) || "[]"); } catch (e) { return []; }
+}
+function recordView(type, id, title, cat) {
+  if (!id) return;
+  let arr = loadRecent().filter(x => !(x.type === type && x.id === id));
+  arr.unshift({ type, id, title, cat });
+  arr = arr.slice(0, 20);
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(arr)); } catch (e) {}
+}
+function clearRecent() {
+  try { localStorage.removeItem(RECENT_KEY); } catch (e) {}
+}
+
+// ══════════════════════════════════════════════
+// Home / 總覽首頁
+// ══════════════════════════════════════════════
+function renderHome() {
+  const el = document.getElementById("home-content");
+  if (!el) return;
+  const imgCount = PROMPTS.length, txtCount = TEXT_PROMPTS.length;
+  const total = imgCount + txtCount;
+  const favCount = dbFavs.size;
+  const imgFavCount = PROMPTS.filter(p => dbFavs.has(p.id)).length;
+  const txtFavCount = TEXT_PROMPTS.filter(p => dbFavs.has(p.id)).length;
+  const srcSet = new Set();
+  PROMPTS.forEach(p => srcSet.add((p.source || "").split(" / ")[0]));
+  TEXT_PROMPTS.forEach(p => srcSet.add((p.source || "").split(" / ")[0]));
+  const srcCount = srcSet.size;
+
+  const imgCounts = {}; PROMPTS.forEach(p => imgCounts[p.category] = (imgCounts[p.category] || 0) + 1);
+  const txtCounts = {}; TEXT_PROMPTS.forEach(p => txtCounts[p.category] = (txtCounts[p.category] || 0) + 1);
+
+  const thumbs = PROMPTS.filter(p => p.previewImage).slice(0, 4)
+    .map(p => `<div class="th" style="background-image:url('${escapeHtml(p.previewImage)}')"></div>`).join("");
+  const txtTopChips = Object.entries(txtCounts).sort((a, b) => b[1] - a[1]).slice(0, 3)
+    .map(([c, n]) => `<span>${(TEXT_CAT_EMOJI[c] || "")} ${escapeHtml(c)} ${n}</span>`).join("");
+
+  const imgChips = CATEGORIES.filter(c => c !== "全部" && imgCounts[c])
+    .map(c => `<button class="cat-chip" data-type="image" data-cat="${escapeHtml(c)}">${escapeHtml(c)}<span class="c">${imgCounts[c]}</span></button>`).join("");
+  const txtChips = TEXT_CATEGORIES.filter(c => c !== "全部" && txtCounts[c])
+    .map(c => `<button class="cat-chip" data-type="text" data-cat="${escapeHtml(c)}">${(TEXT_CAT_EMOJI[c] || "")} ${escapeHtml(c)}<span class="c">${txtCounts[c]}</span></button>`).join("");
+
+  const recentImg = PROMPTS.slice(-3).reverse().map(p => ({ type: "image", title: p.title, cat: p.category }));
+  const recentTxt = TEXT_PROMPTS.slice(-5).reverse().map(p => ({ type: "text", title: p.title, cat: p.category }));
+  const recent = [...recentTxt, ...recentImg].slice(0, 8);
+  const recentHtml = recent.map(r => `
+    <div class="recent-row" data-type="${r.type}" data-title="${escapeHtml(r.title)}">
+      <span class="rtype">${r.type === "image" ? "🖼️ 圖像" : "📚 文字"}</span>
+      <span class="rtitle">${escapeHtml(r.title)}</span>
+      <span class="rcat">${escapeHtml(r.cat)}</span>
+    </div>`).join("");
+
+  const viewed = loadRecent().slice(0, 8);
+  const viewedHtml = viewed.length
+    ? viewed.map(r => `
+      <div class="recent-row" data-type="${r.type}" data-title="${escapeHtml(r.title || "")}">
+        <span class="rtype">${r.type === "image" ? "🖼️ 圖像" : "📚 文字"}</span>
+        <span class="rtitle">${escapeHtml(r.title || "")}</span>
+        <span class="rcat">${escapeHtml(r.cat || "")}</span>
+      </div>`).join("")
+    : `<div class="recent-row" style="cursor:default;"><span class="rtitle" style="color:var(--muted);">點圖放大、展開或複製提示詞後，會出現在這裡</span></div>`;
+
+  el.innerHTML = `
+    <div class="home-stats">
+      <div class="home-stat"><div class="num">${total}</div><div class="lbl">總提示詞</div></div>
+      <div class="home-stat"><div class="num">${imgCount}</div><div class="lbl">圖像提示詞</div></div>
+      <div class="home-stat"><div class="num">${txtCount}</div><div class="lbl">文字提示詞</div></div>
+      <div class="home-stat"><div class="num">${srcCount}</div><div class="lbl">來源</div></div>
+    </div>
+
+    <div class="home-search-wrap">
+      <input type="text" id="home-search" placeholder="🔍 全站搜尋（同時找圖像 + 文字提示詞）" autocomplete="off">
+      <div class="home-results" id="home-results"></div>
+    </div>
+
+    <div class="home-entries">
+      <div class="home-entry" id="entry-image">
+        <h3>🖼️ 圖像提示詞圖庫</h3>
+        <div class="sub">${imgCount} 組 · 點圖放大瀏覽、複製即用</div>
+        <div class="home-thumbs">${thumbs}</div>
+      </div>
+      <div class="home-entry" id="entry-text">
+        <h3>📚 提示詞資料庫</h3>
+        <div class="sub">${txtCount} 組 · 一鍵複製、模板填空</div>
+        <div class="chips">${txtTopChips}</div>
+      </div>
+    </div>
+
+    <div class="home-fav" id="entry-fav">
+      <span class="star">⭐</span>
+      <span class="txt">我的收藏</span>
+      <span class="cnt">${favCount} 筆（🖼️ ${imgFavCount}｜📚 ${txtFavCount}）</span>
+    </div>
+
+    <div class="home-sec-title">🗂️ 分類索引 — 點擊直達該分類</div>
+    <div class="cat-index">
+      <div class="cat-group-label">🖼️ 圖像（${imgCount}）</div>
+      ${imgChips}
+      <div class="cat-group-label">📚 文字（${txtCount}）</div>
+      ${txtChips}
+    </div>
+
+    <div class="home-sec-title" style="justify-content:space-between;">
+      <span>🕐 最近瀏覽</span>
+      <button id="clear-recent" style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:3px 10px;font-size:12px;cursor:pointer;">清除</button>
+    </div>
+    <div class="recent-list">${viewedHtml}</div>
+
+    <div class="home-sec-title">🆕 最近新增</div>
+    <div class="recent-list">${recentHtml}</div>
+  `;
+
+  const hs = document.getElementById("home-search");
+  if (hs) hs.addEventListener("input", e => renderHomeResults(e.target.value));
+  document.getElementById("entry-image").onclick = () => goImage("全部");
+  document.getElementById("entry-text").onclick = () => goText("全部");
+  document.getElementById("entry-fav").onclick = () => goFav();
+  const clrBtn = document.getElementById("clear-recent");
+  if (clrBtn) clrBtn.onclick = (e) => { e.stopPropagation(); clearRecent(); renderHome(); };
+  el.querySelectorAll(".cat-chip").forEach(chip => {
+    chip.onclick = () => {
+      if (chip.dataset.type === "image") goImage(chip.dataset.cat);
+      else goText(chip.dataset.cat);
+    };
+  });
+  el.querySelectorAll(".recent-row").forEach(row => {
+    row.onclick = () => {
+      if (row.dataset.type === "image") goImageSearch(row.dataset.title);
+      else goTextSearch(row.dataset.title);
+    };
+  });
+}
+
+function renderHomeResults(term) {
+  const box = document.getElementById("home-results");
+  if (!box) return;
+  const t = (term || "").trim().toLowerCase();
+  if (!t) { box.innerHTML = ""; return; }
+  const imgM = PROMPTS.filter(p =>
+    p.title.toLowerCase().includes(t) || p.category.toLowerCase().includes(t) ||
+    (p.source || "").toLowerCase().includes(t) || p.prompt.toLowerCase().includes(t)
+  ).map(p => ({ type: "image", title: p.title, cat: p.category }));
+  const txtM = TEXT_PROMPTS.filter(p =>
+    p.title.toLowerCase().includes(t) || p.category.toLowerCase().includes(t) ||
+    (p.source || "").toLowerCase().includes(t) || p.prompt.toLowerCase().includes(t) ||
+    (p.tags || []).some(x => x.toLowerCase().includes(t))
+  ).map(p => ({ type: "text", title: p.title, cat: p.category }));
+  const all = [...txtM, ...imgM].slice(0, 12);
+  if (all.length === 0) { box.innerHTML = `<div class="home-result" style="cursor:default;"><span class="rtitle" style="color:var(--muted);">找不到符合「${escapeHtml(term)}」的提示詞</span></div>`; return; }
+  box.innerHTML = all.map(r => `
+    <div class="home-result" data-type="${r.type}" data-title="${escapeHtml(r.title)}">
+      <span class="rtype">${r.type === "image" ? "🖼️ 圖像" : "📚 文字"}</span>
+      <span class="rtitle">${escapeHtml(r.title)}</span>
+      <span class="rcat">${escapeHtml(r.cat)}</span>
+    </div>`).join("");
+  box.querySelectorAll(".home-result[data-title]").forEach(row => {
+    row.onclick = () => {
+      if (row.dataset.type === "image") goImageSearch(row.dataset.title);
+      else goTextSearch(row.dataset.title);
+    };
+  });
+}
+
+// Initial route from hash
+(function() {
+  const raw = decodeURIComponent(location.hash.replace("#", ""));
+  if (!raw || raw === "home") { switchTab("home"); return; }
+  const idx = raw.indexOf(":");
+  const tab = idx === -1 ? raw : raw.slice(0, idx);
+  const sub = idx === -1 ? "" : raw.slice(idx + 1);
+  if (tab === "image") { if (sub === "fav") goImageFav(); else if (sub) goImage(sub); else switchTab("image"); }
+  else if (tab === "text") { if (sub === "fav") goFav(); else if (sub) goText(sub); else switchTab("text"); }
+  else switchTab("home");
+})();
 
 </script>
 </body>
