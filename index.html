@@ -466,6 +466,7 @@
       <option value="ChatGPT">ChatGPT</option>
       <option value="Claude">Claude</option>
       <option value="Gemini">Gemini</option>
+      <option value="NotebookLM">NotebookLM</option>
       <option value="通用">通用</option>
     </select>
     <button class="show-fav-only" id="db-fav-toggle">⭐ 只看收藏</button>
@@ -3639,6 +3640,230 @@ Gemini 3：沿用「角色／任務／背景／格式」四要素，搭配多模
     note: "影片七招中最強一招：建立自動化對話流程，環環相扣處理極複雜專案。（模板依影片口語描述整理，非逐字原文）",
     tags: ["提示鏈", "Prompt Chaining", "複雜專案", "七大神級"],
     prompt: `我們要用一連串步驟完成 ［複雜專案］。請一個階段一個階段進行：先告訴我你規劃的階段順序，然後從第一階段開始；每完成一個階段就停下來，把該階段的產出當成下一階段的輸入，等我確認後再繼續。`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-1",
+    title: "核心五問掌握全貌",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "讓 AI 先提煉 5 個關鍵問題，回答完即掌握全部核心觀點與主要脈絡",
+    tags: ["NotebookLM", "核心問題", "提問框架", "快速理解"],
+    prompt: `請分析所有上傳資料，產出 5 個關鍵問題。只要完整回答這 5 題，就能掌握全部核心觀點與主要脈絡`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-2",
+    title: "最驚奇資訊＋原文引用",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "找出資料中最令人驚訝或有趣的資訊，附關鍵原文引用並說明為何重要",
+    tags: ["NotebookLM", "亮點萃取", "原文引用", "重點"],
+    prompt: `這些資料中，最令人驚訝或最有趣的資訊是什麼？請附上關鍵原文引用，並簡短說明為何重要`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-3",
+    title: "資深PM決策洞察萃取",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "扮演資深產品經理，只提取可行決策洞察，忽略空泛敘述",
+    tags: ["NotebookLM", "角色扮演", "決策洞察", "產品經理"],
+    prompt: `請扮演資深產品經理，審閱這些文件並只提取「可行的決策洞察」，忽略空泛敘述。
+請用以下格式輸出：
+* 使用者證據（附引用）
+* 技術或資源限制
+* 盲點與缺失`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-4",
+    title: "領域研究助理嚴謹分析",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "扮演特定領域研究助理，客觀嚴謹分析方法論、樣本數、實驗設計與矛盾之處（請替換「填入領域」）",
+    tags: ["NotebookLM", "角色扮演", "研究方法", "批判分析"],
+    prompt: `請扮演某領域（填入領域）的研究助理。語氣客觀嚴謹，不需解釋基礎名詞。
+重點分析方法論、樣本數、實驗設計、統計顯著性與相互矛盾之處。
+請用粗體段落標示：
+* 主要發現
+* 方法優缺點
+* 研究矛盾點`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-5",
+    title: "跨資料研究主題盤點",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "從多篇資料找出最常出現的研究主題並以表格呈現（請替換主題「＿＿＿」）",
+    tags: ["NotebookLM", "主題盤點", "跨文件", "表格輸出"],
+    prompt: `根據主題「＿＿＿」，從多篇資料中找出 5–10 個最常出現的研究主題。
+每個主題請包含：
+* 簡短定義
+* 出現在哪些資料
+* 是被討論、質疑還是驗證
+最後用表格呈現`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-6",
+    title: "費曼學習法快速理解",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "用費曼技巧拆解主題：白話說明、找出模糊處、重新闡述、生活化類比",
+    tags: ["NotebookLM", "費曼學習法", "類比", "快速學習"],
+    prompt: `請根據我上傳的資料，使用費曼技巧說明這個主題：
+1. 簡單說明（不使用專業術語）
+2. 找出資料中模糊或令人困惑的部分
+3. 用更清晰的方式重新說明
+4. 提供一個貼近生活的類比，以鞏固概念`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-7",
+    title: "章節精通學習指南",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "把資料整理成章節精通指南：概述、學習目標、大綱、關鍵框架與難點",
+    tags: ["NotebookLM", "學習指南", "章節整理", "框架"],
+    prompt: `請根據我的資料，將內容整理成章節精通指南：
+* 2–3 句話的主題概述
+* 學習目標
+* 大綱：主要主題 → 子主題 → 細節
+* 關鍵框架／公式及其適用時機
+* 最難理解的 3 個部分，以及如何輕鬆理解它們`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-8",
+    title: "研究摘要（引用驗證風格）",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "僅依上傳資料分析主題，含歷史案例、研究方法、主要貢獻者與可執行建議（請替換〔主題〕）",
+    tags: ["NotebookLM", "研究摘要", "引用驗證", "結論建議"],
+    prompt: `僅使用我上傳的資料，分析〔主題〕。
+包含以下內容：
+* 重要歷史案例及現代應用
+* 研究方法與證據蒐集方式
+* 主要貢獻者及其論點
+* 結論摘要與可執行的重點建議`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-9",
+    title: "決策矩陣比較選項",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "建立決策矩陣比較選項，含評估標準、權重、取捨風險與最終建議",
+    tags: ["NotebookLM", "決策矩陣", "選項比較", "信心程度"],
+    prompt: `請根據我的資料，建立一個用於比較以下選項的決策矩陣：
+選項 A vs 選項 B（如適用，加入選項 C）。
+包含：
+* 做決策的評估標準
+* 各標準的權重
+* 各選項的取捨與風險
+* 基於資料的最終建議，並標示信心程度`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-10",
+    title: "高價值可執行重點萃取",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "只提取最具價值、最可執行的重點，每點附「為什麼重要」說明",
+    tags: ["NotebookLM", "重點萃取", "可執行", "去蕪存菁"],
+    prompt: `請從我的資料中，只提取最具價值、最可執行的重點。規則：
+* 忽略所有填充內容與廢話
+* 優先篩選能影響決策或帶來新思維框架的內容
+* 每個提取的重點附上一句「為什麼重要」的說明`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-11",
+    title: "筆記轉寫作大綱（多平台）",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "把資料轉成部落格、YouTube 腳本與推文串大綱，皆含具體引用與佐證區塊",
+    tags: ["NotebookLM", "內容創作", "寫作大綱", "多平台"],
+    prompt: `請根據我的資料，建立以下內容素材：
+1. 詳細的部落格文章大綱
+2. YouTube 腳本大綱
+3. 10 則推文的系列串大綱
+每種格式都必須包含文本中的具體引用，以及專屬的「佐證資料」區塊`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-12",
+    title: "主動回憶練習題25題",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "依資料出 25 道練習題（記憶／應用／分析），附引用解答與錯選說明",
+    tags: ["NotebookLM", "主動回憶", "練習題", "自我測驗"],
+    prompt: `請根據我的資料，出 25 道練習題：
+* 10 題基礎記憶題
+* 10 題應用題
+* 5 題綜合分析題
+* 提供附有引用的解答，並說明錯誤選項錯在哪裡`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-13",
+    title: "資訊圖表規劃（視覺學習）",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "規劃資訊密度高的資訊圖表：層次結構、視覺元素、各區塊內容與來源引用",
+    tags: ["NotebookLM", "資訊圖表", "視覺學習", "版面規劃"],
+    prompt: `請根據我的資料，規劃一份清晰、資訊密度高的資訊圖表。要求：
+* 清楚的層次結構
+* 所有視覺元素皆有意義，不做無謂裝飾
+* 核心概念同時以視覺與文字雙重強化
+輸出內容：
+* 標題
+* 各區塊內容
+* 圖示／示意圖建議
+* 各區塊的精簡文字摘錄
+每個區塊附上來源引用`,
+    placeholders: []
+  },
+  {
+    id: "nblm-cmd-14",
+    title: "主張→證據對應地圖",
+    category: "工具專屬",
+    model: "NotebookLM",
+    source: "社群整理（NotebookLM 指令集）",
+    sourceUrl: "https://notebooklm.google.com/",
+    note: "建立主張－證據對應表：主張、引文、來源、強度、假設前提與反面證據",
+    tags: ["NotebookLM", "主張證據", "研究等級", "表格輸出"],
+    prompt: `建立一份主張－證據對應圖。
+以表格形式輸出，欄位包含：
+主張 | 支持引文／摘述 | 來源與位置 | 強度（低／中／高）| 假設前提 | 反面證據`,
     placeholders: []
   }
 ];
