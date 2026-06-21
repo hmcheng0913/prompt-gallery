@@ -4061,10 +4061,18 @@ function goImage(cat) {
   history.replaceState(null, "", "#image" + (cat && cat !== "全部" ? ":" + encodeURIComponent(cat) : ""));
 }
 function goText(cat) {
-  dbFilter = cat || "全部"; dbSearch = ""; dbFavOnly = false;
+  dbFilter = cat || "全部"; dbSearch = ""; dbFavOnly = false; dbModel = "";
+  if (dbModelEl) dbModelEl.value = "";
   if (dbSearchEl) dbSearchEl.value = ""; if (dbFavToggle) dbFavToggle.classList.remove("active");
   renderDb(); switchTab("text");
   history.replaceState(null, "", "#text" + (cat && cat !== "全部" ? ":" + encodeURIComponent(cat) : ""));
+}
+function goTextModel(model) {
+  dbModel = model || ""; dbFilter = "全部"; dbSearch = ""; dbFavOnly = false;
+  if (dbModelEl) dbModelEl.value = dbModel;
+  if (dbSearchEl) dbSearchEl.value = ""; if (dbFavToggle) dbFavToggle.classList.remove("active");
+  renderDb(); switchTab("text");
+  history.replaceState(null, "", "#text" + (model ? ":model:" + encodeURIComponent(model) : ""));
 }
 function goImageFav() {
   imgFavOnly = true; activeFilter = "全部"; searchTerm = ""; if (searchEl) searchEl.value = "";
@@ -4159,6 +4167,14 @@ function renderHome() {
       </div>`).join("")
     : `<div class="recent-row" style="cursor:default;"><span class="rtitle" style="color:var(--muted);">點圖放大、展開或複製提示詞後，會出現在這裡</span></div>`;
 
+  // 依模型瀏覽（資料庫）— 用 includes 比對，與 db-model 下拉篩選一致
+  const MODEL_TOKENS = ["通用", "ChatGPT", "Claude", "Gemini", "NotebookLM"];
+  const MODEL_EMOJI = { "通用": "🌐", "ChatGPT": "💬", "Claude": "🪶", "Gemini": "✨", "NotebookLM": "📒" };
+  const modelCounts = {};
+  MODEL_TOKENS.forEach(m => { modelCounts[m] = TEXT_PROMPTS.filter(p => (p.model || "").includes(m)).length; });
+  const modelChips = MODEL_TOKENS.filter(m => modelCounts[m])
+    .map(m => `<button class="cat-chip" data-model="${escapeHtml(m)}">${MODEL_EMOJI[m] || "🤖"} ${escapeHtml(m)}<span class="c">${modelCounts[m]}</span></button>`).join("");
+
   el.innerHTML = `
     <div class="home-stats">
       <div class="home-stat"><div class="num">${total}</div><div class="lbl">總提示詞</div></div>
@@ -4191,6 +4207,9 @@ function renderHome() {
       <span class="cnt">${favCount} 筆（🖼️ ${imgFavCount}｜📚 ${txtFavCount}）</span>
     </div>
 
+    <div class="home-sec-title">🤖 依模型瀏覽 — 點擊篩選資料庫</div>
+    <div class="cat-index">${modelChips}</div>
+
     <div class="home-sec-title">🗂️ 分類索引 — 點擊直達該分類</div>
     <div class="cat-index">
       <div class="cat-group-label">🖼️ 圖像（${imgCount}）</div>
@@ -4218,7 +4237,8 @@ function renderHome() {
   if (clrBtn) clrBtn.onclick = (e) => { e.stopPropagation(); clearRecent(); renderHome(); };
   el.querySelectorAll(".cat-chip").forEach(chip => {
     chip.onclick = () => {
-      if (chip.dataset.type === "image") goImage(chip.dataset.cat);
+      if (chip.dataset.model) goTextModel(chip.dataset.model);
+      else if (chip.dataset.type === "image") goImage(chip.dataset.cat);
       else goText(chip.dataset.cat);
     };
   });
