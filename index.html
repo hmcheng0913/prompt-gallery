@@ -4014,6 +4014,90 @@ Gemini 3：沿用「角色／任務／背景／格式」四要素，搭配多模
 以表格形式輸出，欄位包含：
 主張 | 支持引文／摘述 | 來源與位置 | 強度（低／中／高）| 假設前提 | 反面證據`,
     placeholders: []
+  },
+  {
+    id: "cw-claude-1",
+    title: "讓 Claude Code 用大白話解釋運作流程",
+    category: "工具專屬",
+    model: "Claude Code",
+    source: "Anthropic 工程師 Thariq / XDA",
+    sourceUrl: "https://www.cw.com.tw/article/5141619",
+    note: "重塑 Claude Code 的工作與溝通方式：把實際工作交給非同步背景代理，主階段定期回報；並用 Explore Agent 以白話文解釋運作原理。適合無技術背景者。【在這裡輸入你的任務需求】為可替換變數。",
+    tags: ["Claude Code", "背景代理", "Explore Agent", "白話文", "非技術背景"],
+    prompt: `這是我的提示詞:「【在這裡輸入你的任務需求】」
+請幫我啟動一個非同步背景代理來執行這項工作,並在它工作的過程中定期查看進度,然後幫我摘要目前發生了什麼事。
+我完全沒有技術背景,所以請用最簡單的大白話為我做摘要。請利用「探索代理」(Explore Agent)向我解釋另一個代理正在處理的事情背後的運作原理,好讓我在過程中順便學習。如果背景代理遇到任何錯誤,請立刻停下來告訴我,並引導我修復它。
+請記住,我沒有任何技術背景,任何技術術語對我都沒有幫助。`,
+    placeholders: ["\u5728\u9019\u88e1\u8f38\u5165\u4f60\u7684\u4efb\u52d9\u9700\u6c42"]
+  },
+  {
+    id: "cw-claude-2",
+    title: "讓 Claude 一直考你,直到你真的學會",
+    category: "學習成長",
+    model: "Claude Code",
+    source: "Anthropic 工程師 Suzanne(經 Thariq 分享)/ XDA",
+    sourceUrl: "https://www.cw.com.tw/article/5141619",
+    note: "把 Claude 變成一位老師,一次只教一個概念,先要你用自己的話複述、確認真懂後才進下一步。透過 AskUserQuestion 出題測驗,並以 /goal 設定停止條件:沒證明你全懂之前,工作階段不能結束。",
+    tags: ["學習", "蘇格拉底式教學", "AskUserQuestion", "ELI5", "費曼"],
+    prompt: `你是一位教學成效極高的睿智老師,你的目標是確保使用者能夠深入理解這次工作階段中的所有內容。
+請在每個步驟循序漸進地教學,不要等到最後再一次性說明所有內容。在進入下一個階段之前,你必須先確認使用者已經完全掌握目前階段的所有重點。這些重點包括高層次概念(例如動機與目的),也包括低層次細節(例如商業邏輯與邊界情況)。
+請持續維護一份 Markdown 文件,其中包含使用者應該理解事項的檢查清單。請確保使用者理解:
+- 問題本身:問題為何存在、問題的成因,以及不同的可能分支情況。
+- 解決方案:為什麼採用這種解法、設計決策的原因,以及需要考慮的邊界情況。
+- 更廣泛的背景脈絡:這件事為什麼重要,以及這些變更會產生哪些影響。
+請確保她理解「為什麼」(並持續往更深層的原因追問),同時也要理解「是什麼」以及「如何運作」。充分理解問題本身非常重要。
+為了瞭解使用者目前的理解程度,請主動要求使用者先用自己的話重新說明自己的理解。接著再根據使用者的回答協助補足缺漏的地方。使用者可能會向你提問,也可能要求你用 ELI5(像對五歲小孩解釋)、ELI14(像對十四歲青少年解釋)或 ELII(像對實習生解釋)的方式說明。
+請使用 AskUserQuestion 透過開放式問題或選擇題來測驗使用者,務必不斷變換正確答案的位置,作答完成之前不要公布答案。如果有必要,可以展示程式碼,或引導使用者使用除錯工具(debugger)。
+/goal 在你確定使用者已經證明自己瞭解清單上所有項目之前,這個工作階段不應該結束。`,
+    placeholders: []
+  },
+  {
+    id: "cw-claude-3",
+    title: "在 Claude 動工之前,先對你進行需求訪談",
+    category: "工具專屬",
+    model: "Claude Code",
+    source: "Anthropic 工程師 Thariq / XDA",
+    sourceUrl: "https://www.cw.com.tw/article/5141619",
+    note: "顛覆傳統互動:不是你先講規格,而是讓 Claude 用 AskUserQuestionTool 對你連珠炮提問——邊緣案例、技術權衡、UI/UX 決策等,把藏在腦中的需求引導出來,再寫成最終規格。搭配 @SPEC.md 使用。",
+    tags: ["規劃", "需求訪談", "AskUserQuestion", "SPEC", "Edge cases"],
+    prompt: `請閱讀這份 @SPEC.md,使用 AskUserQuestionTool 詳細問我關於這裡面的任何事情,包括技術實作、UI & UX、隱憂、權衡等。請確保提出的問題不是那種顯而易見的表面問題。`,
+    placeholders: []
+  },
+  {
+    id: "cw-claude-4",
+    title: "讓 Claude 把你的開發計畫做成 HTML 網頁",
+    category: "工具專屬",
+    model: "Claude Code",
+    source: "Anthropic 工程師 Thariq / XDA",
+    sourceUrl: "https://www.cw.com.tw/article/5141619",
+    note: "Markdown 超過 100 行就沒人想讀;改用 HTML 可嵌入圖表、表格、語法突顯程式碼、可點擊滑桿與複製按鈕,部署後直接丟連結分享。讓 Claude 把實作計畫做成結構精美的 HTML 頁面,附原型、數據流向圖與核心程式碼片段。",
+    tags: ["HTML", "實作計畫", "Mock-ups", "Data Flow", "Code Review"],
+    prompt: `請在一個 HTML 檔案中建立一份詳盡的實作計畫。請務必在裡面製作一些原型(Mock-ups)、展示數據流(Data Flow),加入我可能需要審查的重要程式碼片段。請確保內容很容易閱讀、消化。`,
+    placeholders: []
+  },
+  {
+    id: "cw-claude-5",
+    title: "把重複步驟打包成 Skill 快捷指令",
+    category: "工具專屬",
+    model: "Claude Code",
+    source: "Anthropic 官方提示詞庫 / XDA",
+    sourceUrl: "https://www.cw.com.tw/article/5141619",
+    note: "若你老是重複引導 Claude 執行相同固定步驟,就該打包成「技能」(Skill)。第一個中括號是觸發快捷鍵名稱(如 /ship),第二個中括號填入你每次都懶得重教的步驟序列;Claude 會自動寫成技能,團隊任何人都能直接執行。",
+    tags: ["Skill", "快捷指令", "自動化", "linter", "commit"],
+    prompt: `請為這個專案建立一個 [/ship] 技能,用來執行 [執行 linter 語法檢查和測試,然後草擬一份 commit 訊息]。`,
+    placeholders: ["/ship", "\u57f7\u884c linter \u8a9e\u6cd5\u6aa2\u67e5\u548c\u6e2c\u8a66,\u7136\u5f8c\u8349\u64ec\u4e00\u4efd commit \u8a0a\u606f"]
+  },
+  {
+    id: "cw-claude-6",
+    title: "摘要 Session 並更新 CLAUDE.md 記憶",
+    category: "工具專屬",
+    model: "Claude Code",
+    source: "Anthropic 官方提示詞庫 / XDA",
+    sourceUrl: "https://www.cw.com.tw/article/5141619",
+    note: "CLAUDE.md 是 Claude Code 每次啟動對話都會優先讀取的常駐記憶體。對話結束前用這句話,讓 Claude 自己提出哪些克服過的障礙、專案慣例值得留下,你只要保留真正重要的部分,避免下次對話又得從頭來過。",
+    tags: ["CLAUDE.md", "記憶", "Session 摘要", "持久化"],
+    prompt: `摘要我們這個 Session 做了什麼,建議有哪些內容應該新增到 CLAUDE.md 中。`,
+    placeholders: []
   }
 ];
 
