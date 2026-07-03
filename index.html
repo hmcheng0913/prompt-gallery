@@ -4224,6 +4224,30 @@ Gemini 3：沿用「角色／任務／背景／格式」四要素，搭配多模
 ## 取捨提醒
 本準則偏向「謹慎優先於速度」。瑣碎任務（改錯字、明顯的一行修改）請自行斟酌，不必每次都套用完整流程。目的是減少非瑣碎工作上的昂貴錯誤，而不是拖慢簡單任務。`,
     placeholders: []
+  },
+  {
+    id: "claude-design-1",
+    title: "Claude Design 簡報生成萬能公式（目標＋版面配置＋內容＋受眾）",
+    category: "工具專屬",
+    model: "Claude Design",
+    source: "百香果工作頻道 Rita / YouTube",
+    sourceUrl: "https://www.youtube.com/watch?v=T85REDn9vvA",
+    note: "Claude Design（研究預覽版，限 Pro/Max/Team/Enterprise）PPT 生成工作流；免費用戶可用一般 Claude 生成 PPT，但風格較陽春。整理自影片教學，非逐字 prompt",
+    tags: ["Claude Design", "PPT", "簡報", "Tweaks", "Canva", "工作流"],
+    prompt: `【萬能指令公式】目標 + 版面配置 + 內容 + 受眾
+
+【完整工作流】
+1. 建立 Claude 專案，先上傳參考資料（產品手冊、品牌色碼、過往簡報/課程資料），避免生成的風格與品牌不搭
+2. 下指令時具體描述四要素：
+   - 目標：簡報的用途
+   - 版面配置：重要區塊的排列方式、頁數需求
+   - 內容：要呈現的核心資訊
+   - 受眾：簡報對象是誰
+   描述越具體，生成質感越好
+3. 顏色/字體不滿意 → 用 Tweaks 功能即時微調重點色與字體大小，不必重新下指令重新生成
+4. 版面調整直接用對話指令，例如：「把圖片換到左邊」
+5. 滿意後匯出 PPTX → 可再匯入 Canva 做最後美化（圖庫更多）`,
+    placeholders: []
   }
 ];
 
