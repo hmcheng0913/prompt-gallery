@@ -4248,6 +4248,28 @@ Gemini 3：沿用「角色／任務／背景／格式」四要素，搭配多模
 4. 版面調整直接用對話指令，例如：「把圖片換到左邊」
 5. 滿意後匯出 PPTX → 可再匯入 Canva 做最後美化（圖庫更多）`,
     placeholders: []
+  },
+  {
+    id: "cross-ai-prefix-guide-1",
+    title: "建立跨 AI 通用的提示語法 & 自訂前綴指南",
+    category: "提示詞技巧",
+    model: "ChatGPT / Claude / Gemini",
+    source: "使用者截圖上傳",
+    sourceUrl: "",
+    note: "這是使用者自訂的慣例，並非 ChatGPT、Claude、Gemini 官方定義的保留指令或通用協定。三家 AI 之所以都能跟上，是因為它們都擅長理解自然語言中的角色扮演與語氣指令；只要在對話中定義一次（或維持一致用法），任一家夠強的 LLM 都能配合。",
+    prompt: `建立一套跨 AI（ChatGPT、Claude、Gemini 等）都容易理解的提示語法，設計自己的前綴：
+
+- /human：自然、口語、像真人交流
+- /expert：顧問模式，重視分析與決策
+- /writer：文案模式，重視可讀性與感染力
+- /critic：批判模式，主動找漏洞
+- /ceo：高階主管模式，只講重點與商業影響
+- /ppt：輸出簡報架構與重點
+- /table：優先用表格整理資訊
+- /taiwan：使用台灣繁體中文與在地用語
+
+用法：在提示詞開頭加上前綴，AI 會依語意自動代入對應語氣/格式。`,
+    placeholders: []
   }
 ];
 
