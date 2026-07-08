@@ -361,7 +361,7 @@
   .home-result .rtype { font-size: 11px; padding: 1px 7px; border-radius: 99px; background: var(--panel-2); color: var(--muted); flex-shrink: 0; }
   .home-result .rtitle { flex: 1; color: var(--text); }
   .home-result .rcat { font-size: 11px; color: var(--muted); flex-shrink: 0; }
-  .home-entries { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
+  .home-entries { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 24px; }
   @media (max-width: 640px) { .home-entries { grid-template-columns: 1fr; } }
   .home-entry { border: 1px solid var(--border); border-radius: 14px; padding: 18px; cursor: pointer; transition: border-color .2s, transform .15s; background: var(--panel); }
   .home-entry:hover { border-color: var(--accent); transform: translateY(-2px); }
@@ -427,6 +427,7 @@
     <button class="tab-btn active" data-tab="home">🏠 總覽</button>
     <button class="tab-btn" data-tab="image">🖼️ 圖像圖庫</button>
     <button class="tab-btn" data-tab="text">📚 提示詞資料庫</button>
+    <button class="tab-btn" data-tab="slides">📊 簡報技巧</button>
   </div>
 </nav>
 
@@ -480,6 +481,29 @@
     </div>
   </main>
 </div><!-- /page-text -->
+
+<div id="page-slides" class="page">
+  <div class="db-toolbar">
+    <input type="text" id="slides-search" placeholder="🔍 搜尋簡報提示詞（例如：NotebookLM、YAML、風格指令）">
+    <select class="db-model-select" id="slides-model">
+      <option value="">全部工具</option>
+      <option value="NotebookLM">NotebookLM</option>
+      <option value="ChatGPT">ChatGPT</option>
+      <option value="Claude">Claude</option>
+      <option value="Gemini">Gemini</option>
+      <option value="Grok">Grok</option>
+      <option value="通用">通用</option>
+    </select>
+    <button class="show-fav-only" id="slides-fav-toggle">⭐ 只看收藏</button>
+  </div>
+  <div class="db-stats" id="slides-stats">尚未載入提示詞</div>
+  <main>
+    <div class="wrap" style="padding: 0;">
+      <div class="text-grid" id="slides-grid"></div>
+      <div class="empty" id="slides-empty" style="display:none;">找不到符合的提示詞，試試其他關鍵字。</div>
+    </div>
+  </main>
+</div><!-- /page-slides -->
 
   本工具僅整理公開分享的提示詞，原作者版權歸屬請見各卡片來源連結。<br>
   Built for personal use — 2026
@@ -5302,6 +5326,83 @@ if (imgFavToggleEl) {
 }
 
 // ══════════════════════════════════════════════
+// 簡報技巧專區 (Slides Tab)
+// ══════════════════════════════════════════════
+let slidesSearch = "";
+let slidesModel = "";
+let slidesFavOnly = false;
+
+function renderSlides() {
+  const grid = document.getElementById("slides-grid");
+  const empty = document.getElementById("slides-empty");
+  const stats = document.getElementById("slides-stats");
+  if (!grid) return;
+  grid.innerHTML = "";
+  const pool = TEXT_PROMPTS.filter(p => p.category === "簡報技巧");
+  const term = slidesSearch.toLowerCase();
+  const filtered = pool.filter(p => {
+    if (slidesFavOnly && !dbFavs.has(p.id)) return false;
+    if (slidesModel && !p.model.includes(slidesModel)) return false;
+    if (term && !(
+      p.title.toLowerCase().includes(term) ||
+      p.prompt.toLowerCase().includes(term) ||
+      (p.source||"").toLowerCase().includes(term) ||
+      (p.tags||[]).some(t => t.toLowerCase().includes(term))
+    )) return false;
+    return true;
+  });
+  if (filtered.length === 0) {
+    empty.style.display = "block";
+    stats.textContent = pool.length === 0
+      ? "簡報技巧提示詞建置中..."
+      : `找不到符合條件的提示詞（簡報技巧共 ${pool.length} 筆）`;
+    return;
+  }
+  empty.style.display = "none";
+  filtered.forEach(p => grid.appendChild(buildTextCard(p)));
+  stats.textContent = `顯示 ${filtered.length} / ${pool.length} 筆簡報技巧提示詞${slidesModel ? "｜" + slidesModel : ""}${term ? "｜搜尋：「" + slidesSearch + "」" : ""}${slidesFavOnly ? "｜僅收藏" : ""}`;
+  grid.querySelectorAll(".fav-btn").forEach(btn => {
+    btn.onclick = () => {
+      const id = btn.dataset.id;
+      if (dbFavs.has(id)) { dbFavs.delete(id); } else { dbFavs.add(id); }
+      saveFavs();
+      btn.classList.toggle("active");
+      btn.textContent = dbFavs.has(id) ? "⭐" : "☆";
+      btn.title = dbFavs.has(id) ? "取消收藏" : "加入收藏";
+    };
+  });
+  grid.querySelectorAll(".text-prompt-box").forEach(box => {
+    box.addEventListener("click", () => {
+      box.classList.toggle("expanded");
+      if (box.classList.contains("expanded") && box.dataset.vid) recordView("text", box.dataset.vid, box.dataset.vtitle, box.dataset.vcat);
+    });
+  });
+  grid.querySelectorAll(".copy-btn").forEach(btn => {
+    btn.onclick = () => {
+      if (btn.dataset.vid) recordView(btn.dataset.vtype || "text", btn.dataset.vid, btn.dataset.vtitle, btn.dataset.vcat);
+      const el = document.getElementById(btn.dataset.target);
+      navigator.clipboard.writeText(el.dataset.original||el.textContent).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = "✓ 已複製！";
+        btn.classList.add("copied");
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove("copied"); }, 1500);
+      });
+    };
+  });
+}
+
+const slidesSearchEl = document.getElementById("slides-search");
+if (slidesSearchEl) slidesSearchEl.addEventListener("input", e => { slidesSearch = e.target.value; renderSlides(); });
+const slidesModelEl = document.getElementById("slides-model");
+if (slidesModelEl) slidesModelEl.addEventListener("change", e => { slidesModel = e.target.value; renderSlides(); });
+const slidesFavToggle = document.getElementById("slides-fav-toggle");
+if (slidesFavToggle) slidesFavToggle.addEventListener("click", () => {
+  slidesFavOnly = !slidesFavOnly;
+  slidesFavToggle.classList.toggle("active", slidesFavOnly);
+  renderSlides();
+});
+
+// ══════════════════════════════════════════════
 // Tab navigation + deep-link router
 // ══════════════════════════════════════════════
 function switchTab(tab) {
@@ -5310,6 +5411,7 @@ function switchTab(tab) {
   const pg = document.getElementById("page-" + tab);
   if (pg) pg.classList.add("active");
   if (tab === "home") renderHome();
+  if (tab === "slides") renderSlides();
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".tab-btn").forEach(btn => {
@@ -5401,6 +5503,7 @@ function renderHome() {
 
   const imgCounts = {}; PROMPTS.forEach(p => imgCounts[p.category] = (imgCounts[p.category] || 0) + 1);
   const txtCounts = {}; TEXT_PROMPTS.forEach(p => txtCounts[p.category] = (txtCounts[p.category] || 0) + 1);
+  const slidesCount = TEXT_PROMPTS.filter(p => p.category === "簡報技巧").length;
 
   const thumbs = PROMPTS.filter(p => p.previewImage).slice(0, 4)
     .map(p => `<div class="th" style="background-image:url('${escapeHtml(p.previewImage)}')"></div>`).join("");
@@ -5464,6 +5567,11 @@ function renderHome() {
         <div class="sub">${txtCount} 組 · 一鍵複製、模板填空</div>
         <div class="chips">${txtTopChips}</div>
       </div>
+      <div class="home-entry" id="entry-slides">
+        <h3>📊 簡報技巧專區</h3>
+        <div class="sub">${slidesCount} 組 · AI 簡報工作流指令</div>
+        <div class="chips"><span>📒 NotebookLM</span><span>🪶 Claude</span><span>💬 ChatGPT</span></div>
+      </div>
     </div>
 
     <div class="home-fav" id="entry-fav">
@@ -5497,6 +5605,7 @@ function renderHome() {
   if (hs) hs.addEventListener("input", e => renderHomeResults(e.target.value));
   document.getElementById("entry-image").onclick = () => goImage("全部");
   document.getElementById("entry-text").onclick = () => goText("全部");
+  const es = document.getElementById("entry-slides"); if (es) es.onclick = () => { switchTab("slides"); history.replaceState(null, "", "#slides"); };
   document.getElementById("entry-fav").onclick = () => goFav();
   const clrBtn = document.getElementById("clear-recent");
   if (clrBtn) clrBtn.onclick = (e) => { e.stopPropagation(); clearRecent(); renderHome(); };
@@ -5504,6 +5613,7 @@ function renderHome() {
     chip.onclick = () => {
       if (chip.dataset.model) goTextModel(chip.dataset.model);
       else if (chip.dataset.type === "image") goImage(chip.dataset.cat);
+      else if (chip.dataset.cat === "簡報技巧") { switchTab("slides"); history.replaceState(null, "", "#slides"); }
       else goText(chip.dataset.cat);
     };
   });
@@ -5554,6 +5664,7 @@ function renderHomeResults(term) {
   const sub = idx === -1 ? "" : raw.slice(idx + 1);
   if (tab === "image") { if (sub === "fav") goImageFav(); else if (sub) goImage(sub); else switchTab("image"); }
   else if (tab === "text") { if (sub === "fav") goFav(); else if (sub) goText(sub); else switchTab("text"); }
+  else if (tab === "slides") { switchTab("slides"); }
   else switchTab("home");
 })();
 
