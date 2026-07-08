@@ -4338,16 +4338,807 @@ Gemini 3：沿用「角色／任務／背景／格式」四要素，搭配多模
 4. 產出一份未來 12 個月的規劃草案，只保留最多三個核心目標，
 每個目標拆成季度里程碑，並寫出「如果失敗，最可能的原因會是什麼」`,
     placeholders: []
+  },
+  {
+    id: "bnext-slides-1",
+    title: "一張圖解叫車平台佈局",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/81728/notebooklm-tutorial",
+    note: "文章實測「資訊圖表」功能時使用的提示詞，可搭配 10 種風格模板（手繪風、可愛風、動漫風、積木風等）。主題可依自己的來源資料替換。",
+    tags: ["NotebookLM", "資訊圖表", "視覺化"],
+    prompt: `用一張圖表解釋全球叫車平台佈局與現況`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-2",
+    title: "對話區提問範例",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/81728/notebooklm-tutorial",
+    note: "文章在對話區的示範提問，NotebookLM 會以列點回答並附上來源。屬示範性質，需依自己上傳的資料改寫問題。",
+    tags: ["NotebookLM", "對話提問", "資料查詢"],
+    prompt: `目前台灣有哪些叫車平台？`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-3",
+    title: "把我視為博士生（角色設定）",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/81728/notebooklm-tutorial",
+    note: "填入聊天室設定區的「自訂」欄位，讓 AI 嚴格挑戰假設。文中中譯為「把我視為博士生」。",
+    tags: ["NotebookLM", "角色設定", "自訂聊天"],
+    prompt: `Treat me like a PhD candidate`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-4",
+    title: "擔任首席行銷策略長（角色設定）",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/81728/notebooklm-tutorial",
+    note: "填入聊天室設定區的「自訂」欄位，讓 NotebookLM 以行銷策略長角色回應。文中中譯為「擔任首席行銷策略長」。",
+    tags: ["NotebookLM", "角色設定", "行銷"],
+    prompt: `Act as a lead marketing strategist`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-5",
+    title: "叫車平台比較表格",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/81728/notebooklm-tutorial",
+    note: "用於「資料表格」功能的編輯框，會生成含平台、主要市場、核心業務、司機抽成比例等欄位的表格，可一鍵匯出至 Google 試算表。主題可自行替換。",
+    tags: ["NotebookLM", "資料表格", "比較分析"],
+    prompt: `針對全球叫車平台製作一份比較表格`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-6",
+    title: "簡報修改指令範例",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/81728/notebooklm-tutorial",
+    note: "點擊投影片旁的編輯圖示後，在對話框輸入的修改指令範例；確認變更項目後點「生成新簡報」。",
+    tags: ["NotebookLM", "簡報", "修改指令"],
+    prompt: `將標題縮短、頁面文字較少`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-7",
+    title: "深度研究秒變簡報：全球跨年慶典",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/85599/8-way-to-generate--notebooklm-slide-deck",
+    note: "英文版：New Year celebrations around the world. Blend magical, whimsical elements with celebratory festival scenes. Respect local architecture and style. 搭配「深度研究」（Deep Research）功能將研究資料轉為客製化投影片。",
+    tags: ["NotebookLM", "簡報", "深度研究", "Nano Banana Pro"],
+    prompt: `全球各地的新年慶祝活動。將魔幻、奇想的元素與熱鬧的節慶場景融合，並尊重當地的建築特色與風格。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-8",
+    title: "零散筆記美化：聖誕主題風格",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/85599/8-way-to-generate--notebooklm-slide-deck",
+    note: "英文版：Make the slides much more pretty and fun, Christmas-themed. 適用於將草稿、會議紀錄、手寫筆記翻拍等碎片化來源梳理成完整投影片。",
+    tags: ["NotebookLM", "簡報", "風格轉換"],
+    prompt: `讓這份投影片變得更漂亮且有趣，並全面套用聖誕節主題風格。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-9",
+    title: "腦力激盪：文學翻新提案簡報",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/85599/8-way-to-generate--notebooklm-slide-deck",
+    note: "英文版：Briefly list any Christmas or New Year's events mentioned in the novels. Provide three novella concepts based on these mentions. For each, outline the plot and its connection to the original book. Google 以珍·奧斯汀文學研究為例，從現有素材發展新提案。",
+    tags: ["NotebookLM", "簡報", "腦力激盪", "創意提案"],
+    prompt: `簡短列出原著小說中提到的所有聖誕節或新年活動。根據這些內容，提出三個中篇小說的創作構想。針對每個構想，請概述其故事情節以及與原著作品的關聯。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-10",
+    title: "品牌風格一致化簡報",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/85599/8-way-to-generate--notebooklm-slide-deck",
+    note: "英文版：Create a branded deck summarizing 2025 launches. Use the brandbook for branding and styling references. 需先將資料與企業視覺指南（Brandbook）一同上傳。",
+    tags: ["NotebookLM", "簡報", "品牌識別", "Brandbook"],
+    prompt: `製作一份總結 2025 年產品發布重點的品牌投影片。請參考所附的品牌手冊來進行視覺設計與風格設定。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-11",
+    title: "複雜數據視覺化簡報",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/85599/8-way-to-generate--notebooklm-slide-deck",
+    note: "英文版：Sleek design, white background. Visualise the numbers in the deck in a range of different ways that relate to the real world, use an infographic style with hard hitting and inspirational figures. Google 範例為全球旅遊數據敘事。",
+    tags: ["NotebookLM", "簡報", "數據視覺化", "資訊圖表"],
+    prompt: `設計要俐落時尚，採用白色背景。請用各種與現實世界產生連結的方式來視覺化簡報中的數字，並採用資訊圖表風格，呈現出具震撼力且具啟發性的數據。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-12",
+    title: "長文轉漫畫風故事書",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/85599/8-way-to-generate--notebooklm-slide-deck",
+    note: "英文版：Find similarities between holiday recipes in 19th and 21st century. White background, black text, explained with manga on every page, modern Japanese manga. 適用長篇報告、系列文章或整本書籍的敘事重組。",
+    tags: ["NotebookLM", "簡報", "故事書", "漫畫風"],
+    prompt: `找出 19 世紀與 21 世紀節慶食譜間的共通點。視覺設計採用白色背景與黑色文字，且每一頁都要以「現代日系漫畫」風格來進行圖解說明。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-13",
+    title: "照片化身食譜書",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/85599/8-way-to-generate--notebooklm-slide-deck",
+    note: "英文版：Holiday themed overview of all the sweets baked from the pictures. Reference the recipe from the note. 需先上傳烘焙過程照片與食譜筆記作為來源。",
+    tags: ["NotebookLM", "簡報", "食譜", "照片"],
+    prompt: `根據照片中所有烘焙出的甜點，製作一份節慶主題的概覽。內容請參考筆記中提供的具體食譜。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-14",
+    title: "黑板粉筆字自定義風格",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/85599/8-way-to-generate--notebooklm-slide-deck",
+    note: "英文版：Create a deep green \"blackboard\" design using white, yellow, and pink handwritten chalk text to help organize New Year's resolutions. 示範不受既定模板限制的自定義視覺風格。",
+    tags: ["NotebookLM", "簡報", "自定義風格", "黑板風"],
+    prompt: `打造一個深綠色的「黑板」視覺風格，並運用白、黃、粉紅三色的手寫粉筆字體，協助梳理與規劃新年新希望。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-15",
+    title: "簡報製作專家：生成Gamma用簡報稿",
+    category: "簡報技巧",
+    model: "NotebookLM / ChatGPT / Claude",
+    source: "未來商務 / 王聖華",
+    sourceUrl: "https://www.bnext.com.tw/article/80707/gamma-vs.-presentations.ai",
+    note: "先用可對話調整的 AI 工具生成簡報文字稿，再貼入 Gamma 以「保留」＋「逐卡片」設定生成簡報。第三點括號內「（編註：此為配合 Gamma 的格式要求）」為文章編註，實際使用時可省略。可依需求補充受眾與使用情境。",
+    tags: ["Gamma", "簡報", "人機協作", "工作流"],
+    prompt: `你是一名簡報製作專家，目標是將這份內容做成一份可供上台報告的簡報，請進行觀察、分析，再開始製作。原則如下：
+- 挑選出你認為聽眾會覺得有價值、有意義的內容來製作簡報
+- 分配簡報頁面時，頁面之間的銜接符合邏輯、承上啟下
+- 使用「---」分隔不同簡報頁面（編註：此為配合 Gamma 的格式要求）
+- 每一頁講清楚一件事就好，資訊佈局簡單易懂、具備階層邏輯
+- 請不要使用我沒有提供的內容`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-16",
+    title: "向主管提案簡報製作指令",
+    category: "簡報技巧",
+    model: "Claude Cowork",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90392/claude-cowork-ai-ppt",
+    note: "示範 Step 4 的完整任務指令；[ ] 內為資料夾中的檔案名稱，請換成自己的檔名。原文網頁因 Markdown 斜體渲染，檔名中底線顯示為星號，此處還原為底線。",
+    tags: ["簡報", "PPT", "提案", "Cowork", "資料夾"],
+    prompt: `我需要製作一份向主管報告的簡報，目標受眾是總編輯，要讓主管們同意我製作 AI 簡報急速工作流的課程，總頁數最多 20 頁。請根據資料夾內的 [AI 簡報急速工作流_簡報大綱] 來製作簡報，並參考 [AI 簡報急速工作流_簡報風格指令] 來設計排版。在開始製作之前，如果對任務有任何疑問或需要更多資訊，請先問我。`,
+    placeholders: ["AI \u7c21\u5831\u6025\u901f\u5de5\u4f5c\u6d41_\u7c21\u5831\u5927\u7db1", "AI \u7c21\u5831\u6025\u901f\u5de5\u4f5c\u6d41_\u7c21\u5831\u98a8\u683c\u6307\u4ee4"]
+  },
+  {
+    id: "bnext-slides-17",
+    title: "單頁標題修改指令",
+    category: "簡報技巧",
+    model: "Claude Cowork",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90392/claude-cowork-ai-ppt",
+    note: "驗收後小幅修改用；小改建議手動、大改再交給 AI。",
+    tags: ["簡報", "修改", "標題"],
+    prompt: `請把第三頁的標題改得更有氣勢一點`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-18",
+    title: "風格指令檔範例（品牌視覺準則）",
+    category: "簡報技巧",
+    model: "Claude Cowork",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90392/claude-cowork-ai-ppt",
+    note: "存成資料夾內名為「風格指令」的純文字檔，讓每份簡報風格統一；色碼與字型可換成自家 CI 規範。",
+    tags: ["風格指令", "品牌CI", "色碼", "字型"],
+    prompt: `背景一律使用色碼 #F5F5F5，主標題請使用 Noto Sans TC、大小 36px，強調色為 #FFCC80`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-19",
+    title: "要求嚴守風格指令檔",
+    category: "簡報技巧",
+    model: "Claude Cowork",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90392/claude-cowork-ai-ppt",
+    note: "下任務指令時補上這句，搭配「風格指令」檔案使用。",
+    tags: ["風格指令", "排版", "一致性"],
+    prompt: `排版與風格請嚴格遵守資料夾中 \`風格指令\` 檔案的規範。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-20",
+    title: "Chrome搜尋資料整合進簡報",
+    category: "簡報技巧",
+    model: "Claude Cowork",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90392/claude-cowork-ai-ppt",
+    note: "需先啟用 Connectors 並安裝「Claude in Chrome」擴充功能。",
+    tags: ["Chrome", "網路搜尋", "資料整合", "簡報"],
+    prompt: `請打開 Chrome 搜尋『2026 最新 AI 工具趨勢』，告訴我有哪些值得關注的重點，並把這些資料整合進簡報的『市場概況』這一部分中。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-21",
+    title: "AskUserQuestion 防呆指令",
+    category: "簡報技巧",
+    model: "Claude Cowork",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90392/claude-cowork-ai-ppt",
+    note: "加在每次指令中，讓 Claude 動工前先反問確認需求；也可改用中文寫「在開始製作之前，如果對任務有任何疑問或需要更多資訊，請先問我。」",
+    tags: ["AskUserQuestion", "防呆", "需求對焦"],
+    prompt: `Start by using the AskUserQuestion tool before answering to gather enough context.（在開始任務前，請先使用 AskUserQuestion 工具詢問我，以收集足夠的背景資訊。）`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-22",
+    title: "10頁內部說明簡報生成指令",
+    category: "簡報技巧",
+    model: "Claude Design",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/90713/claude-design-vs-figma-ai-product-design-prototyping",
+    note: "官方建議提示中包含：目標、版面配置、內容、受眾四項關鍵資訊；下完提示後 Claude 會先生成對齊清單確認需求。",
+    tags: ["簡報", "Claude Design", "內部溝通"],
+    prompt: `請幫忙設計一份 10 頁的簡報，用來向內部營運團隊解釋 Claude Design 是什麼、可以解決什麼問題，以及導入後對編輯流程的影響。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-23",
+    title: "80頁文件濃縮8頁提案簡報",
+    category: "簡報技巧",
+    model: "Claude for PowerPoint",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90710/claude-for-powerpoint-",
+    note: "「從 100 到 1」場景：先上傳長文件再下指令；文件名稱與頁數可換成自己的。",
+    tags: ["長文摘要", "提案簡報", "PPT", "角色扮演"],
+    prompt: `我剛上傳了一份名為『AI 簡報極速工作流』的 80 頁課程企劃 Word 文件。請你完整閱讀並深度理解後，扮演資深產品企劃，為我提煉出最核心的精華，並建立一份共 8 張投影片的『新產品提案簡報』`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-24",
+    title: "痛點與賣點深度摘要4頁",
+    category: "簡報技巧",
+    model: "Claude for PowerPoint",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90710/claude-for-powerpoint-",
+    note: "「從 100 到 1」場景的另一種下法，聚焦特定章節做摘要。",
+    tags: ["摘要", "USP", "行銷", "視覺層次"],
+    prompt: `請根據我上傳的這份課程企劃書，特別針對『受眾痛點』與『課程獨家賣點 (USP)』進行深度摘要。請幫我製作 4 張投影片，條列出這堂課能幫學員解決的 3 大核心問題，以及我們在行銷上可以主打的亮點。請確保每一頁的文字不要太過擁擠，並自動為我調整出清晰易讀的視覺層次。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-25",
+    title: "文字轉表格加流程圖（局部修改）",
+    category: "簡報技巧",
+    model: "Claude for PowerPoint",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90710/claude-for-powerpoint-",
+    note: "「從 0.5 到 1」範例 A：先在左側縮圖區點選目標投影片（顯示 Slide 4 selected）再下指令，只改該頁。",
+    tags: ["表格", "流程圖", "局部編輯", "母片"],
+    prompt: `把第 4 頁 AI 簡報極速工作流三大部分課程設計，改成表格呈現；同時補上一張流程圖，讓與會者知道內容是由淺入深，分成輸入與輸出端兩大重點。請確保排版整齊，並維持現有的投影片母片風格。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-26",
+    title: "CSV轉原生可編輯柱狀圖",
+    category: "簡報技巧",
+    model: "Claude for PowerPoint",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90710/claude-for-powerpoint-",
+    note: "「從 0.5 到 1」範例 B：先用「+（附加檔案）」上傳 CSV/Excel；檔名可換成自己的資料檔。",
+    tags: ["數據視覺化", "CSV", "柱狀圖", "原生圖表"],
+    prompt: `請讀取我剛上傳的『傳送門商品折扣碼.csv』。請在目前的簡報最後新增一張投影片，為我建立專業的數據視覺化圖表。請使用『柱狀圖』呈現哪幾組折扣碼替 AI 簡報極速工作流 帶來最多轉單。導流最多訂單的用藍色表現。所有產出的圖表必須是原生的 PowerPoint 可編輯圖表格式，並確保顏色對比清晰。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-27",
+    title: "從大綱從零生成12頁教學簡報",
+    category: "簡報技巧",
+    model: "Claude for PowerPoint",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90710/claude-for-powerpoint-",
+    note: "「從 0 到 1」場景：句末接著貼上自己的簡報大綱；建議先套用公司母片、選 Opus 4.7、需要最新資料時開啟網頁搜尋。",
+    tags: ["從零生成", "教學簡報", "大綱擴充", "角色扮演"],
+    prompt: `我剛上傳了一份 3 到 4 頁的『AI 簡報極速工作流』課程大綱文件。我明天就要進行這堂課的試教，但目前完全沒有投影片。請你扮演專業的企業講師，根據這份大綱的內容，從空白的第一頁開始，幫我擴充並建立一份共 12 張投影片的『課程教學簡報』。請包含以下教學邏輯架構，幫助學員有效學會如何用 AI 做簡報。以下是我的簡報大綱：`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-28",
+    title: "品牌設計規格markdown生成指令",
+    category: "簡報技巧",
+    model: "Claude",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90873/save-tokens-with-claude-design-and-refero-brand-templates",
+    note: "第一步在一般 Claude 對話（非 Design）產出 brand spec markdown，再帶進 Claude Design，可大省 token。",
+    tags: ["brand spec", "設計規格", "markdown", "省token"],
+    prompt: `我要為 [品牌名稱] 製作一套品牌設計規格 markdown 文件，預計給 Claude Design 使用。請涵蓋以下章節：
+
+1. Mission（使命，一句話）
+2. Audience（核心受眾，含具體職業／情境）
+3. Color palette（主色＋輔色，附 hex code，共 4–6 色）
+4. Typography（標題字型、內文字型，各給 1 個西文 + 1 個中文選項）
+5. Tone of voice（3 個關鍵詞）
+6. Visual reference（請列 1–2 個我可以參考的世界級品牌的設計語言，例如「Linear 2023 介面感、字距較密」）
+
+請輸出可直接複製到 .md 檔的格式。`,
+    placeholders: ["\u54c1\u724c\u540d\u7a31"]
+  },
+  {
+    id: "bnext-slides-29",
+    title: "以DESIGN.md為基礎套用品牌規格",
+    category: "簡報技巧",
+    model: "Claude Design",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90873/save-tokens-with-claude-design-and-refero-brand-templates",
+    note: "搭配從 Refero 下載的 DESIGN.md 使用；建議先把 Refero 的 DESIGN.md 改名避免讀檔混淆。",
+    tags: ["Refero", "DESIGN.md", "設計語言", "簡報版型"],
+    prompt: `以這份 \`DESIGN.md\` 為設計語言基礎，套用到我的品牌規格 [貼上你的 brand spec]`,
+    placeholders: ["\u8cbc\u4e0a\u4f60\u7684 brand spec"]
+  },
+  {
+    id: "bnext-slides-30",
+    title: "指定Refero與brand spec優",
+    category: "簡報技巧",
+    model: "Claude Design",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90873/save-tokens-with-claude-design-and-refero-brand-templates",
+    note: "生成前先講清楚兩份規格檔的優先順序，避免色票、字型、間距互相衝突。",
+    tags: ["優先順序", "DESIGN.md", "brand spec", "省token"],
+    prompt: `以 Refero 的 \`DESIGN.md\` 為視覺骨架，我的 brand spec 只取 Mission、Audience、Tone 三項`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-31",
+    title: "限定Refero只取字型與間距",
+    category: "簡報技巧",
+    model: "Claude Design",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90873/save-tokens-with-claude-design-and-refero-brand-templates",
+    note: "更精準到欄位的優先順序指定寫法。",
+    tags: ["優先順序", "配色", "字型", "間距"],
+    prompt: `Refero 只取字型搭配與間距節奏，配色一律以我的 brand spec 為準`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-32",
+    title: "XML結構化破題簡報prompt範本",
+    category: "簡報技巧",
+    model: "Claude Design",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90717/claude-design-vs-figma-adobe-canva-workflow-shift",
+    note: "以 <task><context><brand><constraints><structure> 標籤結構化 prompt；主題與內容可替換成自己的素材。末句要求 3 個視覺方向初稿可省 token。",
+    tags: ["XML標籤", "結構化prompt", "簡報", "初稿變體"],
+    prompt: `<task>
+設計一份 6-8 頁的簡報，主題是「Apple 2027 AI 穿戴戰略解讀」。
+</task>
+
+<context>
+素材：《數位時代》2026-04 報導
+關鍵事實：
+- Apple 代號 N50 智慧眼鏡，2026 年底-2027 年初發表，2027 上市
+- 4 種鏡框設計（Ray-Ban Wayfarer 風大矩形、Tim Cook 風細矩形、大橢圓/圓形、小橢圓/圓形）
+- 3 種配色（黑、海洋藍、淺棕）
+- 鏡頭為直立橢圓設計搭配環繞燈（區隔 Meta 的圓形設計）
+- 三件組戰略：眼鏡 + 新 AirPods + 相機吊墜
+- 對手：Meta（EssilorLuxottica 合作）、Google / Samsung（Warby Parker 合作）
+- 真正 AR 眼鏡（帶顯示）預估 2020 年代末才成熟，較原計畫（mid-2022）延後約 8 年
+</context>
+
+<brand>
+語氣：產業分析、直接、有觀點
+參考：The Information 配圖質感、Stratechery 文末 diagram
+配色：深灰底（#1a1a1a）+ 蘋果風銀灰 + 一抹亮色強調
+字型：不用 Inter、不用 Roboto。請用有個性的 serif 搭配 sans-serif 組合
+</brand>
+
+<constraints>
+- 不要 Apple keynote 極簡白底
+- 不要通用 SaaS 漸層
+- 每頁資訊密度要夠，不要一頁只放一句話
+- 時間軸頁必須有、競爭格局比較表必須有
+</constraints>
+
+<structure>
+1. 封面：一句話概括 Apple 戰略
+2. N50 眼鏡規格一覽
+3. 三件組戰略圖
+4. 時間軸（2026-2030）
+5. 競爭格局比較表（Apple / Meta / Google）
+6. 判斷：Apple 路徑與 Apple Watch 的相似性
+</structure>
+
+請先給我 3 個不同視覺方向的初稿，我再挑一個發展下去。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-33",
+    title: "貼參考圖後的微調指令",
+    category: "簡報技巧",
+    model: "Claude Design",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90717/claude-design-vs-figma-adobe-canva-workflow-shift",
+    note: "搭配貼 1-2 張風格參考截圖使用；貼圖比形容詞（乾淨、專業）有效。",
+    tags: ["參考圖", "微調", "版面密度"],
+    prompt: `把選定的初稿微調，版面密度對齊參考圖 1，比較表頁參考圖 2 的 diagram 風格。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-34",
+    title: "Comment局部修改範例三則",
+    category: "簡報技巧",
+    model: "Claude Design",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90717/claude-design-vs-figma-adobe-canva-workflow-shift",
+    note: "三則獨立的 comment 範例（原文分別針對表格、時間軸節點、比較表欄位），在畫布上點選元素後留言，只迭代該元素不重畫整頁；N 為卡片數量。；提示詞中的 N 請自行替換成你的內容",
+    tags: ["Comment", "局部修改", "卡片", "灰階"],
+    prompt: `這個表格太密，拆成 N 個 card 形式
+這個節點放大，加 badge 凸顯
+這一欄換成品牌色系，其他欄用灰階`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-35",
+    title: "生成自訂Slider微調視覺",
+    category: "簡報技巧",
+    model: "Claude Design",
+    source: "數位時代 / 李先泰",
+    sourceUrl: "https://www.bnext.com.tw/article/90717/claude-design-vs-figma-adobe-canva-workflow-shift",
+    note: "系統會依素材產出專屬滑桿（如字體密度、顏色冷暖、版面鬆緊），拉桿即整份統一調整。",
+    tags: ["Slider", "滑桿", "視覺微調"],
+    prompt: `為這份簡報生成幾個 slider，讓我可以微調整體視覺感覺。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-36",
+    title: "定義簡報任務基礎設定",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/91005/chatgpt-images-2.0-ppt",
+    note: "需先點擊迴紋針圖示上傳參考檔案（PDF / DOCX）；文中示範主題、對象、目的、頁數、風格為範例，可替換成自己的內容。建議開啟 Thinking 5.5 並將思考力設為「延伸」。",
+    tags: ["簡報", "提案", "任務定義", "ChatGPT Images 2.0"],
+    prompt: `你現在是一位專業的商業簡報企劃。我上傳了一份『AI 簡報極速工作流』線上課程的規劃草案。請幫我釐清一份提案簡報任務：主題是『為什麼這堂課值得推薦給經理人月刊的讀者』，報告對象是『總編輯與內部決策團隊』，目的是『爭取內部資源與版面來推廣這堂課』，預計製作 10 到 12 頁，風格為『專業、數據導向、具說服力』。請根據附檔資訊，輸出這份提案簡報的核心主張。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-37",
+    title: "生成 12 頁簡報架構表格",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/91005/chatgpt-images-2.0-ppt",
+    note: "第二步：對焦說服邏輯與架構，先產出簡報骨架，確保每頁只講一件事。",
+    tags: ["簡報", "大綱", "架構", "表格"],
+    prompt: `請根據剛才確認的核心主張與我上傳的附檔內容，生成一份 12 頁的圖片式提案簡報架構。請以表格呈現，內容必須包含：頁碼、標題、本頁核心訊息、以及建議的畫面類型。請確保頁與頁之間有清楚的邏輯順序（例如：讀者痛點 -> 課程解方 -> 為什麼我們該推廣 -> 預期效益與合作方案）。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-38",
+    title: "建立統一視覺風格規範",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/91005/chatgpt-images-2.0-ppt",
+    note: "第三步：在生圖前先訂定嚴格視覺規則，避免產出雜亂排版。",
+    tags: ["簡報", "視覺風格", "設計規範", "色碼"],
+    prompt: `請為這份向總編輯提案的圖片式簡報，建立一套統一的視覺風格規範。請參考經理人月刊的專業調性，內容請包含：整體視覺定位、色彩搭配建議（請提供色碼）、字體的感覺，以及封面的設計方向。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-39",
+    title: "生成第 1 至 10 頁投影片圖片",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/91005/chatgpt-images-2.0-ppt",
+    note: "ChatGPT Images 2.0 單次生成上限為 10 張，超過需分批生成。",
+    tags: ["簡報", "生圖", "投影片", "16:9"],
+    prompt: `請按照我們確認的大綱與視覺風格，分別以圖片方式生成第 1 到第 10 頁的 16:9 投影片（請確保一張 SLIDE = 一張圖片）。內容若有不足的地方請自行從附檔中擷取精華補上，版面設計上強調重點不超過兩種，請使用專業且不刺眼的顏色。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-40",
+    title: "續批生成第 11 至 12 頁",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/91005/chatgpt-images-2.0-ppt",
+    note: "第二批指令；靠上下文記憶維持跨批次視覺風格一致。",
+    tags: ["簡報", "生圖", "分批生成"],
+    prompt: `繼續以圖片方式生成第 11 頁到第 12 頁的 16:9 投影片（請確保一張 SLIDE = 一張圖片）。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-41",
+    title: "生成逐頁提案講稿",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/91005/chatgpt-images-2.0-ppt",
+    note: "第五步：為每頁投影片產生講稿要點。",
+    tags: ["簡報", "講稿", "提案"],
+    prompt: `簡報畫面已完成，請根據這份圖片式簡報與附檔內容，為我產生向總編輯提案時的逐頁講稿要點，請用充滿自信與說服力的口吻撰寫。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-42",
+    title: "一鍵打包成 PPTX 下載",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/91005/chatgpt-images-2.0-ppt",
+    note: "第六步：所有圖片生成完畢後使用，免逐張下載。",
+    tags: ["簡報", "PPTX", "打包下載"],
+    prompt: `請將剛才生成的所有簡報圖片，統整並打包成 PPTX （或 PDF）檔案讓我直接下載。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-43",
+    title: "強制使用最新圖像模型",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/91005/chatgpt-images-2.0-ppt",
+    note: "出自 FAQ Q6：當排版突然與前幾頁不一致（任務被降級到舊模型）時，加在 Prompt 中的強制性指令；也可改開新對話。",
+    tags: ["除錯", "模型降級", "圖像生成"],
+    prompt: `請務必使用最新版的圖像生成模型（use the latest image generation model）`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-44",
+    title: "PDF 轉 Canva 簡報指令",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "未來商務 / 陳祈安",
+    sourceUrl: "https://www.bnext.com.tw/article/84741/chatgpt-canva-ai-presentation-tutorial",
+    note: "使用前需：1) 將 Canva 語言介面調為 English（US）；2) 在 ChatGPT「應用程式和連接器」中連接 Canva；3) 先上傳 PDF 檔，並在對話框啟用 Canva（點加號選 Canva 或輸入 /canva）。",
+    tags: ["簡報", "Canva", "ChatGPT", "PDF"],
+    prompt: `● 請閱讀我提供給你的 PDF 檔後，將內容整理成 10 頁以內的簡報。
+● 簡報請用 Canva 進行製作。
+● 設計風格請以專業、簡約為主，每頁的設計風格皆須一致。
+● 內容請以繁體中文呈現，如遇專有名詞可維持英文。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-45",
+    title: "依主題生成 10 頁簡報",
+    category: "簡報技巧",
+    model: "ChatGPT",
+    source: "未來商務 / 陳祈安",
+    sourceUrl: "https://www.bnext.com.tw/article/84741/chatgpt-canva-ai-presentation-tutorial",
+    note: "無檔案可上傳時的替代句型，XXX 替換為自訂主題；可與上一組其餘 ● 條件搭配使用。；提示詞中的 XXX 請自行替換成你的內容",
+    tags: ["簡報", "Canva", "主題生成"],
+    prompt: `請依照 XXX 主題，將內容整理成 10 頁以內的簡報`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-46",
+    title: "呼叫雲端檔案生成投影片",
+    category: "簡報技巧",
+    model: "Gemini",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90659/google-slides-gemini-ai-tutorial",
+    note: "在 Google 簡報右上角「星星（✦）」開啟「問問 Gemini」側邊欄後輸入；「@」後接雲端硬碟中的檔案名稱（文中的「2026 台灣手搖飲市場競品分析」為範例檔名，需換成自己的檔案）。需 Google Workspace 含 Gemini 附加方案或 Google One AI Premium。；提示詞中的 @檔案名稱 請自行替換成你的內容",
+    tags: ["Google簡報", "Gemini", "雲端硬碟", "投影片"],
+    prompt: `根據 @2026 台灣手搖飲市場競品分析，建立一頁投影片，分析產品定位。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-47",
+    title: "逐頁指令：品牌定位分析",
+    category: "簡報技巧",
+    model: "Gemini",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90659/google-slides-gemini-ai-tutorial",
+    note: "目前一次只能建立一張投影片，故採逐頁下指令的做法；完成後再下下一頁指令。",
+    tags: ["Google簡報", "Gemini", "逐頁生成"],
+    prompt: `建立一頁品牌定位分析`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-48",
+    title: "逐頁指令：季度行銷策略",
+    category: "簡報技巧",
+    model: "Gemini",
+    source: "數位時代 / 經理人月刊",
+    sourceUrl: "https://www.bnext.com.tw/article/90659/google-slides-gemini-ai-tutorial",
+    note: "承上，逐頁生成的第二個範例指令。",
+    tags: ["Google簡報", "Gemini", "逐頁生成"],
+    prompt: `建立一頁季度行銷策略`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-49",
+    title: "建立量子運算 10 頁簡報",
+    category: "簡報技巧",
+    model: "Gemini",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/84938/gemini-canva",
+    note: "於 Gemini 工具選單選取「Canvas」模式後輸入；主題可自行替換。",
+    tags: ["Gemini", "Canvas", "簡報生成"],
+    prompt: `建立一個有關量子運算的10頁簡報`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-50",
+    title: "網址文章轉成簡報",
+    category: "簡報技巧",
+    model: "Gemini",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/84938/gemini-canva",
+    note: "搭配貼上文章網址使用；也可直接上傳文章、文件檔案。生成後可由右上角「匯出成簡報」存到 Google 簡報或下載 PDF。",
+    tags: ["Gemini", "Canvas", "網址轉簡報"],
+    prompt: `分析這個網址的文章轉成簡報`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-51",
+    title: "PowerPoint 簡報生成範本",
+    category: "簡報技巧",
+    model: "Grok",
+    source: "未來商務 / 陳祈安",
+    sourceUrl: "https://www.bnext.com.tw/article/90842/grok-4.3-beta-ppt",
+    note: "需切換至 Grok 4.3 Beta 模型（SuperGrok 訂閱以上）；先拖曳檔案或貼上文字素材再送出。免費版用戶輸入同一提示詞可得大綱與逐頁內容，再手動排版。",
+    tags: ["Grok", "PPT", "簡報範本", "備忘稿"],
+    prompt: `請根據以上內容，幫我製作一份 PowerPoint 簡報。
+
+需求如下：
+- 投影片張數：[8–12 張]
+- 對象：[例如：投資人、內部團隊、學術受眾]
+- 風格：[例如：專業簡潔、視覺豐富、學術正式]
+- 重點架構：封面、議題背景、核心數據、分析觀點、結論與建議、Q&A
+
+請確保每張投影片有清楚的標題，並在說明欄位加入備忘稿。`,
+    placeholders: ["8\u201312 \u5f35", "\u4f8b\u5982\uff1a\u6295\u8cc7\u4eba\u3001\u5167\u90e8\u5718\u968a\u3001\u5b78\u8853\u53d7\u773e", "\u4f8b\u5982\uff1a\u5c08\u696d\u7c21\u6f54\u3001\u8996\u89ba\u8c50\u5bcc\u3001\u5b78\u8853\u6b63\u5f0f"]
+  },
+  {
+    id: "bnext-slides-52",
+    title: "附加參考資料轉簡報",
+    category: "簡報技巧",
+    model: "Grok",
+    source: "未來商務 / 陳祈安",
+    sourceUrl: "https://www.bnext.com.tw/article/90842/grok-4.3-beta-ppt",
+    note: "從影片連結或 PDF 轉換時，加在上述範本之後使用。",
+    tags: ["Grok", "PDF", "影片輸入", "簡報"],
+    prompt: `以下是我的參考資料，請消化內容後依照上述格式製作簡報。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-53",
+    title: "修改單頁為條列式呈現",
+    category: "簡報技巧",
+    model: "Grok",
+    source: "未來商務 / 陳祈安",
+    sourceUrl: "https://www.bnext.com.tw/article/90842/grok-4.3-beta-ppt",
+    note: "生成後回到對話中微調用；頁碼可自行替換。",
+    tags: ["Grok", "簡報修改", "條列式"],
+    prompt: `請把第 3 張投影片的重點改為條列式，並加強數字的視覺呈現`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-54",
+    title: "以視覺豐富風格重新生成",
+    category: "簡報技巧",
+    model: "Grok",
+    source: "未來商務 / 陳祈安",
+    sourceUrl: "https://www.bnext.com.tw/article/90842/grok-4.3-beta-ppt",
+    note: "簡報有重大錯誤或想轉換整體設計風格時使用。",
+    tags: ["Grok", "簡報風格", "重新生成"],
+    prompt: `請以視覺豐富的風格重新生成簡報`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-55",
+    title: "請AI代寫NotebookLM專用YAM",
+    category: "簡報技巧",
+    model: "通用",
+    source: "數位時代 / 蘇柔瑋",
+    sourceUrl: "https://www.bnext.com.tw/article/85609/ppt-yaml-notebooklm-style",
+    note: "文章建議不會寫 YAML 時的懶人做法：先用口語描述想要的風格，讓 AI 轉寫成 NotebookLM 可用的 YAML 指令，再貼入 NotebookLM 自訂簡報對話框。「像 Apple 官網那樣極簡、白底、黑字、字體很大」可替換成自己想要的風格描述。",
+    tags: ["YAML", "NotebookLM", "簡報設計", "AI協作AI", "風格指令"],
+    prompt: `我想要一種像 Apple 官網那樣極簡、白底、黑字、字體很大的設計，請幫我寫成 NotebookLM 專用的 YAML 指令。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-56",
+    title: "照大綱排版、禁止AI自行發揮",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 羅秀如",
+    sourceUrl: "https://www.bnext.com.tw/article/90903/notebooklm-ai-slides",
+    note: "使用時機：先讓 NotebookLM 產出純文字大綱並親自核對後，再連同確認過的大綱一起送出這段指令進行排版。文章指出此指令能減少 AI 亂發揮、繁體中文破字與亂碼問題。",
+    tags: ["NotebookLM", "簡報", "排版", "大綱先行", "繁體中文"],
+    prompt: `請完全照著我給的大綱製作投影片，不可以自己加入任何觀點，也不可以漏掉任何一頁。投影片上的文字越精簡越好。請一頁一頁、一字一字仔細生成，並逐字確認，確保每個繁體中文字正確、清晰。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-57",
+    title: "YAML基礎語法範例（色碼＋字體）",
+    category: "簡報技巧",
+    model: "通用",
+    source: "數位時代 / 羅秀如",
+    sourceUrl: "https://www.bnext.com.tw/article/91085/ai-presentation-yaml-style-guide",
+    note: "文章中附「複製」按鈕的最小 YAML 範例：左邊是參數名稱，右邊是設定值，# 之後可加中文備註作為給 AI 的提示。色碼與字體可自行替換。",
+    tags: ["YAML", "色碼", "字體", "簡報", "語法範例"],
+    prompt: `color: "#002060" # 冒號後面必須空一格，系統才能讀取
+font: "Arial, bold"`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-58",
+    title: "YAML視覺點菜單四大參數骨架",
+    category: "簡報技巧",
+    model: "通用",
+    source: "數位時代 / 羅秀如",
+    sourceUrl: "https://www.bnext.com.tw/article/91085/ai-presentation-yaml-style-guide",
+    note: "一份完整 YAML 視覺規範的 4 個頂層參數骨架，各欄位下自行填入具體設定：color_palette 用十六進位色碼取代顏色名稱、typography 分別指定標題與內文字體、design_system 給具體場景描述、output_constraints 明文寫出禁止元素（禁止清單）。",
+    tags: ["YAML", "簡報設計", "配色", "字體", "禁止清單", "NotebookLM"],
+    prompt: `color_palette: # 控制配色
+typography: # 控制字體
+design_system: # 控制視覺風格與插圖類型
+output_constraints: # 設下禁止項目，防止 AI 過度設計`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-59",
+    title: "簡報設計師角色＋套用YAML規範指令",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 羅秀如",
+    sourceUrl: "https://www.bnext.com.tw/article/91085/ai-presentation-yaml-style-guide",
+    note: "使用方式：把事先準備好的簡報大綱連同 YAML 風格規範一起貼給 AI，再接上這段提示詞。NotebookLM 等文字 AI 會輸出每頁的顏色、字體、排版規則，再貼給 Gamma、Canva 或 PowerPoint 執行視覺輸出。",
+    tags: ["NotebookLM", "YAML", "角色扮演", "簡報大綱", "視覺規範"],
+    prompt: `你現在是一位專業的簡報設計師。請嚴格按照我提供的簡報大綱內容，並全程套用上方的 YAML 風格規範來生成視覺化投影片草稿。請保持結構一致性，禁止自行添加外部資料與多餘的裝飾。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-slides-60",
+    title: "資訊圖表「字少」指令",
+    category: "簡報技巧",
+    model: "NotebookLM",
+    source: "數位時代 / 支琬清",
+    sourceUrl: "https://www.bnext.com.tw/article/85379/notebooklm-lovart-canva",
+    note: "在 NotebookLM「工作室」的「資訊圖表」鉛筆符號自訂欄中，將詳細程度選「精簡」並輸入「字少」指令；《經理人》實測可大幅縮短後續修正時間。",
+    tags: ["NotebookLM", "資訊圖表", "精簡", "減少文字"],
+    prompt: `字少`,
+    placeholders: []
   }
 ];
 
 const TEXT_CATEGORIES = [
   "全部", "提示詞技巧", "模型指南", "職場商業",
-  "工具專屬", "翻譯校正", "學習成長", "AI觀念"
+  "簡報技巧", "工具專屬", "翻譯校正", "學習成長", "AI觀念"
 ];
 
 const TEXT_CAT_EMOJI = {
   "提示詞技巧": "📝",
+  "簡報技巧": "📊",
   "模型指南": "🤖",
   "職場商業": "💼",
   "工具專屬": "🛠️",
@@ -4358,6 +5149,7 @@ const TEXT_CAT_EMOJI = {
 
 const TEXT_CAT_CLASS_MAP = {
   "提示詞技巧": "cat-1", "模型指南": "cat-2", "職場商業": "cat-4",
+  "簡報技巧": "cat-2",
   "工具專屬": "cat-3", "翻譯校正": "cat-3",
   "學習成長": "cat-1", "AI觀念": "cat-4"
 };
