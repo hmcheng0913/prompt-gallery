@@ -5365,6 +5365,116 @@ output_constraints: # 設下禁止項目，防止 AI 過度設計`,
     tags: ["投影片修改", "深色背景", "高對比", "字體放大", "去AI感"],
     prompt: `請修改附檔的slide，圖表清晰，字體在可接受範圍內盡可能大，傳達的訊息清楚明確，深色背景，對比清楚，不要看起來就像AI 做的`,
     placeholders: []
+  },
+  {
+    id: "bnext-learn-8",
+    title: "教材整理成讀書指南（概念＋誤解＋考題）",
+    category: "學習成長",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/92111/notebooklm-study-prompts-exam-prep",
+    note: "第一步：先替整份教材畫地圖，「常見誤解」欄位是與一般摘要最大的差別",
+    tags: ["NotebookLM", "Gemini Notebook", "考前複習", "讀書指南"],
+    prompt: `用我的教材做一份完整的讀書指南，依主題分類。每個主題包含：3個核心概念、2個常見誤解、2道附解答的考題。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-learn-9",
+    title: "讓 AI 反過來一題一題考你",
+    category: "學習成長",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/92111/notebooklm-study-prompts-exam-prep",
+    note: "第二步：「每次答完一題後給回饋」是關鍵條件，少了它 AI 會一次丟出整份題目",
+    tags: ["NotebookLM", "Gemini Notebook", "考前複習", "互動測驗", "檢索練習"],
+    prompt: `針對最重要的概念對我進行測驗。
+從基礎題開始，逐步提高難度。
+每次答完一題後，給我回饋與說明。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-learn-10",
+    title: "預測最可能出現的 5 個考試主題",
+    category: "學習成長",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/92111/notebooklm-study-prompts-exam-prep",
+    note: "第三步：結果實為教材重點排序，適合當複習優先順序參考，而非考題預告",
+    tags: ["NotebookLM", "Gemini Notebook", "考前複習", "考點預測"],
+    prompt: `分析我的教材並預測：
+最可能出現的5個考試主題、為什麼重要，
+以及為每個主題各出一題高難度題。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-learn-11",
+    title: "用類比＋例子＋常見錯誤拆解難懂概念",
+    category: "學習成長",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/92111/notebooklm-study-prompts-exam-prep",
+    note: "第四步：[CONCEPT] 請替換為一直看不懂的概念名稱",
+    tags: ["NotebookLM", "Gemini Notebook", "考前複習", "概念拆解", "類比"],
+    prompt: `請解釋[CONCEPT]，並包含以下三個部分：
+一個容易理解的類比、
+一個實際應用的例子，
+以及一個最常見的錯誤理解。
+說明完之後，出一道題目考我。`,
+    placeholders: ["CONCEPT"]
+  },
+  {
+    id: "bnext-learn-12",
+    title: "找出教材中說明不足、前後斷掉的地方",
+    category: "學習成長",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/92111/notebooklm-study-prompts-exam-prep",
+    note: "第五步：找的是教材本身的銜接缺口，AI 無法直接知道「你本人」哪裡弱；經理人轉載版此處誤貼第四步指令，本條採數位時代原文",
+    tags: ["NotebookLM", "Gemini Notebook", "考前複習", "學習盲點"],
+    prompt: `請閱讀我的教材，找出其中說明不足或前後銜接不完整的概念，指出哪些部分需要額外補充才能理解，並針對這些地方提供簡短的補充說明。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-learn-13",
+    title: "直接產出一份完整模擬考卷（附答案解析）",
+    category: "學習成長",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/92111/notebooklm-study-prompts-exam-prep",
+    note: "第六步：已知正式題型配分可直接寫進指令，如「20題選擇題、5題簡答題、2題申論題」",
+    tags: ["NotebookLM", "Gemini Notebook", "考前複習", "模擬考"],
+    prompt: `請依據我的教材出一份完整考卷，
+題型包含選擇題、簡答題與申論題，
+並在卷末附上答案與解析。`,
+    placeholders: []
+  },
+  {
+    id: "bnext-learn-14",
+    title: "教材轉成通勤可聽的語音摘要",
+    category: "學習成長",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/92111/notebooklm-study-prompts-exam-prep",
+    note: "第七步：搭配 Audio Overview 功能；[TOPIC] 請替換為要聚焦的主題。適合複習，不適合首次學習陌生概念",
+    tags: ["NotebookLM", "Gemini Notebook", "考前複習", "語音摘要", "Audio Overview"],
+    prompt: `請把這份教材整理成語音摘要，
+聚焦在[TOPIC]，
+並針對容易混淆的概念多做說明。`,
+    placeholders: ["TOPIC"]
+  },
+  {
+    id: "bnext-learn-15",
+    title: "費曼式教回去：我講一次、AI 指出漏洞",
+    category: "學習成長",
+    model: "NotebookLM",
+    source: "數位時代 / 黃若彤",
+    sourceUrl: "https://www.bnext.com.tw/article/92111/notebooklm-study-prompts-exam-prep",
+    note: "第八步：角色對調，由你用自己的話說明概念；講到一半停住的地方就是要補強的地方",
+    tags: ["NotebookLM", "Gemini Notebook", "考前複習", "費曼技巧", "教學相長"],
+    prompt: `我來解釋一個概念，
+請你依教材指出我哪裡說對了、哪裡漏了，
+以及哪裡可以再補強。`,
+    placeholders: []
   }
 ];
 
